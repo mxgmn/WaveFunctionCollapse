@@ -15,7 +15,7 @@ In our examples typical value of N is 3.
 
 WFC initializes output bitmap in a completely unobserved state, where each pixel value is in superposition of colors of the input bitmap (so if the input was black & white then the unobserved states are shown in different shades of grey). The coefficients in these superpositions are real numbers, not complex numbers, so it doesn't do the actual quantum mechanics, but it was inspired by QM. Then the program goes into the observation-propagation cycle:
 
-* On each observation step an NxN region is chosen among the unobserved which has the lowest Shannon entropy. This region's state then collapses into a definite state according to it's coefficients and the distribution of NxN patterns in the input.
+* On each observation step an NxN region is chosen among the unobserved which has the lowest Shannon entropy. This region's state then collapses into a definite state according to its coefficients and the distribution of NxN patterns in the input.
 * On each propagation step new information gained from the collapse on the previous step propagates through the output.
 
 On each step the overall entropy decreases and in the end we have a completely observed state, the wave function has collapsed.
@@ -32,7 +32,7 @@ Watch a video demonstration of WFC algorithm on YouTube: [https://youtu.be/DOQTr
 4. Repeat the following steps:
   1. Observation:
     1. Find a wave element with the minimal nonzero entropy. If there is no such elements (if all elements have zero or undefined entropy) then break the cycle (4) and go to step (5).
-    2. Collapse this element into a definite state according to it's coefficients and the distribution of NxN patterns in the input.
+    2. Collapse this element into a definite state according to its coefficients and the distribution of NxN patterns in the input.
   2. Propagation: propagate information gained on the previous observation step.
 5. By now all the wave elements are either in a completely observed state (all the coefficients except one being zero) or in the contradictive state (all the coefficients being zero). In the first case return the output. In the second case finish the work without returning anything.
 
@@ -41,7 +41,7 @@ The simplest nontrivial case of our algorithm is when NxN=1x2 (well, NxM). If we
 
 <center>[GIF](http://i.imgur.com/jIctSoT.gif)</center>
 
-Lists of all the possible pairs of adjacent tiles in practical tilesets can be quite long, so we implemented a symmetry system for tiles to shorten the enumeration. In that system each tile should be assigned with it's symmetry type.
+Lists of all the possible pairs of adjacent tiles in practical tilesets can be quite long, so we implemented a symmetry system for tiles to shorten the enumeration. In that system each tile should be assigned with its symmetry type.
 
 <p align="center"><img alt="symmetries" src="http://i.imgur.com/9H0frmK.png"></p>
 
