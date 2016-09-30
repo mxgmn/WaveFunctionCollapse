@@ -1,0 +1,118 @@
+<set size="32">
+	<tiles>
+		<tile name="b_half" symmetry="T"/>
+		<tile name="b_i" symmetry="I"/>
+		<tile name="b_quarter" symmetry="L"/>
+		<tile name="w_half" symmetry="T"/>
+		<tile name="w_i" symmetry="I"/>
+		<tile name="w_quarter" symmetry="L"/>
+		<tile name="b" symmetry="X"/>
+		<tile name="w" symmetry="X"/>
+	</tiles>
+	<neighbors>
+		<neighbor left="b_half" right="b_half"/>
+		<neighbor left="b_half 1" right="b_half 3"/>
+		<neighbor left="b_half 3" right="b_half 1"/>
+		<neighbor left="b_half" right="b_half 3"/>
+		<neighbor left="b_half" right="b_half 2"/>
+		<neighbor left="b_half" right="b_i"/>
+		<neighbor left="b_half 3" right="b_i 3"/>
+		<neighbor left="b_half 1" right="b_i"/>
+		<neighbor left="b_half" right="b_quarter"/>
+		<neighbor left="b_half 1" right="b_quarter"/>
+		<neighbor left="b_half 2" right="b_quarter"/>
+		<neighbor left="b_half 3" right="b_quarter 1"/>
+		<neighbor left="b_i" right="b_i"/>
+		<neighbor left="b_i 1" right="b_i 1"/>
+		<neighbor left="b_i" right="b_quarter"/>
+		<neighbor left="b_i 1" right="b_quarter 1"/>
+		<neighbor left="b_quarter" right="b_quarter 1"/>
+		<neighbor left="b_quarter 1" right="b_quarter"/>
+		<neighbor left="b_quarter 2" right="b_quarter"/>
+		<neighbor left="b_quarter" right="b_quarter 2"/>
+		<neighbor left="b_half 1" right="w_half 1"/>
+		<neighbor left="b_half" right="w_half 1"/>
+		<neighbor left="b_half 3" right="w_half"/>
+		<neighbor left="b_half 3" right="w_half 3"/>
+		<neighbor left="b_half" right="w_i 1"/>
+		<neighbor left="b_half 1" right="w_i 1"/>
+		<neighbor left="b_half 3" right="w_i"/>
+		<neighbor left="b_half" right="w_quarter 1"/>
+		<neighbor left="b_half" right="w_quarter 2"/>
+		<neighbor left="b_half 1" right="w_quarter 1"/>
+		<neighbor left="b_half 3" right="w_quarter"/>
+		<neighbor left="b_i" right="w_half 1"/>
+		<neighbor left="b_i 1" right="w_half"/>
+		<neighbor left="b_i 1" right="w_half 3"/>
+		<neighbor left="b_i" right="w_i 1"/>
+		<neighbor left="b_i 1" right="w_i"/>
+		<neighbor left="b_i" right="w_quarter 1"/>
+		<neighbor left="b_i 1" right="w_quarter"/>
+		<neighbor left="b_quarter" right="w_half"/>
+		<neighbor left="b_quarter" right="w_half 3"/>
+		<neighbor left="b_quarter" right="w_half 2"/>
+		<neighbor left="b_quarter 1" right="w_half 1"/>
+		<neighbor left="b_quarter" right="w_i"/>
+		<neighbor left="b_quarter 1" right="w_i 1"/>
+		<neighbor left="b_quarter" right="w_quarter"/>
+		<neighbor left="b_quarter" right="w_quarter 3"/>
+		<neighbor left="b_quarter 1" right="w_quarter 1"/>
+		<neighbor left="b_quarter 1" right="w_quarter 2"/>
+		<neighbor left="w_half" right="w_half"/>
+		<neighbor left="w_half 1" right="w_half 3"/>
+		<neighbor left="w_half 3" right="w_half 1"/>
+		<neighbor left="w_half" right="w_half 3"/>
+		<neighbor left="w_half" right="w_half 2"/>
+		<neighbor left="w_half" right="w_i"/>
+		<neighbor left="w_half 3" right="w_i 3"/>
+		<neighbor left="w_half 1" right="w_i"/>
+		<neighbor left="w_half" right="w_quarter"/>
+		<neighbor left="w_half 1" right="w_quarter"/>
+		<neighbor left="w_half 2" right="w_quarter"/>
+		<neighbor left="w_half 3" right="w_quarter 1"/>
+		<neighbor left="w_i" right="w_i"/>
+		<neighbor left="w_i 1" right="w_i 1"/>
+		<neighbor left="w_i" right="w_quarter"/>
+		<neighbor left="w_i 1" right="w_quarter 1"/>
+		<neighbor left="w_quarter" right="w_quarter 1"/>
+		<neighbor left="w_quarter 1" right="w_quarter"/>
+		<neighbor left="w_quarter 2" right="w_quarter"/>
+		<neighbor left="w_quarter" right="w_quarter 2"/>
+		<neighbor left="b" right="b"/>
+		<neighbor left="b" right="b_half 1"/>
+		<neighbor left="b" right="b_i 1"/>
+		<neighbor left="b" right="b_quarter 1"/>
+		<neighbor left="b" right="w_half"/>
+		<neighbor left="b" right="w_half 3"/>
+		<neighbor left="b" right="w_i"/>
+		<neighbor left="b" right="w_quarter"/>
+		<neighbor left="w" right="w"/>
+		<neighbor left="w" right="w_half 1"/>
+		<neighbor left="w" right="w_i 1"/>
+		<neighbor left="w" right="w_quarter 1"/>
+		<neighbor left="w" right="b_half"/>
+		<neighbor left="w" right="b_half 3"/>
+		<neighbor left="w" right="b_i"/>
+		<neighbor left="w" right="b_quarter"/>
+	</neighbors>
+	<subsets>
+		<subset name="Large">
+			<tile name="b_quarter"/>
+			<tile name="w_quarter"/>
+		</subset>
+		<subset name="More">
+			<tile name="b_quarter"/>
+			<tile name="w_quarter"/>
+			<tile name="b"/>
+			<tile name="w"/>
+		</subset>
+		<subset name="Without">
+			<tile name="b_half" symmetry="T"/>
+			<tile name="b_i" symmetry="I"/>
+			<tile name="b_quarter" symmetry="L"/>
+			<tile name="w_half" symmetry="T"/>
+			<tile name="w_i" symmetry="I"/>
+			<tile name="w_quarter" symmetry="L"/>
+		</subset>
+	</subsets>
+</set>

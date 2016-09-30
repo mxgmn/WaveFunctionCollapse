@@ -1,0 +1,89 @@
+<set size="10">
+	<tiles>
+		<tile name="corner" symmetry="L"/>
+		<tile name="cross" symmetry="I"/>
+		<tile name="empty" symmetry="X"/>
+		<tile name="line" symmetry="I"/>
+		<tile name="t" symmetry="T"/>
+	</tiles>
+	<neighbors>
+		<neighbor left="corner 1" right="empty"/>
+		<neighbor left="corner" right="cross"/>
+		<neighbor left="corner" right="cross 1"/>
+		<neighbor left="corner" right="line"/>
+		<neighbor left="corner 1" right="line 1"/>
+		<neighbor left="corner" right="t 2"/>
+		<neighbor left="corner" right="t 3"/>
+		<neighbor left="corner" right="t"/>
+		<neighbor left="corner 1" right="t 1"/>
+		<neighbor left="corner 1" right="corner 3"/>
+		<neighbor left="corner 1" right="corner"/>
+		<neighbor left="corner" right="corner 1"/>
+		<neighbor left="corner" right="corner 2"/>
+		<neighbor left="cross" right="cross"/>
+		<neighbor left="cross" right="cross 1"/>
+		<neighbor left="cross 1" right="cross 1"/>
+		<neighbor left="cross" right="line"/>
+		<neighbor left="cross 1" right="line"/>
+		<neighbor left="cross" right="t"/>
+		<neighbor left="cross" right="t 3"/>
+		<neighbor left="cross 1" right="t"/>
+		<neighbor left="cross 1" right="t 3"/>
+		<neighbor left="empty" right="empty"/>
+		<neighbor left="empty" right="line 1"/>
+		<neighbor left="empty" right="t 1"/>
+		<neighbor left="line" right="line"/>
+		<neighbor left="line 1" right="line 1"/>
+		<neighbor left="line" right="t"/>
+		<neighbor left="line 1" right="t 1"/>
+		<neighbor left="line" right="t 3"/>
+		<neighbor left="t 1" right="t 3"/>
+		<neighbor left="t" right="t"/>
+		<neighbor left="t 2" right="t"/>
+		<neighbor left="t 1" right="t"/>
+		<neighbor left="t 3" right="t 1"/>
+	</neighbors>
+	<subsets>
+		<subset name="Standard">
+			<tile name="corner"/>
+			<tile name="cross"/>
+			<tile name="empty"/>
+			<tile name="line"/>
+		</subset>
+		<subset name="Something">
+			<tile name="corner"/>
+			<tile name="cross"/>
+			<tile name="line"/>
+		</subset>
+		<subset name="Crossless">
+			<tile name="corner"/>
+			<tile name="empty"/>
+			<tile name="line"/>
+		</subset>
+		<subset name="TE">
+			<tile name="t"/>
+			<tile name="empty"/>
+		</subset>
+		<subset name="Only T">
+			<tile name="t"/>
+		</subset>
+		<subset name="Urban">
+			<tile name="corner"/>
+			<tile name="line"/>
+		</subset>
+		<subset name="Suburban">
+			<tile name="corner"/>
+			<tile name="empty"/>
+		</subset>
+		<subset name="Manhattan">
+			<tile name="corner"/>
+		</subset>
+		<subset name="Fabric">
+			<tile name="cross"/>
+			<tile name="line"/>
+		</subset>
+		<subset name="Dense Fabric">
+			<tile name="cross"/>
+		</subset>
+	</subsets>
+</set>

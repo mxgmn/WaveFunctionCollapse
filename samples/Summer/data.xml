@@ -1,0 +1,68 @@
+<set size="48" unique="True">
+	<tiles>
+		<tile name="cliff" symmetry="T"/>
+		<tile name="cliffcorner" symmetry="L"/>
+		<tile name="cliffturn" symmetry="L"/>
+		<tile name="grass" symmetry="X"/>
+		<tile name="grasscorner" symmetry="L" weight="0.0001"/>
+		<tile name="road" symmetry="T" weight="0.1"/>
+		<tile name="roadturn" symmetry="L" weight="0.1"/>
+		<tile name="water_a" symmetry="X"/>
+		<tile name="water_b" symmetry="X"/>
+		<tile name="water_c" symmetry="X"/>
+		<tile name="watercorner" symmetry="L"/>
+		<tile name="waterside" symmetry="T"/>
+		<tile name="waterturn" symmetry="L"/>
+	</tiles>
+	<neighbors>
+		<neighbor left="cliff 0" right="cliff 0"/>
+		<neighbor left="cliff 2" right="cliffcorner 1"/>
+		<neighbor left="cliff 2" right="cliffturn 2"/>
+		<neighbor left="cliff 1" right="grass 0"/>
+		<neighbor left="grass 0" right="cliff 1"/>
+		<neighbor left="cliff 1" right="road 3"/>
+		<neighbor left="road 1" right="cliff 1"/>
+		<neighbor left="cliff 1" right="roadturn 0"/>
+		<neighbor left="roadturn 1" right="cliff 1"/>
+		<neighbor left="cliffcorner 0" right="cliffturn 2"/>
+		<neighbor left="cliffcorner 1" right="road 3"/>
+		<neighbor left="cliffcorner 1" right="roadturn 0"/>
+		<neighbor left="cliffcorner 1" right="roadturn 3"/>
+		<neighbor left="cliffcorner 1" right="grass 0"/>
+		<neighbor left="cliffturn 1" right="grass 0"/>
+		<neighbor left="cliffturn 1" right="road 3"/>
+		<neighbor left="cliffturn 1" right="roadturn 0"/>
+		<neighbor left="cliffturn 1" right="roadturn 3"/>
+		<neighbor left="grass 0" right="grass 0"/>
+		<neighbor left="grass 0" right="road 3"/>
+		<neighbor left="grass 0" right="roadturn 0"/>
+		<neighbor left="grass 0" right="watercorner 0"/>
+		<neighbor left="grass 0" right="waterside 3"/>
+		<neighbor left="grasscorner 1" right="grasscorner 0"/>
+		<neighbor left="grasscorner 1" right="grasscorner 3"/>
+		<neighbor left="grasscorner 1" right="road 1"/>
+		<neighbor left="grasscorner 3" right="road 0"/>
+		<neighbor left="grasscorner 3" right="roadturn 1"/>
+		<neighbor left="road 3" right="road 1"/>
+		<neighbor left="road 0" right="road 0"/>
+		<neighbor left="road 0" right="roadturn 1"/>
+		<neighbor left="road 1" right="watercorner 0"/>
+		<neighbor left="road 1" right="waterside 3"/>
+		<neighbor left="roadturn 1" right="watercorner 0"/>
+		<neighbor left="roadturn 1" right="watercorner 3"/>
+		<neighbor left="roadturn 1" right="waterside 3"/>
+		<neighbor left="water_a 0" right="water_a 0"/>
+		<neighbor left="water_a 0" right="water_b 0"/>
+		<neighbor left="water_a 0" right="water_c 0"/>
+		<neighbor left="water_a 0" right="waterside 1"/>
+		<neighbor left="water_a 0" right="waterturn 1"/>
+		<neighbor left="water_b 0" right="waterside 1"/>
+		<neighbor left="water_b 0" right="waterturn 1"/>
+		<neighbor left="water_c 0" right="waterside 1"/>
+		<neighbor left="water_c 0" right="waterturn 1"/>
+		<neighbor left="watercorner 0" right="waterside 0"/>
+		<neighbor left="watercorner 0" right="waterturn 0"/>
+		<neighbor left="waterside 0" right="waterside 0"/>
+		<neighbor left="waterside 0" right="waterturn 0"/>
+	</neighbors>
+</set>

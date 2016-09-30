@@ -1,0 +1,55 @@
+<set size="3">
+	<tiles>
+		<tile name="bend" symmetry="L" weight="0.5"/>
+		<tile name="corner" symmetry="L" weight="0.5"/>
+		<tile name="corridor" symmetry="I" weight="1.0"/>
+		<tile name="door" symmetry="T" weight="0.5"/>
+		<tile name="empty" symmetry="X"/>
+		<tile name="side" symmetry="T" weight="2.0"/>
+		<tile name="t" symmetry="T" weight="0.5"/>
+		<tile name="turn" symmetry="L" weight="0.25"/>
+		<tile name="wall" symmetry="X"/>
+	</tiles>
+	<neighbors>
+		<neighbor left="corner 1" right="corner"/>
+		<neighbor left="corner 2" right="corner"/>
+		<neighbor left="corner" right="door"/>
+		<neighbor left="corner" right="side 2"/>
+		<neighbor left="corner 1" right="side 1"/>
+		<neighbor left="corner 1" right="t 1"/>
+		<neighbor left="corner 1" right="turn"/>
+		<neighbor left="corner 2" right="turn"/>
+		<neighbor left="wall" right="corner"/>
+		<neighbor left="corridor 1" right="corridor 1"/>
+		<neighbor left="corridor 1" right="door 3"/>
+		<neighbor left="corridor" right="side 1"/>
+		<neighbor left="corridor 1" right="t"/>
+		<neighbor left="corridor 1" right="t 3"/>
+		<neighbor left="corridor 1" right="turn 1"/>
+		<neighbor left="corridor" right="wall"/>
+		<neighbor left="door 1" right="door 3"/>
+		<neighbor left="door 3" right="empty"/>
+		<neighbor left="door" right="side 2"/>
+		<neighbor left="door 1" right="t"/>
+		<neighbor left="door 1" right="t 3"/>
+		<neighbor left="door 1" right="turn 1"/>
+		<neighbor left="empty" right="empty"/>
+		<neighbor left="empty" right="side 3"/>
+		<neighbor left="side" right="side"/>
+		<neighbor left="side 3" right="side 1"/>
+		<neighbor left="side 3" right="t 1"/>
+		<neighbor left="side 3" right="turn"/>
+		<neighbor left="side 3" right="wall"/>
+		<neighbor left="t" right="t 2"/>
+		<neighbor left="t" right="turn 1"/>
+		<neighbor left="t 3" right="wall"/>
+		<neighbor left="turn" right="turn 2"/>
+		<neighbor left="turn 1" right="wall"/>
+		<neighbor left="wall" right="wall"/>
+		<neighbor left="bend" right="bend 1"/>
+		<neighbor left="corner" right="bend 2"/>
+		<neighbor left="door" right="bend 2"/>
+		<neighbor left="empty" right="bend"/>
+		<neighbor left="side" right="bend 1"/>
+	</neighbors>
+</set>

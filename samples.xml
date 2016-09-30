@@ -1,0 +1,48 @@
+<samples>
+	<overlapping name="Chess" N="2" periodic="True"/>
+	<overlapping name="Chess" N="2" width="47" height="47" periodic="True" screenshots="1"/>
+	<overlapping name="City" N="3" symmetry="2" foundation="-1" periodic="True"/>
+	<overlapping name="Flowers" N="3" symmetry="2" foundation="102" periodic="True"/>
+	<overlapping name="Hogs" N="3" periodic="True"/>
+	<overlapping name="Hogs" N="2" periodic="True"/>
+	<overlapping name="Knot" N="3" periodic="True"/>
+	<overlapping name="Less Rooms" N="3" periodic="True"/>
+	<overlapping name="Mountains" N="3" symmetry="2" periodic="True"/>
+	<overlapping name="Office" N="3" periodic="True"/>
+	<overlapping name="Paths" N="3" periodic="True"/>
+	<overlapping name="Platformer" N="2" symmetry="2" foundation="-1" periodic="True"/>
+	<overlapping name="Platformer" N="3" symmetry="2" foundation="-1" periodic="True"/>
+	<overlapping name="Red Maze" N="2"/>
+	<overlapping name="Rooms" N="3" screenshots="3" periodic="True"/>
+	<overlapping name="Rule 126" N="3" symmetry="2" periodicInput="False" periodic="False"/>
+	<overlapping name="Simple Knot" N="3" periodic="True"/>
+	<overlapping name="Simple Maze" N="2"/>
+	<overlapping name="Simple Wall" N="3" symmetry="2" periodic="True"/>
+	<overlapping name="Simple Wall" N="3" periodic="True"/>
+	<overlapping name="Simple Wall" N="2" symmetry="2" periodic="True"/>
+	<overlapping name="Simple Wall" N="2" periodic="True"/>
+	<overlapping name="Trick Knot" N="3" periodic="True"/>
+	<overlapping name="Village" N="3" symmetry="2" periodic="True"/>
+	<overlapping name="Water" N="3" symmetry="1" periodic="True"/>
+	<simpletiled name="Summer" width="15" height="15"/>
+	<simpletiled name="Castle" width="20" height="20"/>
+	<simpletiled name="Circuit" subset="Turnless" width="34" height="34" periodic="True" screenshot="3"/>
+	<simpletiled name="Knots" subset="Standard" width="24" height="24" periodic="True"/>
+	<simpletiled name="Knots" subset="Something" width="24" height="24" periodic="True"/>	
+	<simpletiled name="Knots" subset="Crossless" width="24" height="24"/>
+	<simpletiled name="Knots" subset="TE" width="24" height="24"/>
+	<simpletiled name="Knots" subset="Only T" width="24" height="24"/>
+	<simpletiled name="Knots" subset="Urban" width="24" height="24"/>	
+	<simpletiled name="Knots" subset="Suburban" width="24" height="24" periodic="True"/>
+	<simpletiled name="Knots" subset="Manhattan" width="24" height="24" periodic="True"/>
+	<simpletiled name="Knots" subset="Fabric" width="24" height="24" periodic="True"/>
+	<simpletiled name="Knots" subset="Dense Fabric" width="24" height="24" periodic="True"/>
+	<simpletiled name="Rooms" width="30" height="30"/>
+	<simpletiled name="Circles" width="24" height="24"/>
+	<simpletiled name="Circles" subset="Large" width="24" height="24"/>
+	<simpletiled name="Circles" subset="More" width="24" height="24"/>
+	<simpletiled name="Circles" subset="Without" width="24" height="24"/>
+	<overlapping name="Village" N="3" symmetry="2" limit="50" periodic="True"/>
+	<simpletiled name="Summer" width="15" height="15" periodic="False" limit="15"/>
+	<overlapping name="3Bricks" N="3" symmetry="1" periodic="True"/>
+</samples>
