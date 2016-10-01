@@ -20,13 +20,18 @@ static class Program
 		int counter = 1;
 		foreach (XmlNode xnode in xdoc.FirstChild.ChildNodes)
 		{
+			string nodeName = xnode.Name;
+			if (nodeName== "#comment") {
+				continue;
+			}
+
 			Model model;
 			string name = xnode.Get<string>("name");
 			Console.WriteLine($"< {name}");
 
-			if (xnode.Name == "overlapping") model = new OverlappingModel(name, xnode.Get("N", 2), xnode.Get("width", 48), xnode.Get("height", 48), 
+			if (nodeName == "overlapping") model = new OverlappingModel(name, xnode.Get("N", 2), xnode.Get("width", 48), xnode.Get("height", 48),
 				xnode.Get("periodicInput", true), xnode.Get("periodic", false), xnode.Get("symmetry", 8), xnode.Get("foundation", 0));
-			else if (xnode.Name == "simpletiled") model = new SimpleTiledModel(name, xnode.Get<string>("subset"), 
+			else if (nodeName == "simpletiled") model = new SimpleTiledModel(name, xnode.Get<string>("subset"),
 				xnode.Get("width", 10), xnode.Get("height", 10), xnode.Get("periodic", false), xnode.Get("black", false));
 			else continue;
 
