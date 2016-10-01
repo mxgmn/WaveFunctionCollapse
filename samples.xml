@@ -26,7 +26,7 @@
 	<overlapping name="Water" N="3" symmetry="1" periodic="True"/>
 	<simpletiled name="Summer" width="15" height="15"/>
 	<simpletiled name="Castle" width="20" height="20"/>
-	<simpletiled name="Circuit" subset="Turnless" width="34" height="34" periodic="True" screenshot="3"/>
+	<simpletiled name="Circuit" subset="Turnless" width="34" height="34" periodic="True" screenshots="3"/>
 	<simpletiled name="Knots" subset="Standard" width="24" height="24" periodic="True"/>
 	<simpletiled name="Knots" subset="Something" width="24" height="24" periodic="True"/>	
 	<simpletiled name="Knots" subset="Crossless" width="24" height="24"/>
