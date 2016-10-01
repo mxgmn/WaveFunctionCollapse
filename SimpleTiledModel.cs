@@ -258,8 +258,10 @@ class SimpleTiledModel : Model
 	public override Bitmap Graphics()
 	{
 		Bitmap result = new Bitmap(FMX * tilesize, FMY * tilesize);
+        
+        int[] bmpData = new int[result.Height * result.Width];
 
-		for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++)
+        for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++)
 			{
 				bool[] a = wave[x][y];
 				int amount = (from b in a where b select 1).Sum();
@@ -267,23 +269,27 @@ class SimpleTiledModel : Model
 
 				for (int yt = 0; yt < tilesize; yt++) for (int xt = 0; xt < tilesize; xt++)
 					{
-						if (black && amount == T) result.SetPixel(x * tilesize + xt, y * tilesize + yt, Color.Black);
-						else
-						{
-							double r = 0, g = 0, b = 0;
-							for (int t = 0; t < T; t++) if (wave[x][y][t])
-								{
-									Color c = tiles[t][xt + yt * tilesize];
-									r += (double)c.R * stationary[t] * lambda;
-									g += (double)c.G * stationary[t] * lambda;
-									b += (double)c.B * stationary[t] * lambda;
-								}
+                        if (black && amount == T) bmpData[x * tilesize + xt + (y * tilesize + yt) * FMX * tilesize] = unchecked((int)0xff000000);
+                        else
+                        {
+                            double r = 0, g = 0, b = 0;
+                            for (int t = 0; t < T; t++) if (wave[x][y][t])
+                                {
+                                    Color c = tiles[t][xt + yt * tilesize];
+                                    r += (double)c.R * stationary[t] * lambda;
+                                    g += (double)c.G * stationary[t] * lambda;
+                                    b += (double)c.B * stationary[t] * lambda;
+                                }
 
-							result.SetPixel(x * tilesize + xt, y * tilesize + yt, Color.FromArgb((int)r, (int)g, (int)b));
-						}
+                            bmpData[x * tilesize + xt + (y * tilesize + yt) * FMX * tilesize] = unchecked((int)0xff000000 | ((int)r << 16) | ((int)g << 8) | (int)b);
+                        }
 					}
 			}
 
-		return result;
+        var bits = result.LockBits(new Rectangle(0, 0, result.Width, result.Height), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+        System.Runtime.InteropServices.Marshal.Copy(bmpData, 0, bits.Scan0, bmpData.Length);
+        result.UnlockBits(bits);
+
+        return result;
 	}
 }
