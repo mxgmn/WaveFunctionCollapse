@@ -120,7 +120,7 @@ class OverlappingModel : Model
 
 		patterns = new byte[T][];
 		stationary = new double[T];
-		propagator = new int[T][][][];
+		propagator = new int[2 * N - 1][][][];
 
 		int counter = 0;
 		foreach (int w in weights.Keys)
@@ -151,18 +151,18 @@ class OverlappingModel : Model
 			return true;
 		};
 
-		for (int t = 0; t < T; t++)
+		for (int x = 0; x < 2 * N - 1; x++)
 		{
-			propagator[t] = new int[2 * N - 1][][];
-			for (int x = 0; x < 2 * N - 1; x++)
+			propagator[x] = new int[2 * N - 1][][];
+			for (int y = 0; y < 2 * N - 1; y++)
 			{
-				propagator[t][x] = new int[2 * N - 1][];
-				for (int y = 0; y < 2 * N - 1; y++)
+				propagator[x][y] = new int[T][];
+				for (int t = 0; t < T; t++)
 				{
 					List<int> list = new List<int>();
 					for (int t2 = 0; t2 < T; t2++) if (agrees(patterns[t], patterns[t2], x - N + 1, y - N + 1)) list.Add(t2);
-					propagator[t][x][y] = new int[list.Count];
-					for (int c = 0; c < list.Count; c++) propagator[t][x][y][c] = list[c];
+					propagator[x][y][t] = new int[list.Count];
+					for (int c = 0; c < list.Count; c++) propagator[x][y][t][c] = list[c];
 				}
 			}
 		}
@@ -194,12 +194,14 @@ class OverlappingModel : Model
 
 							if (!periodic && (sx + N > FMX || sy + N > FMY)) continue;
 							allowed = wave[sx][sy];
+							int[][] p = propagator[N - 1 - dx][N - 1 - dy];
+							bool[] w = wave[x1][y1];
 
 							for (int t2 = 0; t2 < T; t2++)
 							{
 								b = false;
-								int[] prop = propagator[t2][N - 1 - dx][N - 1 - dy];
-								for (int i1 = 0; i1 < prop.Length && !b; i1++) b = wave[x1][y1][prop[i1]];
+								int[] prop = p[t2];
+								for (int i1 = 0; i1 < prop.Length && !b; i1++) b = w[prop[i1]];
 
 								if (allowed[t2] && !b)
 								{
