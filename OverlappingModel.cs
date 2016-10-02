@@ -197,11 +197,12 @@ class OverlappingModel : Model
 
 							for (int t2 = 0; t2 < T; t2++)
 							{
+								if (!allowed[t2]) continue;
 								b = false;
 								int[] prop = propagator[t2][N - 1 - dx][N - 1 - dy];
 								for (int i1 = 0; i1 < prop.Length && !b; i1++) b = wave[x1][y1][prop[i1]];
 
-								if (allowed[t2] && !b)
+								if (!b)
 								{
 									changes[sx][sy] = true;
 									change = true;
