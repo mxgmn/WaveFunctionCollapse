@@ -1,0 +1,30 @@
+name: wfc
+version: 0
+summary: This program generates bitmaps that are locally similar to the input bitmap.
+description: |
+  Bitmap & tilemap generation from a single example with the help of ideas from
+  quantum mechanics.
+
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs and slots
+
+apps:
+  wfc:
+    command: wfc-wrapper
+    plugs:
+      - home
+
+parts:
+  build-wfc:
+    plugin: make
+    source: .
+    build-packages: [mono-devel]
+    stage-packages: [mono-runtime, libmono-system-core4.0-cil, libmono-system-drawing4.0-cil]
+  copy-wfc:
+    plugin: dump
+    source: .
+    snap:
+      - wfc-wrapper
+      - wfc.exe
+      - usr/lib/mono/*/*
+      - usr/bin/mono

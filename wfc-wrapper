@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+export MONO_PATH=${SNAP}/usr/lib/mono/4.5
+export HOME=${SNAP_USER_DATA}
+
+if [ ! -e "${HOME}/.mono/config" ]; then
+	mkdir -p ${HOME}/.mono
+	cp ${SNAP}/etc/mono/config ${HOME}/.mono/config
+fi
+
+exec ${SNAP}/usr/bin/mono ${SNAP}/wfc.exe "$@"
