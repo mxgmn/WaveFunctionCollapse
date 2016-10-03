@@ -108,7 +108,7 @@ The main inspirations for this work are:
 * [Max Aller](https://github.com/nanodeath) is making a Kotlin port.
 
 ## Credits
-Some samples are taken from the games Ultima IV and [Dungeon Crawl](https://github.com/crawl/crawl). Circles tileset is taken from [Mario Klingemann](https://twitter.com/quasimondo/status/778196128957403136). Idea of generating integrated circuits was suggested to me by [Moonasaur](https://twitter.com/Moonasaur/status/759890746350731264) and their style was taken from Zachtronics' [Ruckingenur II](http://www.zachtronics.com/ruckingenur-ii/). I couldn't find the authors of the summer tileset and will be grateful for information about them. Voxel models were rendered in [MagicaVoxel](http://ephtracy.github.io/).
+Some samples are taken from the games Ultima IV and [Dungeon Crawl](https://github.com/crawl/crawl). Circles tileset is taken from [Mario Klingemann](https://twitter.com/quasimondo/status/778196128957403136). Idea of generating integrated circuits was suggested to me by [Moonasaur](https://twitter.com/Moonasaur/status/759890746350731264) and their style was taken from Zachtronics' [Ruckingenur II](http://www.zachtronics.com/ruckingenur-ii/). Summer tileset was made by Hermann Hillmann. Voxel models were rendered in [MagicaVoxel](http://ephtracy.github.io/).
 
 <p align="center"><img alt="second collage" src="http://i.imgur.com/CZsvnc7.png"></p>
 <p align="center"><img alt="voxel perspective" src="http://i.imgur.com/RywXCHn.png"></p>
