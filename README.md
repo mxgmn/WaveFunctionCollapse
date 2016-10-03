@@ -15,7 +15,7 @@ In our examples typical value of N is 3.
 
 WFC initializes output bitmap in a completely unobserved state, where each pixel value is in superposition of colors of the input bitmap (so if the input was black & white then the unobserved states are shown in different shades of grey). The coefficients in these superpositions are real numbers, not complex numbers, so it doesn't do the actual quantum mechanics, but it was inspired by QM. Then the program goes into the observation-propagation cycle:
 
-* On each observation step an NxN region is chosen among the unobserved which has the lowest Shannon entropy. This region's state then collapses into a definite state according to it's coefficients and the distribution of NxN patterns in the input.
+* On each observation step an NxN region is chosen among the unobserved which has the lowest Shannon entropy. This region's state then collapses into a definite state according to its coefficients and the distribution of NxN patterns in the input.
 * On each propagation step new information gained from the collapse on the previous step propagates through the output.
 
 On each step the overall entropy decreases and in the end we have a completely observed state, the wave function has collapsed.
@@ -32,7 +32,7 @@ Watch a video demonstration of WFC algorithm on YouTube: [https://youtu.be/DOQTr
 4. Repeat the following steps:
   1. Observation:
     1. Find a wave element with the minimal nonzero entropy. If there is no such elements (if all elements have zero or undefined entropy) then break the cycle (4) and go to step (5).
-    2. Collapse this element into a definite state according to it's coefficients and the distribution of NxN patterns in the input.
+    2. Collapse this element into a definite state according to its coefficients and the distribution of NxN patterns in the input.
   2. Propagation: propagate information gained on the previous observation step.
 5. By now all the wave elements are either in a completely observed state (all the coefficients except one being zero) or in the contradictive state (all the coefficients being zero). In the first case return the output. In the second case finish the work without returning anything.
 
@@ -73,7 +73,7 @@ Higher resolution screenshots: [1](http://i.imgur.com/0bsjlBY.png), [2](http://i
 Voxel models generated with WFC and other algorithms will be in a separate repo.
 
 ## Constrained synthesis
-WFC algorithm supports constraints. Therefore it can be easely combined with other generative algorithms or with manual creation.
+WFC algorithm supports constraints. Therefore, it can be easely combined with other generative algorithms or with manual creation.
 
 Here is WFC autocompleting a level started by a human:
 
@@ -81,14 +81,14 @@ Here is WFC autocompleting a level started by a human:
 
 [ConvChain](https://github.com/mxgmn/ConvChain) algorithm satisfies the strong version of the condition (C2): the limit distribution of NxN patterns in the outputs it is producing is exactly the same as the distributions of patterns in the input. However, ConvChain doesn't satisfy (C1): it often produces noticable artefacts. It makes sense to run ConvChain first to get a well-sampled configuration and then run WFC to correct local artefacts. This is similar to a common strategy in optimization: first run a Monte-Carlo method to find a point close to a global optimum and then run a gradient descent from that point for greater accuracy.
 
-P. F. Harrison's [texture synthesis](https://github.com/mxgmn/SynTex) algorithm is significantly faster then WFC, but it has trouble with long correlations (for example, it's difficult for this algorithm to synthesize brick wall textures with correctly aligned bricks). But this is exactly where WFC shines, and Harrison's algorithm supports constraints. It makes sense first to generate a perfect brick wall blueprint with WFC and then run a constrained texture synthesis algorithm on that blueprint.
+P. F. Harrison's [texture synthesis](https://github.com/mxgmn/SynTex) algorithm is significantly faster than WFC, but it has trouble with long correlations (for example, it's difficult for this algorithm to synthesize brick wall textures with correctly aligned bricks). But this is exactly where WFC shines, and Harrison's algorithm supports constraints. It makes sense first to generate a perfect brick wall blueprint with WFC and then run a constrained texture synthesis algorithm on that blueprint.
 
 ## Comments
 Why the minimal entropy heuristic? I noticed that when humans draw something they often follow the minimal entropy heuristic themselves. That's why the algorithm is so enjoyable to watch.
 
 The overlapping model relates to the simple tiled model the same way higher order Markov chains relate to order one Markov chains.
 
-Note that the entropy of any node can't increase during the propagation phase, i.e. possibilities are not arising, but can be cancelled. When propagation step can not decrease entropy further, we activate observation step. If the observation step can not decrease entropy, that means that the algorithm has finished working.
+Note that the entropy of any node can't increase during the propagation phase, i.e. possibilities are not arising, but can be canceled. When propagation step can not decrease entropy further, we activate observation step. If the observation step can not decrease entropy, that means that the algorithm has finished working.
 
 WFC's propagation phase is very similar to the loopy belief propagation algorithm. In fact, I first programmed belief propagation, but then switched to constraint propagation with a saved stationary distribution, because BP is significantly slower without a massive parallelization (on a CPU) and didn't produce significantly better results in my problems.
 
