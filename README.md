@@ -41,7 +41,7 @@ The simplest nontrivial case of our algorithm is when NxN=1x2 (well, NxM). If we
 
 <center>[GIF](http://i.imgur.com/jIctSoT.gif)</center>
 
-Lists of all the possible pairs of adjacent tiles in practical tilesets can be quite long, so we implemented a symmetry system for tiles to shorten the enumeration. In that system each tile should be assigned with it's symmetry type.
+Lists of all the possible pairs of adjacent tiles in practical tilesets can be quite long, so we implemented a symmetry system for tiles to shorten the enumeration. In that system each tile should be assigned with its symmetry type.
 
 <p align="center"><img alt="symmetries" src="http://i.imgur.com/9H0frmK.png"></p>
 
