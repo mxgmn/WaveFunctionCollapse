@@ -39,7 +39,9 @@ Watch a video demonstration of WFC algorithm on YouTube: [https://youtu.be/DOQTr
 ## Tilemap generation
 The simplest nontrivial case of our algorithm is when NxN=1x2 (well, NxM). If we simplify it even further by storing not the probabilities of pairs of colors, but the probabilities of colors themselves, we get what we call a "simple tiled model". The propagation phase in this model is just adjacency constraint propagation. It's convenient to initialize the simple tiled model not with a sample bitmap, but with a list of tiles and their adjacency data (adjacency data can be viewed as a large set of very small samples).
 
-[GIF](http://i.imgur.com/jIctSoT.gif) [GIFV](http://i.imgur.com/jIctSoT.gifv)
+<p align="center">
+  [GIF](http://i.imgur.com/jIctSoT.gif), [GIFV](http://i.imgur.com/jIctSoT.gifv)
+</p>
 
 Lists of all the possible pairs of adjacent tiles in practical tilesets can be quite long, so we implemented a symmetry system for tiles to shorten the enumeration. In that system each tile should be assigned with its symmetry type.
 
@@ -77,7 +79,9 @@ WFC algorithm supports constraints. Therefore, it can be easely combined with ot
 
 Here is WFC autocompleting a level started by a human:
 
-[GIF](http://i.imgur.com/X3aNDUv.gif) [GIFV](http://i.imgur.com/X3aNDUv.gifv)
+<p align="center">
+  [GIF](http://i.imgur.com/X3aNDUv.gif), [GIFV](http://i.imgur.com/X3aNDUv.gifv)
+</p>
 
 [ConvChain](https://github.com/mxgmn/ConvChain) algorithm satisfies the strong version of the condition (C2): the limit distribution of NxN patterns in the outputs it is producing is exactly the same as the distributions of patterns in the input. However, ConvChain doesn't satisfy (C1): it often produces noticable artefacts. It makes sense to run ConvChain first to get a well-sampled configuration and then run WFC to correct local artefacts. This is similar to a common strategy in optimization: first run a Monte-Carlo method to find a point close to a global optimum and then run a gradient descent from that point for greater accuracy.
 
