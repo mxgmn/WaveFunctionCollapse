@@ -105,7 +105,7 @@ The main inspirations for this work are:
 ## Ports to other languages
 
 * Emil Ernerfeldt made a [C++ port](https://github.com/emilk/wfc).
-* [Max Aller](https://github.com/nanodeath) is making a Kotlin port.
+* [Max Aller](https://github.com/nanodeath) is making a Kotlin (JVM) library, [Kollapse](https://gitlab.com/nanodeath/kollapse).
 
 ## Credits
 Some samples are taken from the games Ultima IV and [Dungeon Crawl](https://github.com/crawl/crawl). Circles tileset is taken from [Mario Klingemann](https://twitter.com/quasimondo/status/778196128957403136). Idea of generating integrated circuits was suggested to me by [Moonasaur](https://twitter.com/Moonasaur/status/759890746350731264) and their style was taken from Zachtronics' [Ruckingenur II](http://www.zachtronics.com/ruckingenur-ii/). Summer tileset was made by Hermann Hillmann. Voxel models were rendered in [MagicaVoxel](http://ephtracy.github.io/).
