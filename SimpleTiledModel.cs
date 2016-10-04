@@ -124,13 +124,13 @@ class SimpleTiledModel : Model
 			{
 				for (int t = 0; t < cardinality; t++)
 				{
-					Bitmap bitmap = new Bitmap($"samples/{name}/{tilename} {t}.bmp");
+					Bitmap bitmap = new Bitmap($"samples/{name}/{tilename} {t}.png");
 					tiles.Add(tile((x, y) => bitmap.GetPixel(x, y)));
 				}
 			}
 			else
 			{
-				Bitmap bitmap = new Bitmap($"samples/{name}/{tilename}.bmp");
+				Bitmap bitmap = new Bitmap($"samples/{name}/{tilename}.png");
 				tiles.Add(tile((x, y) => bitmap.GetPixel(x, y)));
 				for (int t = 1; t < cardinality; t++) tiles.Add(rotate(tiles[T + t - 1]));
 			}

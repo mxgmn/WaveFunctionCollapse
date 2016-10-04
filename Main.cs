@@ -40,7 +40,7 @@ static class Program
 					if (finished)
 					{
 						Console.WriteLine("DONE");
-						model.Graphics().Save($"{counter} {name} {i}.bmp");
+						model.Graphics().Save($"{counter} {name} {i}.png");
 						break;
 					}
 					else Console.WriteLine("CONTRADICTION");

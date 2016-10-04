@@ -26,7 +26,7 @@ class OverlappingModel : Model
 		FMY = height;
 		periodic = periodicOutput;
 
-		var bitmap = new Bitmap($"samples/{name}.bmp");
+		var bitmap = new Bitmap($"samples/{name}.png");
 		int SMX = bitmap.Width, SMY = bitmap.Height;
 		byte[,] sample = new byte[SMX, SMY];
 		colors = new List<Color>();
