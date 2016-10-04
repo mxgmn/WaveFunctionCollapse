@@ -20,6 +20,8 @@ static class Program
 		int counter = 1;
 		foreach (XmlNode xnode in xdoc.FirstChild.ChildNodes)
 		{
+			if (xnode.Name == "#comment") continue;
+
 			Model model;
 			string name = xnode.Get<string>("name");
 			Console.WriteLine($"< {name}");
