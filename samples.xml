@@ -1,8 +1,8 @@
 <samples>
 	<overlapping name="Chess" N="2" periodic="True"/>
 	<overlapping name="Chess" N="2" width="47" height="47" periodic="True" screenshots="1"/>
-	<overlapping name="City" N="3" symmetry="2" foundation="-1" periodic="True"/>
-	<overlapping name="Flowers" N="3" symmetry="2" foundation="102" periodic="True"/>
+	<overlapping name="City" N="3" symmetry="2" ground="-1" periodic="True"/>
+	<overlapping name="Flowers" N="3" symmetry="2" ground="-4" periodic="True"/>
 	<overlapping name="Hogs" N="3" periodic="True"/>
 	<overlapping name="Hogs" N="2" periodic="True"/>
 	<overlapping name="Knot" N="3" periodic="True"/>
@@ -10,8 +10,8 @@
 	<overlapping name="Mountains" N="3" symmetry="2" periodic="True"/>
 	<overlapping name="Office" N="3" periodic="True"/>
 	<overlapping name="Paths" N="3" periodic="True"/>
-	<overlapping name="Platformer" N="2" symmetry="2" foundation="-1" periodic="True"/>
-	<overlapping name="Platformer" N="3" symmetry="2" foundation="-1" periodic="True"/>
+	<overlapping name="Platformer" N="2" symmetry="2" ground="-1" periodic="True"/>
+	<overlapping name="Platformer" N="3" symmetry="2" ground="-1" periodic="True"/>
 	<overlapping name="Red Maze" N="2"/>
 	<overlapping name="Rooms" N="3" screenshots="3" periodic="True"/>
 	<overlapping name="Rule 126" N="3" symmetry="2" periodicInput="False" periodic="False"/>

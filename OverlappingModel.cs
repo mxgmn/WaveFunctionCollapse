@@ -17,9 +17,9 @@ class OverlappingModel : Model
 
 	byte[][] patterns;
 	List<Color> colors;
-	int foundation;
+	int ground;
 
-	public OverlappingModel(string name, int N, int width, int height, bool periodicInput, bool periodicOutput, int symmetry, int foundation)
+	public OverlappingModel(string name, int N, int width, int height, bool periodicInput, bool periodicOutput, int symmetry, int ground)
 	{
 		this.N = N;
 		FMX = width;
@@ -116,7 +116,7 @@ class OverlappingModel : Model
 			}
 
 		T = weights.Count;
-		this.foundation = (foundation + T) % T;
+		this.ground = (ground + T) % T;
 
 		patterns = new byte[T][];
 		stationary = new double[T];
@@ -254,21 +254,21 @@ class OverlappingModel : Model
 	{
 		base.Clear();
 
-		if (foundation != 0)
+		if (ground != 0)
 		{
 			for (int x = 0; x < FMX; x++)
 			{
-				for (int t = 0; t < T; t++) if (t != foundation) wave[x][FMY - 1][t] = false;
+				for (int t = 0; t < T; t++) if (t != ground) wave[x][FMY - 1][t] = false;
 				changes[x][FMY - 1] = true;
 
 				for (int y = 0; y < FMY - 1; y++)
 				{
-					wave[x][y][foundation] = false;
+					wave[x][y][ground] = false;
 					changes[x][y] = true;
 				}
-
-				while (Propagate());
 			}
+
+			while (Propagate()) ;
 		}
 	}
 }
