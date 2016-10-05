@@ -10,6 +10,7 @@ using System;
 using System.Xml;
 using System.Linq;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Collections.Generic;
 
 class SimpleTiledModel : Model
@@ -167,21 +168,21 @@ class SimpleTiledModel : Model
 			int L = action[firstOccurrence[left[0]]][left.Length == 1 ? 0 : int.Parse(left[1])], D = action[L][1];
 			int R = action[firstOccurrence[right[0]]][right.Length == 1 ? 0 : int.Parse(right[1])], U = action[R][1];
 
-			propagator[0][L][R] = true;
-			propagator[0][action[L][6]][action[R][6]] = true;
-			propagator[0][action[R][4]][action[L][4]] = true;
-			propagator[0][action[R][2]][action[L][2]] = true;
+			propagator[0][R][L] = true;
+			propagator[0][action[R][6]][action[L][6]] = true;
+			propagator[0][action[L][4]][action[R][4]] = true;
+			propagator[0][action[L][2]][action[R][2]] = true;
 
-			propagator[1][D][U] = true;
-			propagator[1][action[U][6]][action[D][6]] = true;
-			propagator[1][action[D][4]][action[U][4]] = true;
-			propagator[1][action[U][2]][action[D][2]] = true;
+			propagator[1][U][D] = true;
+			propagator[1][action[D][6]][action[U][6]] = true;
+			propagator[1][action[U][4]][action[D][4]] = true;
+			propagator[1][action[D][2]][action[U][2]] = true;
 		}
 
-		for (int t1 = 0; t1 < T; t1++) for (int t2 = 0; t2 < T; t2++)
+		for (int t2 = 0; t2 < T; t2++) for (int t1 = 0; t1 < T; t1++)
 			{
-				propagator[2][t1][t2] = propagator[0][t2][t1];
-				propagator[3][t1][t2] = propagator[1][t2][t1];
+				propagator[2][t2][t1] = propagator[0][t1][t2];
+				propagator[3][t2][t1] = propagator[1][t1][t2];
 			}
 	}
 
@@ -230,10 +231,15 @@ class SimpleTiledModel : Model
 
 					if (!changes[x1][y1]) continue;
 
-					for (int t2 = 0; t2 < T; t2++) if (wave[x2][y2][t2])
+					bool[] w1 = wave[x1][y1];
+					bool[] w2 = wave[x2][y2];
+
+					for (int t2 = 0; t2 < T; t2++) if (w2[t2])
 						{
+							bool[] prop = propagator[d][t2];
 							b = false;
-							for (int t1 = 0; t1 < T && !b; t1++) if (wave[x1][y1][t1]) b = propagator[d][t1][t2];
+
+							for (int t1 = 0; t1 < T && !b; t1++) if (w1[t1]) b = prop[t1];
 							if (!b)
 							{
 								wave[x2][y2][t2] = false;
@@ -251,6 +257,7 @@ class SimpleTiledModel : Model
 	public override Bitmap Graphics()
 	{
 		Bitmap result = new Bitmap(FMX * tilesize, FMY * tilesize);
+		int[] bitmapData = new int[result.Height * result.Width];
 
 		for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++)
 			{
@@ -260,7 +267,7 @@ class SimpleTiledModel : Model
 
 				for (int yt = 0; yt < tilesize; yt++) for (int xt = 0; xt < tilesize; xt++)
 					{
-						if (black && amount == T) result.SetPixel(x * tilesize + xt, y * tilesize + yt, Color.Black);
+						if (black && amount == T) bitmapData[x * tilesize + xt + (y * tilesize + yt) * FMX * tilesize] = unchecked((int)0xff000000);
 						else
 						{
 							double r = 0, g = 0, b = 0;
@@ -272,10 +279,15 @@ class SimpleTiledModel : Model
 									b += (double)c.B * stationary[t] * lambda;
 								}
 
-							result.SetPixel(x * tilesize + xt, y * tilesize + yt, Color.FromArgb((int)r, (int)g, (int)b));
+							bitmapData[x * tilesize + xt + (y * tilesize + yt) * FMX * tilesize] = 
+								unchecked((int)0xff000000 | ((int)r << 16) | ((int)g << 8) | (int)b);
 						}
 					}
 			}
+
+		var bits = result.LockBits(new Rectangle(0, 0, result.Width, result.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+		System.Runtime.InteropServices.Marshal.Copy(bitmapData, 0, bits.Scan0, bitmapData.Length);
+		result.UnlockBits(bits);
 
 		return result;
 	}

@@ -127,7 +127,7 @@ class OverlappingModel : Model
 
 		patterns = new byte[T][];
 		stationary = new double[T];
-		propagator = new int[T][][][];
+		propagator = new int[2 * N - 1][][][];
 
 		int counter = 0;
 		foreach (int w in ordering)
@@ -158,18 +158,18 @@ class OverlappingModel : Model
 			return true;
 		};
 
-		for (int t = 0; t < T; t++)
+		for (int x = 0; x < 2 * N - 1; x++)
 		{
-			propagator[t] = new int[2 * N - 1][][];
-			for (int x = 0; x < 2 * N - 1; x++)
+			propagator[x] = new int[2 * N - 1][][];
+			for (int y = 0; y < 2 * N - 1; y++)
 			{
-				propagator[t][x] = new int[2 * N - 1][];
-				for (int y = 0; y < 2 * N - 1; y++)
+				propagator[x][y] = new int[T][];
+				for (int t = 0; t < T; t++)
 				{
 					List<int> list = new List<int>();
 					for (int t2 = 0; t2 < T; t2++) if (agrees(patterns[t], patterns[t2], x - N + 1, y - N + 1)) list.Add(t2);
-					propagator[t][x][y] = new int[list.Count];
-					for (int c = 0; c < list.Count; c++) propagator[t][x][y][c] = list[c];
+					propagator[x][y][t] = new int[list.Count];
+					for (int c = 0; c < list.Count; c++) propagator[x][y][t][c] = list[c];
 				}
 			}
 		}
@@ -180,8 +180,7 @@ class OverlappingModel : Model
 	override protected bool Propagate()
 	{
 		bool change = false, b;
-		int x2, y2, sx, sy;
-		bool[] allowed;
+		int x2, y2;
 
 		for (int x1 = 0; x1 < FMX; x1++) for (int y1 = 0; y1 < FMY; y1++) if (changes[x1][y1])
 				{
@@ -189,31 +188,32 @@ class OverlappingModel : Model
 					for (int dx = -N + 1; dx < N; dx++) for (int dy = -N + 1; dy < N; dy++)
 						{
 							x2 = x1 + dx;
+							if (x2 < 0) x2 += FMX;
+							else if (x2 >= FMX) x2 -= FMX;
+
 							y2 = y1 + dy;
+							if (y2 < 0) y2 += FMY;
+							else if (y2 >= FMY) y2 -= FMY;
 
-							sx = x2;
-							if (sx < 0) sx += FMX;
-							else if (sx >= FMX) sx -= FMX;
+							if (!periodic && (x2 + N > FMX || y2 + N > FMY)) continue;
 
-							sy = y2;
-							if (sy < 0) sy += FMY;
-							else if (sy >= FMY) sy -= FMY;
-
-							if (!periodic && (sx + N > FMX || sy + N > FMY)) continue;
-							allowed = wave[sx][sy];
+							bool[] w1 = wave[x1][y1];
+							bool[] w2 = wave[x2][y2];
+							int[][] p = propagator[N - 1 - dx][N - 1 - dy];
 
 							for (int t2 = 0; t2 < T; t2++)
 							{
-								if (!allowed[t2]) continue;
+								if (!w2[t2]) continue;
+
 								b = false;
-								int[] prop = propagator[t2][N - 1 - dx][N - 1 - dy];
-								for (int i1 = 0; i1 < prop.Length && !b; i1++) b = wave[x1][y1][prop[i1]];
+								int[] prop = p[t2];
+								for (int i1 = 0; i1 < prop.Length && !b; i1++) b = w1[prop[i1]];
 
 								if (!b)
 								{
-									changes[sx][sy] = true;
+									changes[x2][y2] = true;
 									change = true;
-									allowed[t2] = false;
+									w2[t2] = false;
 								}
 							}
 						}
