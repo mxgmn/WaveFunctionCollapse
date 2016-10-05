@@ -94,6 +94,8 @@ class OverlappingModel : Model
 		};
 
 		Dictionary<int, int> weights = new Dictionary<int, int>();
+		List<int> ordering = new List<int>();
+
 		for (int y = 0; y < (periodicInput ? SMY : SMY - N + 1); y++) for (int x = 0; x < (periodicInput ? SMX : SMX - N + 1); x++)
 			{
 				byte[][] ps = new byte[8][];
@@ -111,7 +113,11 @@ class OverlappingModel : Model
 				{
 					int ind = index(ps[k]);
 					if (weights.ContainsKey(ind)) weights[ind]++;
-					else weights.Add(ind, 1);
+					else
+					{
+						weights.Add(ind, 1);
+						ordering.Add(ind);
+					}
 				}
 			}
 
@@ -123,7 +129,7 @@ class OverlappingModel : Model
 		propagator = new int[T][][][];
 
 		int counter = 0;
-		foreach (int w in weights.Keys)
+		foreach (int w in ordering)
 		{
 			patterns[counter] = patternFromIndex(w);
 			stationary[counter] = weights[w];
