@@ -224,10 +224,11 @@ class OverlappingModel : Model
 	public override Bitmap Graphics()
 	{
 		Bitmap result = new Bitmap(FMX, FMY);
+		int[] bmpData = new int[result.Height * result.Width];
 
 		for (int y = 0; y < FMY; y++) for (int x = 0; x < FMX; x++)
 			{
-				List<byte> contributors = new List<byte>();
+				int contributorsNb = 0, r = 0, g = 0, b = 0;
 				for (int dy = 0; dy < N; dy++) for (int dx = 0; dx < N; dx++)
 					{
 						int sx = x - dx;
@@ -237,21 +238,22 @@ class OverlappingModel : Model
 						if (sy < 0) sy += FMY;
 
 						if (OnBoundary(sx, sy)) continue;
-						for (int t = 0; t < T; t++) if (wave[sx][sy][t]) contributors.Add(patterns[t][dx + dy * N]);
+						for (int t = 0; t < T; t++) if (wave[sx][sy][t])
+						{
+							contributorsNb++;
+							Color color = colors[patterns[t][dx + dy * N]];
+							r += color.R;
+							g += color.G;
+							b += color.B;
+						}
 					}
 
-				int r = 0, g = 0, b = 0;
-				foreach (byte c in contributors)
-				{
-					Color color = colors[c];
-					r += color.R;
-					g += color.G;
-					b += color.B;
-				}
-
-				float lambda = 1.0f / (float)contributors.Count;
-				result.SetPixel(x, y, Color.FromArgb((int)(lambda * r), (int)(lambda * g), (int)(lambda * b)));
+                bmpData[x + y * FMX] = unchecked((int)0xff000000 | ((r / contributorsNb) << 16) | ((g / contributorsNb) << 8) | b / contributorsNb);
 			}
+
+		var bits = result.LockBits(new Rectangle(0, 0, result.Width, result.Height), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+        System.Runtime.InteropServices.Marshal.Copy(bmpData, 0, bits.Scan0, bmpData.Length);
+        result.UnlockBits(bits);
 
 		return result;
 	}
