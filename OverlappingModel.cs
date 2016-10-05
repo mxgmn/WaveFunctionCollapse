@@ -8,6 +8,7 @@ The software is provided "as is", without warranty of any kind, express or impli
 
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Collections.Generic;
 
 class OverlappingModel : Model
@@ -224,11 +225,11 @@ class OverlappingModel : Model
 	public override Bitmap Graphics()
 	{
 		Bitmap result = new Bitmap(FMX, FMY);
-		int[] bmpData = new int[result.Height * result.Width];
+		int[] bitmapData = new int[result.Height * result.Width];
 
 		for (int y = 0; y < FMY; y++) for (int x = 0; x < FMX; x++)
 			{
-				int contributorsNb = 0, r = 0, g = 0, b = 0;
+				int contributors = 0, r = 0, g = 0, b = 0;
 				for (int dy = 0; dy < N; dy++) for (int dx = 0; dx < N; dx++)
 					{
 						int sx = x - dx;
@@ -240,7 +241,7 @@ class OverlappingModel : Model
 						if (OnBoundary(sx, sy)) continue;
 						for (int t = 0; t < T; t++) if (wave[sx][sy][t])
 						{
-							contributorsNb++;
+							contributors++;
 							Color color = colors[patterns[t][dx + dy * N]];
 							r += color.R;
 							g += color.G;
@@ -248,11 +249,11 @@ class OverlappingModel : Model
 						}
 					}
 
-                bmpData[x + y * FMX] = unchecked((int)0xff000000 | ((r / contributorsNb) << 16) | ((g / contributorsNb) << 8) | b / contributorsNb);
+                bitmapData[x + y * FMX] = unchecked((int)0xff000000 | ((r / contributors) << 16) | ((g / contributors) << 8) | b / contributors);
 			}
 
-		var bits = result.LockBits(new Rectangle(0, 0, result.Width, result.Height), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-        System.Runtime.InteropServices.Marshal.Copy(bmpData, 0, bits.Scan0, bmpData.Length);
+		var bits = result.LockBits(new Rectangle(0, 0, result.Width, result.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+        System.Runtime.InteropServices.Marshal.Copy(bitmapData, 0, bits.Scan0, bitmapData.Length);
         result.UnlockBits(bits);
 
 		return result;
