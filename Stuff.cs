@@ -37,9 +37,9 @@ static class Stuff
 		return 0;
 	}
 
-	public static int Power(int a, int n)
+	public static long Power(int a, int n)
 	{
-		int product = 1;
+		long product = 1;
 		for (int i = 0; i < n; i++) product *= a;
 		return product;
 	}
