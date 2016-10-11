@@ -42,7 +42,11 @@ static class Program
 					if (finished)
 					{
 						Console.WriteLine("DONE");
+
 						model.Graphics().Save($"{counter} {name} {i}.png");
+						if (model is SimpleTiledModel && xnode.Get("textOutput", false))
+							System.IO.File.WriteAllText($"{counter} {name} {i}.txt", (model as SimpleTiledModel).TextOutput());
+
 						break;
 					}
 					else Console.WriteLine("CONTRADICTION");

@@ -42,7 +42,12 @@
 	<simpletiled name="Circles" subset="Large" width="24" height="24"/>
 	<simpletiled name="Circles" subset="More" width="24" height="24"/>
 	<simpletiled name="Circles" subset="Without" width="24" height="24"/>
+	
+	<overlapping name="3Bricks" N="3" symmetry="1" periodic="True"/>
 	<overlapping name="Village" N="3" symmetry="2" limit="50" periodic="True"/>
 	<simpletiled name="Summer" width="15" height="15" periodic="False" limit="15"/>
-	<overlapping name="3Bricks" N="3" symmetry="1" periodic="True"/>
+
+	<simpletiled name="Knots" subset="Standard" width="5" height="5" periodic="True" textOutput="True"/>
+	<simpletiled name="Summer" width="6" height="6" periodic="False" textOutput="True"/>
+	<simpletiled name="Circuit" subset="Turnless" width="7" height="7" periodic="True" textOutput="True"/>
 </samples>

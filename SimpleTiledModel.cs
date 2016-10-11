@@ -18,6 +18,7 @@ class SimpleTiledModel : Model
 	bool[][][] propagator;
 
 	List<Color[]> tiles;
+	List<string> tilenames;
 	int tilesize;
 	bool black;
 
@@ -54,6 +55,7 @@ class SimpleTiledModel : Model
 		Func<Color[], Color[]> rotate = array => tile((x, y) => array[tilesize - 1 - y + x * tilesize]);
 
 		tiles = new List<Color[]>();
+		tilenames = new List<string>();
 		var tempStationary = new List<double>();
 
 		List<int[]> action = new List<int[]>();
@@ -127,13 +129,20 @@ class SimpleTiledModel : Model
 				{
 					Bitmap bitmap = new Bitmap($"samples/{name}/{tilename} {t}.png");
 					tiles.Add(tile((x, y) => bitmap.GetPixel(x, y)));
+					tilenames.Add($"{tilename} {t}");
 				}
 			}
 			else
 			{
 				Bitmap bitmap = new Bitmap($"samples/{name}/{tilename}.png");
 				tiles.Add(tile((x, y) => bitmap.GetPixel(x, y)));
-				for (int t = 1; t < cardinality; t++) tiles.Add(rotate(tiles[T + t - 1]));
+				tilenames.Add($"{tilename} 0");
+
+				for (int t = 1; t < cardinality; t++)
+				{
+					tiles.Add(rotate(tiles[T + t - 1]));
+					tilenames.Add($"{tilename} {t}");
+				}
 			}
 
 			for (int t = 0; t < cardinality; t++) tempStationary.Add(xtile.Get("weight", 1.0f));
@@ -290,5 +299,24 @@ class SimpleTiledModel : Model
 		result.UnlockBits(bits);
 
 		return result;
+	}
+
+	public string TextOutput()
+	{
+		var result = new System.Text.StringBuilder();
+
+		for (int y = 0; y < FMY; y++)
+		{
+			for (int x = 0; x < FMX; x++)
+				for (int t = 0; t < T; t++) if (wave[x][y][t])
+					{
+						result.Append($"{tilenames[t]}, ");
+						break;
+					}
+
+			result.Append(Environment.NewLine);
+		}
+
+		return result.ToString();
 	}
 }
