@@ -103,16 +103,20 @@ Note that the "Simple Knot" and "Trick Knot" samples have 3 colors, not 2.
 One of the dimensions can be time. In particular, d-dimensional WFC captures the behaviour of any (d-1)-dimensional cellular automata.
 
 ## References
-The main inspirations for this work are:
+This project builds upon Paul Merrell's work on model synthesis, in particular discrete model synthesis chapter of [his dissertation](http://graphics.stanford.edu/~pmerrell/thesis.pdf). Paul propagates adjacency constraints in what we call a simple tiled model with a heuristic that tries to complete propagation in a small moving region.
 
-1. Discrete model synthesis chapter of [Paul Merrell's dissertation](http://graphics.stanford.edu/~pmerrell/thesis.pdf). Paul propagates adjacency constraints in what we call a simple tiled model with a heuristic that tries to complete propagation in a small moving region.
-2. Declarative texture synthesis chapter of [Paul F. Harrison's dissertation](http://logarithmic.net/pfh-files/thesis/dissertation.pdf). Paul defines adjacency data of tiles by labeling their borders and uses backtracking search to fill the tilemap.
+It was also heavily influenced by declarative texture synthesis chapter of [Paul F. Harrison's dissertation](http://logarithmic.net/pfh-files/thesis/dissertation.pdf). Paul defines adjacency data of tiles by labeling their borders and uses backtracking search to fill the tilemap.
 
-## Ports to other languages
+## Ports, notable forks and other projects based on this work
 
 * Emil Ernerfeldt made a [C++ port](https://github.com/emilk/wfc).
 * [Max Aller](https://github.com/nanodeath) is making a Kotlin (JVM) library, [Kollapse](https://gitlab.com/nanodeath/kollapse).
-* [Kevin Chapelier](https://github.com/kchapelier) is making a [JavaScript port](http://www.kchapelier.com/wfc-example/overlapping-model.html).
+* [Kevin Chapelier](https://github.com/kchapelier) made a [JavaScript port](http://www.kchapelier.com/wfc-example/overlapping-model.html).
+* Oskar Stalberg programmed a 3d tiled model ([1](https://twitter.com/OskSta/status/787319655648100352)), 2d tiled model for irregular grids on a sphere ([1](https://twitter.com/OskSta/status/784847588893814785), [2](https://twitter.com/OskSta/status/784847933686575104), [3](https://twitter.com/OskSta/status/784848286272327680)) and is building beautiful 3d tilesets for them.
+* [Martin O'Leary](https://github.com/mewo2) applied WFC algorithm for poetry generation: [1](https://twitter.com/mewo2/status/789167437518217216), [2](https://twitter.com/mewo2/status/789177702620114945), [3](https://twitter.com/mewo2/status/789187174683987968), [4](https://twitter.com/mewo2/status/789897712372183041).
+* [Nick Nenov](https://github.com/NNNenov) made a [3d voxel tileset](https://twitter.com/NNNenov/status/789903180226301953) based on my Castle tileset. He is using text output option in the tiled model to reconstruct 3d models in Cinema 4D.
+* Sean Leffler implemented the [overlapping model in Rust](https://github.com/sdleffler/collapse).
+* rid5x is making an [OCaml version of WFC](https://twitter.com/rid5x/status/782442620459114496).
 
 ## How to build
 WFC is a console application that depends only on the standard library. Build instructions from the community for various platforms can be found in the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
