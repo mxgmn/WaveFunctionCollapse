@@ -112,12 +112,13 @@ It was also heavily influenced by declarative texture synthesis chapter of [Paul
 * Emil Ernerfeldt made a [C++ port](https://github.com/emilk/wfc).
 * [Max Aller](https://github.com/nanodeath) is making a Kotlin (JVM) library, [Kollapse](https://gitlab.com/nanodeath/kollapse).
 * [Kevin Chapelier](https://github.com/kchapelier) made a [JavaScript port](http://www.kchapelier.com/wfc-example/overlapping-model.html).
-* Oskar Stalberg programmed a 3d tiled model, a 2d tiled model for irregular grids on a sphere and is building beautiful 3d tilesets for them: [1](https://twitter.com/OskSta/status/787319655648100352), [2](https://twitter.com/OskSta/status/784847588893814785), [3](https://twitter.com/OskSta/status/784847933686575104), [4](https://twitter.com/OskSta/status/784848286272327680).
+* Oskar Stalberg programmed a 3d tiled model, a 2d tiled model for irregular grids on a sphere and is building beautiful 3d tilesets for them: [1](https://twitter.com/OskSta/status/787319655648100352), [2](https://twitter.com/OskSta/status/784847588893814785), [3](https://twitter.com/OskSta/status/784847933686575104), [4](https://twitter.com/OskSta/status/784848286272327680), [5](https://twitter.com/OskSta/status/793545297376972801), [6](https://twitter.com/OskSta/status/793806535898136576).
 * [Joseph Parker](https://github.com/selfsame) adapted [WFC to Unity](https://selfsame.itch.io/unitywfc).
 * [Martin O'Leary](https://github.com/mewo2) applied a WFC-like algorithm to poetry generation: [1](https://twitter.com/mewo2/status/789167437518217216), [2](https://twitter.com/mewo2/status/789177702620114945), [3](https://twitter.com/mewo2/status/789187174683987968), [4](https://twitter.com/mewo2/status/789897712372183041).
-* [Nick Nenov](https://github.com/NNNenov) made a [3d voxel tileset](https://twitter.com/NNNenov/status/789903180226301953) based on my Castle tileset. He is using text output option in the tiled model to reconstruct 3d models in Cinema 4D.
+* [Nick Nenov](https://github.com/NNNenov) made a [3d voxel tileset](https://twitter.com/NNNenov/status/789903180226301953) based on my Castle tileset. Nick uses text output option in the tiled model to reconstruct 3d models in Cinema 4D.
 * Sean Leffler implemented the [overlapping model in Rust](https://github.com/sdleffler/collapse).
 * rid5x is making an [OCaml version of WFC](https://twitter.com/rid5x/status/782442620459114496).
+* I published a very basic [3d tiled model](https://bitbucket.org/mxgmn/basic3dwfc/overview) so people could make their own 3d tilesets without waiting for the full 3d repository.
 
 ## How to build
 WFC is a console application that depends only on the standard library. Build instructions from the community for various platforms can be found in the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
