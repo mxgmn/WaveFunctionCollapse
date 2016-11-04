@@ -22,7 +22,7 @@ class SimpleTiledModel : Model
 	int tilesize;
 	bool black;
 
-	public SimpleTiledModel(string name, string subsetName, int width, int height, bool periodic, bool black)
+	public SimpleTiledModel(string inputPath, string subsetName, int width, int height, bool periodic, bool black)
 	{
 		FMX = width;
 		FMY = height;
@@ -30,7 +30,7 @@ class SimpleTiledModel : Model
 		this.black = black;
 
 		var xdoc = new XmlDocument();
-		xdoc.Load($"samples/{name}/data.xml");
+		xdoc.Load($"{inputPath}/data.xml");
 		XmlNode xnode = xdoc.FirstChild;
 		tilesize = xnode.Get("size", 16);
 		bool unique = xnode.Get("unique", false);
@@ -127,14 +127,14 @@ class SimpleTiledModel : Model
 			{
 				for (int t = 0; t < cardinality; t++)
 				{
-					Bitmap bitmap = new Bitmap($"samples/{name}/{tilename} {t}.png");
+					Bitmap bitmap = new Bitmap($"{inputPath}/{tilename} {t}.png");
 					tiles.Add(tile((x, y) => bitmap.GetPixel(x, y)));
 					tilenames.Add($"{tilename} {t}");
 				}
 			}
 			else
 			{
-				Bitmap bitmap = new Bitmap($"samples/{name}/{tilename}.png");
+				Bitmap bitmap = new Bitmap($"{inputPath}/{tilename}.png");
 				tiles.Add(tile((x, y) => bitmap.GetPixel(x, y)));
 				tilenames.Add($"{tilename} 0");
 
