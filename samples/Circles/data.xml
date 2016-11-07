@@ -96,17 +96,17 @@
 		<neighbor left="w" right="b_quarter"/>
 	</neighbors>
 	<subsets>
-		<subset name="Large">
+		<subset name="Large Circles">
 			<tile name="b_quarter"/>
 			<tile name="w_quarter"/>
 		</subset>
-		<subset name="More">
+		<subset name="Large Circles and Solid">
 			<tile name="b_quarter"/>
 			<tile name="w_quarter"/>
 			<tile name="b"/>
 			<tile name="w"/>
 		</subset>
-		<subset name="Without">
+		<subset name="No Solid">
 			<tile name="b_half" symmetry="T"/>
 			<tile name="b_i" symmetry="I"/>
 			<tile name="b_quarter" symmetry="L"/>

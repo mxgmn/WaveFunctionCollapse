@@ -20,11 +20,10 @@ class OverlappingModel : Model
 	List<Color> colors;
 	int ground;
 
-	public OverlappingModel(string name, int N, int width, int height, bool periodicInput, bool periodicOutput, int symmetry, int ground)
+	public OverlappingModel(string name, int N, int width, int height, bool periodicInput, bool periodicOutput, int symmetry, int ground) 
+		: base(width, height)
 	{
 		this.N = N;
-		FMX = width;
-		FMY = height;
 		periodic = periodicOutput;
 
 		var bitmap = new Bitmap($"samples/{name}.png");
@@ -137,19 +136,7 @@ class OverlappingModel : Model
 			counter++;
 		}
 
-		wave = new bool[FMX][][];
-		changes = new bool[FMX][];
-		for (int x = 0; x < FMX; x++)
-		{
-			wave[x] = new bool[FMY][];
-			changes[x] = new bool[FMY];
-			for (int y = 0; y < FMY; y++)
-			{
-				wave[x][y] = new bool[T];
-				changes[x][y] = false;
-				for (int t = 0; t < T; t++) wave[x][y][t] = true;
-			}
-		}
+		for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++) wave[x][y] = new bool[T];
 
 		Func<byte[], byte[], int, int, bool> agrees = (p1, p2, dx, dy) =>
 		{
@@ -227,30 +214,46 @@ class OverlappingModel : Model
 		Bitmap result = new Bitmap(FMX, FMY);
 		int[] bitmapData = new int[result.Height * result.Width];
 
-		for (int y = 0; y < FMY; y++) for (int x = 0; x < FMX; x++)
+		if (observed != null)
+		{
+			for (int y = 0; y < FMY; y++)
 			{
-				int contributors = 0, r = 0, g = 0, b = 0;
-				for (int dy = 0; dy < N; dy++) for (int dx = 0; dx < N; dx++)
-					{
-						int sx = x - dx;
-						if (sx < 0) sx += FMX;
-
-						int sy = y - dy;
-						if (sy < 0) sy += FMY;
-
-						if (OnBoundary(sx, sy)) continue;
-						for (int t = 0; t < T; t++) if (wave[sx][sy][t])
-						{
-							contributors++;
-							Color color = colors[patterns[t][dx + dy * N]];
-							r += color.R;
-							g += color.G;
-							b += color.B;
-						}
-					}
-
-                bitmapData[x + y * FMX] = unchecked((int)0xff000000 | ((r / contributors) << 16) | ((g / contributors) << 8) | b / contributors);
+				int dy = y < FMY - N + 1 ? 0 : N - 1;
+				for (int x = 0; x < FMX; x++)
+				{
+					int dx = x < FMX - N + 1 ? 0 : N - 1;
+					Color c = colors[patterns[observed[x - dx][y - dy]][dx + dy * N]];
+					bitmapData[x + y * FMX] = unchecked((int)0xff000000 | (c.R << 16) | (c.G << 8) | c.B);
+				}
 			}
+		}
+		else
+		{
+			for (int y = 0; y < FMY; y++) for (int x = 0; x < FMX; x++)
+				{
+					int contributors = 0, r = 0, g = 0, b = 0;
+					for (int dy = 0; dy < N; dy++) for (int dx = 0; dx < N; dx++)
+						{
+							int sx = x - dx;
+							if (sx < 0) sx += FMX;
+
+							int sy = y - dy;
+							if (sy < 0) sy += FMY;
+
+							if (OnBoundary(sx, sy)) continue;
+							for (int t = 0; t < T; t++) if (wave[sx][sy][t])
+								{
+									contributors++;
+									Color color = colors[patterns[t][dx + dy * N]];
+									r += color.R;
+									g += color.G;
+									b += color.B;
+								}
+						}
+
+					bitmapData[x + y * FMX] = unchecked((int)0xff000000 | ((r / contributors) << 16) | ((g / contributors) << 8) | b / contributors);
+				}
+		}
 
 		var bits = result.LockBits(new Rectangle(0, 0, result.Width, result.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
         System.Runtime.InteropServices.Marshal.Copy(bitmapData, 0, bits.Scan0, bitmapData.Length);

@@ -22,10 +22,8 @@ class SimpleTiledModel : Model
 	int tilesize;
 	bool black;
 
-	public SimpleTiledModel(string name, string subsetName, int width, int height, bool periodic, bool black)
+	public SimpleTiledModel(string name, string subsetName, int width, int height, bool periodic, bool black) : base(width, height)
 	{
-		FMX = width;
-		FMY = height;
 		this.periodic = periodic;
 		this.black = black;
 
@@ -158,14 +156,7 @@ class SimpleTiledModel : Model
 			for (int t = 0; t < T; t++) propagator[d][t] = new bool[T];
 		}
 
-		wave = new bool[FMX][][];
-		changes = new bool[FMX][];
-		for (int x = 0; x < FMX; x++)
-		{
-			wave[x] = new bool[FMY][];
-			changes[x] = new bool[FMY];
-			for (int y = 0; y < FMY; y++) wave[x][y] = new bool[T];
-		}
+		for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++) wave[x][y] = new bool[T];
 
 		foreach (XmlNode xneighbor in xnode.NextSibling.ChildNodes)
 		{
@@ -251,7 +242,7 @@ class SimpleTiledModel : Model
 							for (int t1 = 0; t1 < T && !b; t1++) if (w1[t1]) b = prop[t1];
 							if (!b)
 							{
-								wave[x2][y2][t2] = false;
+								w2[t2] = false;
 								changes[x2][y2] = true;
 								change = true;
 							}
@@ -268,31 +259,47 @@ class SimpleTiledModel : Model
 		Bitmap result = new Bitmap(FMX * tilesize, FMY * tilesize);
 		int[] bitmapData = new int[result.Height * result.Width];
 
-		for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++)
-			{
-				bool[] a = wave[x][y];
-				int amount = (from b in a where b select 1).Sum();
-				double lambda = 1.0 / (from t in Enumerable.Range(0, T) where a[t] select stationary[t]).Sum();
-
-				for (int yt = 0; yt < tilesize; yt++) for (int xt = 0; xt < tilesize; xt++)
+		if (observed != null)
+		{
+			for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++)
 					{
-						if (black && amount == T) bitmapData[x * tilesize + xt + (y * tilesize + yt) * FMX * tilesize] = unchecked((int)0xff000000);
-						else
-						{
-							double r = 0, g = 0, b = 0;
-							for (int t = 0; t < T; t++) if (wave[x][y][t])
-								{
-									Color c = tiles[t][xt + yt * tilesize];
-									r += (double)c.R * stationary[t] * lambda;
-									g += (double)c.G * stationary[t] * lambda;
-									b += (double)c.B * stationary[t] * lambda;
-								}
-
-							bitmapData[x * tilesize + xt + (y * tilesize + yt) * FMX * tilesize] = 
-								unchecked((int)0xff000000 | ((int)r << 16) | ((int)g << 8) | (int)b);
-						}
+						Color[] tile = tiles[observed[x][y]];
+						for (int yt = 0; yt < tilesize; yt++) for (int xt = 0; xt < tilesize; xt++)
+							{
+								Color c = tile[xt + yt * tilesize];
+								bitmapData[x * tilesize + xt + (y * tilesize + yt) * FMX * tilesize] =
+									unchecked((int)0xff000000 | (c.R << 16) | (c.G << 8) | c.B);
+							}
 					}
-			}
+		}
+		else
+		{
+			for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++)
+				{
+					bool[] a = wave[x][y];
+					int amount = (from b in a where b select 1).Sum();
+					double lambda = 1.0 / (from t in Enumerable.Range(0, T) where a[t] select stationary[t]).Sum();
+
+					for (int yt = 0; yt < tilesize; yt++) for (int xt = 0; xt < tilesize; xt++)
+						{
+							if (black && amount == T) bitmapData[x * tilesize + xt + (y * tilesize + yt) * FMX * tilesize] = unchecked((int)0xff000000);
+							else
+							{
+								double r = 0, g = 0, b = 0;
+								for (int t = 0; t < T; t++) if (wave[x][y][t])
+									{
+										Color c = tiles[t][xt + yt * tilesize];
+										r += (double)c.R * stationary[t] * lambda;
+										g += (double)c.G * stationary[t] * lambda;
+										b += (double)c.B * stationary[t] * lambda;
+									}
+
+								bitmapData[x * tilesize + xt + (y * tilesize + yt) * FMX * tilesize] =
+									unchecked((int)0xff000000 | ((int)r << 16) | ((int)g << 8) | (int)b);
+							}
+						}
+				}
+		}
 
 		var bits = result.LockBits(new Rectangle(0, 0, result.Width, result.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 		System.Runtime.InteropServices.Marshal.Copy(bitmapData, 0, bits.Scan0, bitmapData.Length);

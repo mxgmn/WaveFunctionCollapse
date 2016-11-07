@@ -163,19 +163,6 @@
 		<neighbor left="wire 1" right="skew"/>
 	</neighbors>
 	<subsets>
-		<subset name="Debug">
-			<tile name="substrate"/>
-			<tile name="turn"/>
-		</subset>
-		<subset name="Chips">
-			<tile name="component"/>
-			<tile name="substrate"/>
-			<tile name="turn"/>
-			<tile name="connection"/>
-			<tile name="corner"/>
-			<tile name="track"/>
-			<tile name="t"/>
-		</subset>
 		<subset name="Turnless">
 			<tile name="bridge"/>
 			<tile name="component"/>

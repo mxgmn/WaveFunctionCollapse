@@ -50,7 +50,7 @@
 			<tile name="empty"/>
 			<tile name="line"/>
 		</subset>
-		<subset name="Something">
+		<subset name="Dense">
 			<tile name="corner"/>
 			<tile name="cross"/>
 			<tile name="line"/>
@@ -64,18 +64,18 @@
 			<tile name="t"/>
 			<tile name="empty"/>
 		</subset>
-		<subset name="Only T">
+		<subset name="T">
 			<tile name="t"/>
 		</subset>
-		<subset name="Urban">
+		<subset name="CL">
 			<tile name="corner"/>
 			<tile name="line"/>
 		</subset>
-		<subset name="Suburban">
+		<subset name="CE">
 			<tile name="corner"/>
 			<tile name="empty"/>
 		</subset>
-		<subset name="Manhattan">
+		<subset name="C">
 			<tile name="corner"/>
 		</subset>
 		<subset name="Fabric">

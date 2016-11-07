@@ -28,20 +28,20 @@
 	<simpletiled name="Castle" width="20" height="20"/>
 	<simpletiled name="Circuit" subset="Turnless" width="34" height="34" periodic="True" screenshots="3"/>
 	<simpletiled name="Knots" subset="Standard" width="24" height="24" periodic="True"/>
-	<simpletiled name="Knots" subset="Something" width="24" height="24" periodic="True"/>	
+	<simpletiled name="Knots" subset="Dense" width="24" height="24" periodic="True"/>	
 	<simpletiled name="Knots" subset="Crossless" width="24" height="24"/>
 	<simpletiled name="Knots" subset="TE" width="24" height="24"/>
-	<simpletiled name="Knots" subset="Only T" width="24" height="24"/>
-	<simpletiled name="Knots" subset="Urban" width="24" height="24"/>	
-	<simpletiled name="Knots" subset="Suburban" width="24" height="24" periodic="True"/>
-	<simpletiled name="Knots" subset="Manhattan" width="24" height="24" periodic="True"/>
+	<simpletiled name="Knots" subset="T" width="24" height="24"/>
+	<simpletiled name="Knots" subset="CL" width="24" height="24"/>	
+	<simpletiled name="Knots" subset="CE" width="24" height="24" periodic="True"/>
+	<simpletiled name="Knots" subset="C" width="24" height="24" periodic="True"/>
 	<simpletiled name="Knots" subset="Fabric" width="24" height="24" periodic="True"/>
 	<simpletiled name="Knots" subset="Dense Fabric" width="24" height="24" periodic="True"/>
 	<simpletiled name="Rooms" width="30" height="30"/>
 	<simpletiled name="Circles" width="24" height="24"/>
-	<simpletiled name="Circles" subset="Large" width="24" height="24"/>
-	<simpletiled name="Circles" subset="More" width="24" height="24"/>
-	<simpletiled name="Circles" subset="Without" width="24" height="24"/>
+	<simpletiled name="Circles" subset="Large Circles" width="24" height="24"/>
+	<simpletiled name="Circles" subset="Large Circles and Solid" width="24" height="24"/>
+	<simpletiled name="Circles" subset="No Solid" width="24" height="24"/>
 	
 	<overlapping name="3Bricks" N="3" symmetry="1" periodic="True"/>
 	<overlapping name="Village" N="3" symmetry="2" limit="50" periodic="True"/>
