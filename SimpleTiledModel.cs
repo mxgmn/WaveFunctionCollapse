@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 class SimpleTiledModel : Model
 {
-	bool[][][] propagator;
+	int[][][] propagator;
 
 	List<Color[]> tiles;
 	List<string> tilenames;
@@ -149,11 +149,13 @@ class SimpleTiledModel : Model
 		T = action.Count;
 		stationary = tempStationary.ToArray();
 
-		propagator = new bool[4][][];
+		var tempPropagator = new bool[4][][];
+		propagator = new int[4][][];
 		for (int d = 0; d < 4; d++)
 		{
-			propagator[d] = new bool[T][];
-			for (int t = 0; t < T; t++) propagator[d][t] = new bool[T];
+			tempPropagator[d] = new bool[T][];
+			propagator[d] = new int[T][];
+			for (int t = 0; t < T; t++) tempPropagator[d][t] = new bool[T];
 		}
 
 		for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++) wave[x][y] = new bool[T];
@@ -168,21 +170,40 @@ class SimpleTiledModel : Model
 			int L = action[firstOccurrence[left[0]]][left.Length == 1 ? 0 : int.Parse(left[1])], D = action[L][1];
 			int R = action[firstOccurrence[right[0]]][right.Length == 1 ? 0 : int.Parse(right[1])], U = action[R][1];
 
-			propagator[0][R][L] = true;
-			propagator[0][action[R][6]][action[L][6]] = true;
-			propagator[0][action[L][4]][action[R][4]] = true;
-			propagator[0][action[L][2]][action[R][2]] = true;
+			tempPropagator[0][R][L] = true;
+			tempPropagator[0][action[R][6]][action[L][6]] = true;
+			tempPropagator[0][action[L][4]][action[R][4]] = true;
+			tempPropagator[0][action[L][2]][action[R][2]] = true;
 
-			propagator[1][U][D] = true;
-			propagator[1][action[D][6]][action[U][6]] = true;
-			propagator[1][action[U][4]][action[D][4]] = true;
-			propagator[1][action[D][2]][action[U][2]] = true;
+			tempPropagator[1][U][D] = true;
+			tempPropagator[1][action[D][6]][action[U][6]] = true;
+			tempPropagator[1][action[U][4]][action[D][4]] = true;
+			tempPropagator[1][action[D][2]][action[U][2]] = true;
 		}
 
 		for (int t2 = 0; t2 < T; t2++) for (int t1 = 0; t1 < T; t1++)
 			{
-				propagator[2][t2][t1] = propagator[0][t1][t2];
-				propagator[3][t2][t1] = propagator[1][t1][t2];
+				tempPropagator[2][t2][t1] = tempPropagator[0][t1][t2];
+				tempPropagator[3][t2][t1] = tempPropagator[1][t1][t2];
+			}
+
+		List<int>[][] sparsePropagator = new List<int>[4][];
+		for (int d = 0; d < 4; d++)
+		{
+			sparsePropagator[d] = new List<int>[T];
+			for (int t = 0; t < T; t++) sparsePropagator[d][t] = new List<int>();
+		}
+
+		for (int d = 0; d < 4; d++) for (int t1 = 0; t1 < T; t1++)
+			{
+				List<int> sp = sparsePropagator[d][t1];
+				bool[] tp = tempPropagator[d][t1];
+
+				for (int t2 = 0; t2 < T; t2++) if (tp[t2]) sp.Add(t2);
+
+				int ST = sp.Count;
+				propagator[d][t1] = new int[ST];
+				for (int st = 0; st < ST; st++) propagator[d][t1][st] = sp[st];
 			}
 	}
 
@@ -234,19 +255,21 @@ class SimpleTiledModel : Model
 					bool[] w1 = wave[x1][y1];
 					bool[] w2 = wave[x2][y2];
 
-					for (int t2 = 0; t2 < T; t2++) if (w2[t2])
-						{
-							bool[] prop = propagator[d][t2];
-							b = false;
+					for (int t2 = 0; t2 < T; t2++)
+					{
+						if (!w2[t2]) continue;
 
-							for (int t1 = 0; t1 < T && !b; t1++) if (w1[t1]) b = prop[t1];
-							if (!b)
-							{
-								w2[t2] = false;
-								changes[x2][y2] = true;
-								change = true;
-							}
+						b = false;
+						int[] prop = propagator[d][t2];
+						for (int i1 = 0; i1 < prop.Length && !b; i1++) b = w1[prop[i1]];
+
+						if (!b)
+						{
+							changes[x2][y2] = true;
+							change = true;
+							w2[t2] = false;
 						}
+					}						
 				}			
 
 		return change;
