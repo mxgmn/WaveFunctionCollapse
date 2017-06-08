@@ -125,6 +125,7 @@ It was also heavily influenced by declarative texture synthesis chapter of [Paul
 * Arvi Teikari programmed a [texture synthesis algorithm with the entropy heuristic](http://www.hempuli.com/blogblog/archives/1598) in Lua.
 * Isaac Karth made a [Python port](https://github.com/ikarth/wfc_python) of the overlapping model.
 * Oskar Stalberg made an [interactive version](http://oskarstalberg.com/game/wave/wave.html) of the tiled model that runs in the browser.
+* [Matt Rix](https://github.com/MattRix) implemented a 3d tiled model ([1](https://twitter.com/MattRix/status/869403586664570880), [2](https://twitter.com/MattRix/status/870999185167962113), [3](https://twitter.com/MattRix/status/871054734018453505), [4](https://twitter.com/MattRix/status/871056805761359872)) and made a 3-dimensional tiled model where one of the dimensions is time ([1](https://twitter.com/MattRix/status/872674537799913472), [2](https://twitter.com/MattRix/status/872648369625325568), [3](https://twitter.com/MattRix/status/872645716660891648), [4](https://twitter.com/MattRix/status/872641331956518914)). 
 
 ## How to build
 WFC is a console application that depends only on the standard library. Build instructions from the community for various platforms can be found in the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
