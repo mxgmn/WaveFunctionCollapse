@@ -10,13 +10,16 @@ using System;
 
 abstract class Model
 {
-	protected bool[][][] wave;
-	protected bool[][] changes;
+	protected bool[][] wave;
 	protected double[] stationary;
-	protected int[][] observed;
+	protected int[] observed;
+
+	protected bool[] changes;
+	protected int[] stack;
+	protected int stacksize;
 
 	protected Random random;
-	protected int FMX, FMY, T, limit;
+	protected int FMX, FMY, T;
 	protected bool periodic;
 
 	double[] logProb;
@@ -27,80 +30,68 @@ abstract class Model
 		FMX = width;
 		FMY = height;
 
-		wave = new bool[FMX][][];
-		changes = new bool[FMX][];
-		for (int x = 0; x < FMX; x++)
-		{
-			wave[x] = new bool[FMY][];
-			changes[x] = new bool[FMY];
-		}
+		wave = new bool[FMX * FMY][];
+		changes = new bool[FMX * FMY];
+
+		stack = new int[FMX * FMY];
+		stacksize = 0;
 	}
 
-	protected abstract bool Propagate();
+	protected abstract void Propagate();
 
 	bool? Observe()
 	{
-		double min = 1E+3, sum, mainSum, logSum, noise, entropy;
-		int argminx = -1, argminy = -1, amount;
-		bool[] w;
+		double min = 1E+3;
+		int argmin = -1;
 
-		for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++)
-			{
-				if (OnBoundary(x, y)) continue;
-
-				w = wave[x][y];
-				amount = 0;
-				sum = 0;
-
-				for (int t = 0; t < T; t++) if (w[t])
-					{
-						amount += 1;
-						sum += stationary[t];
-					}
-
-				if (sum == 0) return false;
-
-				noise = 1E-6 * random.NextDouble();
-
-				if (amount == 1) entropy = 0;
-				else if (amount == T) entropy = logT;
-				else
-				{
-					mainSum = 0;
-					logSum = Math.Log(sum);
-					for (int t = 0; t < T; t++) if (w[t]) mainSum += stationary[t] * logProb[t];
-					entropy = logSum - mainSum / sum;
-				}
-
-				if (entropy > 0 && entropy + noise < min)
-				{
-					min = entropy + noise;
-					argminx = x;
-					argminy = y;
-				}
-			}
-
-		if (argminx == -1 && argminy == -1)
+		for (int i = 0; i < wave.Length; i++)
 		{
-			observed = new int[FMX][];
-			for (int x = 0; x < FMX; x++)
+			if (OnBoundary(i)) continue;
+
+			bool[] w = wave[i];
+			int amount = 0;
+			double sum = 0;
+
+			for (int t = 0; t < T; t++) if (w[t])
+				{
+					amount += 1;
+					sum += stationary[t];
+				}
+
+			if (sum == 0) return false;
+
+			double noise = 1E-6 * random.NextDouble();
+
+			double entropy;
+			if (amount == 1) entropy = 0;
+			else if (amount == T) entropy = logT;
+			else
 			{
-				observed[x] = new int[FMY];
-				for (int y = 0; y < FMY; y++) for (int t = 0; t < T; t++) if (wave[x][y][t])
-						{
-							observed[x][y] = t;
-							break;
-						}
+				double mainSum = 0;
+				double logSum = Math.Log(sum);
+				for (int t = 0; t < T; t++) if (w[t]) mainSum += stationary[t] * logProb[t];
+				entropy = logSum - mainSum / sum;
 			}
-							
+
+			if (entropy > 0 && entropy + noise < min)
+			{
+				min = entropy + noise;
+				argmin = i;
+			}
+		}
+
+		if (argmin == -1)
+		{
+			observed = new int[FMX * FMY];
+			for (int i = 0; i < wave.Length; i++) for (int t = 0; t < T; t++) if (wave[i][t]) { observed[i] = t; break; }
 			return true;
 		}
 
 		double[] distribution = new double[T];
-		for (int t = 0; t < T; t++) distribution[t] = wave[argminx][argminy][t] ? stationary[t] : 0;
+		for (int t = 0; t < T; t++) distribution[t] = wave[argmin][t] ? stationary[t] : 0;
 		int r = distribution.Random(random.NextDouble());
-		for (int t = 0; t < T; t++) wave[argminx][argminy][t] = t == r;
-		changes[argminx][argminy] = true;
+		for (int t = 0; t < T; t++) wave[argmin][t] = t == r;
+		Change(argmin);
 
 		return null;
 	}
@@ -112,28 +103,36 @@ abstract class Model
 		for (int t = 0; t < T; t++) logProb[t] = Math.Log(stationary[t]);
 
 		Clear();
-
 		random = new Random(seed);
 
 		for (int l = 0; l < limit || limit == 0; l++)
 		{
 			bool? result = Observe();
 			if (result != null) return (bool)result;
-			while (Propagate());
+			Propagate();
 		}
 
 		return true;
 	}
 
-	protected virtual void Clear()
+	protected void Change(int i)
 	{
-		for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++)
-			{
-				for (int t = 0; t < T; t++) wave[x][y][t] = true;
-				changes[x][y] = false;
-			}
+		if (changes[i]) return;
+
+		stack[stacksize] = i;
+		stacksize++;
+		changes[i] = true;
 	}
 
-	protected abstract bool OnBoundary(int x, int y);
+	protected virtual void Clear()
+	{
+		for (int i = 0; i < wave.Length; i++)
+		{
+			for (int t = 0; t < T; t++) wave[i][t] = true;
+			changes[i] = false;
+		}
+	}
+
+	protected abstract bool OnBoundary(int i);
 	public abstract System.Drawing.Bitmap Graphics();
 }

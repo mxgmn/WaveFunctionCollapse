@@ -6,9 +6,10 @@ The above copyright notice and this permission notice shall be included in all c
 The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
 */
 
-using System.Xml;
 using System.Linq;
+using System.Xml.Linq;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 static class Stuff
 {
@@ -18,16 +19,16 @@ static class Stuff
 
 		if (sum == 0)
 		{
-			for (int j = 0; j < a.Count(); j++) a[j] = 1;
+			for (int j = 0; j < a.Length; j++) a[j] = 1;
 			sum = a.Sum();
 		}
 
-		for (int j = 0; j < a.Count(); j++) a[j] /= sum;
+		for (int j = 0; j < a.Length; j++) a[j] /= sum;
 
 		int i = 0;
 		double x = 0;
 
-		while (i < a.Count())
+		while (i < a.Length)
 		{
 			x += a[i];
 			if (r <= x) return i;
@@ -44,10 +45,11 @@ static class Stuff
 		return product;
 	}
 
-	public static T Get<T>(this XmlNode node, string attribute, T defaultT = default(T))
+	public static T Get<T>(this XElement xelem, string attribute, T defaultT = default(T))
 	{
-		string s = ((XmlElement)node).GetAttribute(attribute);
-		var converter = TypeDescriptor.GetConverter(typeof(T));
-		return s == "" ? defaultT : (T)converter.ConvertFromInvariantString(s);
+		XAttribute a = xelem.Attribute(attribute);
+		return a == null ? defaultT : (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(a.Value);
 	}
+
+	public static IEnumerable<XElement> Elements(this XElement x, params string[] names) => x.Elements().Where(xelem => names.Any(s => s == xelem.Name));
 }

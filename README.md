@@ -9,7 +9,7 @@ Local similarity means that
 * (C1) Each NxN pattern of pixels in the output should occur at least once in the input.
 * (Weak C2) Distribution of NxN patterns in the input should be similar to the distribution of NxN patterns over a sufficiently large number of outputs. In other words, probability to meet a particular pattern in the output should be close to the density of such patterns in the input.
 
-In our examples typical value of N is 3.
+In the examples typical value of N is 3.
 
 <p align="center"><img alt="local similarity" src="http://i.imgur.com/KULGX86.png"></p>
 
@@ -20,7 +20,7 @@ WFC initializes output bitmap in a completely unobserved state, where each pixel
 
 On each step the overall entropy decreases and in the end we have a completely observed state, the wave function has collapsed.
 
-It may happen that during propagation all the coefficients for a certain pixel become zero. That means that the algorithm have run into a contradiction and can not continue. The problem of determining whether a certain bitmap allows other nontrivial bitmaps satisfying condition (C1) is NP-hard, so it's impossible to create a fast solution that always finishes. In practice, however, our algorithm runs into contradictions surprisingly rarely.
+It may happen that during propagation all the coefficients for a certain pixel become zero. That means that the algorithm has run into a contradiction and can not continue. The problem of determining whether a certain bitmap allows other nontrivial bitmaps satisfying condition (C1) is NP-hard, so it's impossible to create a fast solution that always finishes. In practice, however, the algorithm runs into contradictions surprisingly rarely.
 
 Watch a video demonstration of WFC algorithm on YouTube: [https://youtu.be/DOQTr2Xmlz0](https://youtu.be/DOQTr2Xmlz0)
 
@@ -37,14 +37,14 @@ Watch a video demonstration of WFC algorithm on YouTube: [https://youtu.be/DOQTr
 5. By now all the wave elements are either in a completely observed state (all the coefficients except one being zero) or in the contradictive state (all the coefficients being zero). In the first case return the output. In the second case finish the work without returning anything.
 
 ## Tilemap generation
-The simplest nontrivial case of our algorithm is when NxN=1x2 (well, NxM). If we simplify it even further by storing not the probabilities of pairs of colors but the probabilities of colors themselves, we get what we call a "simple tiled model". The propagation phase in this model is just adjacency constraint propagation. It's convenient to initialize the simple tiled model with a list of tiles and their adjacency data (adjacency data can be viewed as a large set of very small samples) rather than a sample bitmap.
+The simplest nontrivial case of the algorithm is when NxN=1x2 (well, NxM). If we simplify it even further by storing not the probabilities of pairs of colors but the probabilities of colors themselves, we get what we call a "simple tiled model". The propagation phase in this model is just adjacency constraint propagation. It's convenient to initialize the simple tiled model with a list of tiles and their adjacency data (adjacency data can be viewed as a large set of very small samples) rather than a sample bitmap.
 
 <p align="center">
   <a href="http://i.imgur.com/jIctSoT.gif">GIF</a> |
   <a href="http://i.imgur.com/jIctSoT.gifv">GIFV</a>
 </p>
 
-Lists of all the possible pairs of adjacent tiles in practical tilesets can be quite long, so we implemented a symmetry system for tiles to shorten the enumeration. In that system each tile should be assigned with its symmetry type.
+Lists of all the possible pairs of adjacent tiles in practical tilesets can be quite long, so I implemented a symmetry system for tiles to shorten the enumeration. In this system each tile should be assigned with its symmetry type.
 
 <p align="center"><img alt="symmetries" src="http://i.imgur.com/9H0frmK.png"></p>
 
@@ -64,10 +64,10 @@ dihedral group D4 are isomorphic for tiles and their corresponding letters). Wit
 
 Note that the unrestrained knot tileset (with all 5 tiles being allowed) is not interesting for WFC, because you can't run into a situation where you can't place a tile. We call tilesets with this property "easy". For example, Wang tilesets are easy. Without special heuristics easy tilesets don't produce interesting global arrangements, because correlations of tiles in easy tilesets quickly fall off with a distance.
 
-Btw, a lot of cool Wang tilesets can be found on [cr31's site](http://s358455341.websitehome.co.uk/stagecast/wang/tiles_e.html). Consider the "Dual" 2-edge tileset there. How can it generate knots (without t-junctions, not easy) while being easy? The answer is, it can only generate a narrow class of knots, it can't produce an arbitrary knot.
+Many interesting Wang tilesets can be found on [cr31's site](http://s358455341.websitehome.co.uk/stagecast/wang/tiles_e.html). Consider the "Dual" 2-edge tileset there. How can it generate knots (without t-junctions, not easy) while being easy? The answer is, it can only generate a narrow class of knots, it can't produce an arbitrary knot.
 
 ## Higher dimensions
-WFC algorithm in higher dimensions works completely the same way as in dimension 2, though performance becomes a big issue. These voxel models were generated with N=2 overlapping tiled model using 5x5x5 and 5x5x2 blocks and additional heuristics (height, density, curvature, ...).
+WFC algorithm in higher dimensions works completely the same way as in dimension 2, though performance becomes an issue. These voxel models were generated with N=2 overlapping tiled model using 5x5x5 and 5x5x2 blocks and additional heuristics (height, density, curvature, ...).
 
 <p align="center"><img alt="voxels" src="http://i.imgur.com/hsqPdQl.png"></p>
 
