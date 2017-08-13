@@ -129,6 +129,7 @@ It was also heavily influenced by declarative texture synthesis chapter of [Paul
 * [Nick Nenov](https://github.com/NNNenov) made a [visual guide](https://www.dropbox.com/s/zeiat1w8zre9ro8/Knots%20breakdown.png?dl=0) to the tile symmetry system.
 * [Isaac Karth](https://github.com/ikarth) and [Adam M. Smith](https://github.com/rndmcnlly) wrote a [research paper](https://adamsmith.as/papers/wfc_is_constraint_solving_in_the_wild.pdf) where they formulate WFC as an ASP problem, use general constraint solver [clingo](https://github.com/potassco/clingo) to generate bitmaps, experiment with global constraints, trace WFC's history and give detailed explanation of the algorithm.
 * Sylvain Lefebvre made a [C++ implementation](https://github.com/sylefeb/VoxModSynth) of 3d model synthesis, described the thought process of designing a sample and provided an example where adjacency constraints ensure that the output is connected (walkable).
+* I generalized 3d WFC to work with cube symmetry group and made a tileset that generates [Escheresque scenes](https://twitter.com/ExUtumno/status/895684431477747715).
 
 ## How to build
 WFC is a console application that depends only on the standard library. Build instructions from the community for various platforms can be found in the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
