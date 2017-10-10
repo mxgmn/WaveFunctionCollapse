@@ -132,6 +132,8 @@ It was also heavily influenced by declarative texture synthesis chapter of [Paul
 * I generalized 3d WFC to work with cube symmetry group and made a tileset that generates [Escheresque scenes](https://twitter.com/ExUtumno/status/895684431477747715).
 * There are many ways to visualize partially observed wave states. In the code, color values of possible options are averaged to produce the resulting color. Oskar Stalberg [shows](https://twitter.com/OskSta/status/863019585162932224) partially observed states as semi-transparent boxes, where the box is bigger for a state with more options. In the voxel setting I [visualize](https://twitter.com/ExUtumno/status/900395635412787202) wave states with per-voxel voting.
 * Remy Devaux implemented the tiled model in PICO-8 and wrote an [article](https://trasevol.dog/2017/09/01/di19/) about generation of coherent data with the explanation of WFC.
+* For the upcoming game [Bad North](https://www.badnorth.com/) Oskar Stalberg [uses](https://twitter.com/OskSta/status/917405214638006273) a heuristic that tries to select such tiles
+that the resulting observed zone is navigable at each step.
 
 ## How to build
 WFC is a console application that depends only on the standard library. Build instructions from the community for various platforms can be found in the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
