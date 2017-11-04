@@ -135,6 +135,7 @@ It was also heavily influenced by declarative texture synthesis chapter of [Paul
 * For the upcoming game [Bad North](https://www.badnorth.com/) Oskar Stalberg [uses](https://twitter.com/OskSta/status/917405214638006273) a heuristic that tries to select such tiles
 that the resulting observed zone is navigable at each step.
 * [William Manning](https://github.com/heyx3) [implemented](https://github.com/heyx3/easywfc) the overlapping model in C# with the primary goal of making code readable, and provided it with WPF GUI.
+* [Joseph Parker](https://gist.github.com/selfsame) wrote a WFC [tutorial](http://www.procjam.com/tutorials/wfc/) for Procjam 2017.
 
 ## How to build
 WFC is a console application that depends only on the standard library. Build instructions from the community for various platforms can be found in the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
