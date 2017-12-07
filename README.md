@@ -134,9 +134,10 @@ It was also heavily influenced by declarative texture synthesis chapter of [Paul
 * Remy Devaux implemented the tiled model in PICO-8 and wrote an [article](https://trasevol.dog/2017/09/01/di19/) about generation of coherent data with the explanation of WFC.
 * For the upcoming game [Bad North](https://www.badnorth.com/) Oskar Stalberg [uses](https://twitter.com/OskSta/status/917405214638006273) a heuristic that tries to select such tiles
 that the resulting observed zone is navigable at each step.
-* [William Manning](https://github.com/heyx3) [implemented](https://github.com/heyx3/easywfc) the overlapping model in C# with the primary goal of making code readable, and provided it with WPF GUI.
+* William Manning [implemented](https://github.com/heyx3/easywfc) the overlapping model in C# with the primary goal of making code readable, and provided it with WPF GUI.
 * [Joseph Parker](https://gist.github.com/selfsame) wrote a WFC [tutorial](http://www.procjam.com/tutorials/wfc/) for Procjam 2017.
 * [Aman Tiwari](https://github.com/aman-tiwari) formulated the connectivity constraint as an [ASP problem](https://gist.github.com/aman-tiwari/8a7b874cb1fd1270adc203b2af293f4c) for clingo.
+* MatveyK programmed a [3d overlapping model](https://github.com/MatveyK/Kazimir).
 
 ## How to build
 WFC is a console application that depends only on the standard library. Build instructions from the community for various platforms can be found in the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
