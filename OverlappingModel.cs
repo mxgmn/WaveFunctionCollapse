@@ -13,9 +13,7 @@ using System.Collections.Generic;
 
 class OverlappingModel : Model
 {
-	int[][][][] propagator;
 	int N;
-
 	byte[][] patterns;
 	List<Color> colors;
 	int ground;
@@ -123,20 +121,16 @@ class OverlappingModel : Model
 
 		T = weights.Count;
 		this.ground = (ground + T) % T;
-
 		patterns = new byte[T][];
-		stationary = new double[T];
-		propagator = new int[2 * N - 1][][][];
+		base.weights = new double[T];
 
 		int counter = 0;
 		foreach (long w in ordering)
 		{
 			patterns[counter] = patternFromIndex(w);
-			stationary[counter] = weights[w];
+			base.weights[counter] = weights[w];
 			counter++;
 		}
-
-		for (int i = 0; i < wave.Length; i++) wave[i] = new bool[T];
 
 		bool agrees(byte[] p1, byte[] p2, int dx, int dy)
 		{
@@ -145,67 +139,21 @@ class OverlappingModel : Model
 			return true;
 		};
 
-		for (int x = 0; x < 2 * N - 1; x++)
+		propagator = new int[4][][];
+		for (int d = 0; d < 4; d++)
 		{
-			propagator[x] = new int[2 * N - 1][][];
-			for (int y = 0; y < 2 * N - 1; y++)
+			propagator[d] = new int[T][];
+			for (int t = 0; t < T; t++)
 			{
-				propagator[x][y] = new int[T][];
-				for (int t = 0; t < T; t++)
-				{
-					List<int> list = new List<int>();
-					for (int t2 = 0; t2 < T; t2++) if (agrees(patterns[t], patterns[t2], x - N + 1, y - N + 1)) list.Add(t2);
-					propagator[x][y][t] = new int[list.Count];
-					for (int c = 0; c < list.Count; c++) propagator[x][y][t][c] = list[c];
-				}
+				List<int> list = new List<int>();
+				for (int t2 = 0; t2 < T; t2++) if (agrees(patterns[t], patterns[t2], DX[d], DY[d])) list.Add(t2);
+				propagator[d][t] = new int[list.Count];
+				for (int c = 0; c < list.Count; c++) propagator[d][t][c] = list[c];
 			}
 		}
 	}
 
-	protected override bool OnBoundary(int i) => !periodic && (i % FMX + N > FMX || i / FMX + N > FMY);
-
-	override protected void Propagate()
-	{
-		while (stacksize > 0)
-		{
-			int i1 = stack[stacksize - 1];
-			stacksize--;
-			changes[i1] = false;
-
-			bool[] w1 = wave[i1];
-			int x1 = i1 % FMX, y1 = i1 / FMX;
-
-			for (int dx = -N + 1; dx < N; dx++) for (int dy = -N + 1; dy < N; dy++)
-				{
-					int x2 = x1 + dx;
-					if (x2 < 0) x2 += FMX;
-					else if (x2 >= FMX) x2 -= FMX;
-
-					int y2 = y1 + dy;
-					if (y2 < 0) y2 += FMY;
-					else if (y2 >= FMY) y2 -= FMY;
-
-					if (!periodic && (x2 + N > FMX || y2 + N > FMY)) continue;
-
-					int i2 = x2 + y2 * FMX;
-					bool[] w2 = wave[i2];
-					int[][] prop = propagator[N - 1 - dx][N - 1 - dy];
-
-					for (int t2 = 0; t2 < T; t2++) if (w2[t2])
-						{
-							bool b = false;
-							int[] p = prop[t2];
-							for (int l = 0; l < p.Length && !b; l++) b = w1[p[l]];
-
-							if (!b)
-							{
-								Change(i2);
-								w2[t2] = false;
-							}
-						}
-				}
-		}
-	}
+	protected override bool OnBoundary(int x, int y) => !periodic && (x + N > FMX || y + N > FMY || x < 0 || y < 0);
 
 	public override Bitmap Graphics()
 	{
@@ -241,7 +189,7 @@ class OverlappingModel : Model
 						if (sy < 0) sy += FMY;
 
 						int s = sx + sy * FMX;
-						if (OnBoundary(s)) continue;
+						if (OnBoundary(sx, sy)) continue;
 						for (int t = 0; t < T; t++) if (wave[s][t])
 							{
 								contributors++;
@@ -271,14 +219,8 @@ class OverlappingModel : Model
 		{
 			for (int x = 0; x < FMX; x++)
 			{
-				for (int t = 0; t < T; t++) if (t != ground) wave[x + (FMY - 1) * FMX][t] = false;
-				Change(x + (FMY - 1) * FMX);
-
-				for (int y = 0; y < FMY - 1; y++)
-				{
-					wave[x + y * FMX][ground] = false;
-					Change(x + y * FMX);
-				}
+				for (int t = 0; t < T; t++) if (t != ground) Ban(x + (FMY - 1) * FMX, t);
+				for (int y = 0; y < FMY - 1; y++) Ban(x + y * FMX, ground);
 			}
 
 			Propagate();

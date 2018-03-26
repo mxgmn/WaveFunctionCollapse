@@ -8,11 +8,14 @@ The software is provided "as is", without warranty of any kind, express or impli
 
 using System;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 static class Program
 {
 	static void Main()
 	{
+		Stopwatch sw = Stopwatch.StartNew();
+
 		Random random = new Random();
 		XDocument xdoc = XDocument.Load("samples.xml");
 
@@ -52,5 +55,7 @@ static class Program
 
 			counter++;
 		}
+
+		Console.WriteLine($"time = {sw.ElapsedMilliseconds}");
 	}
 }
