@@ -119,7 +119,6 @@ abstract class Model
 
 			int i1 = e1.Item1;
 			int x1 = i1 % FMX, y1 = i1 / FMX;
-			bool[] w1 = wave[i1];
 
 			for (int d = 0; d < 4; d++)
 			{
