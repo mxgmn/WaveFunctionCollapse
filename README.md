@@ -147,7 +147,7 @@ that the resulting observed zone is navigable at each step.
 * Oskar Stalberg gave a [talk](https://www.youtube.com/watch?v=0bcZb-SsnrA) about level generation in Bad North at the Everything Procedural Conference 2018.
 * I [wrote](https://twitter.com/ExUtumno/status/1024314661951467521) about how to generate (approximately) unbiased paths between 2 points with WFC and other algorithms.
 * [Isaac Karth](https://github.com/ikarth) and [Adam M. Smith](https://github.com/rndmcnlly) published a [preprint](https://arxiv.org/abs/1809.04432) where they describe a system based on WFC that learns from both positive and negative examples, and discuss it in a general context of dialogs with example-driven generators.
-* Brendan Anthony uses (https://steamcommunity.com/games/314230/announcements/detail/3369147113795750369) WFC to generate wall decorations in the game [Rodina](https://store.steampowered.com/app/314230/Rodina/).
+* Brendan Anthony [uses](https://steamcommunity.com/games/314230/announcements/detail/3369147113795750369) WFC to generate wall decorations in the game [Rodina](https://store.steampowered.com/app/314230/Rodina/).
 * Tim Kong implemented the [overlapping model in Haxe](https://github.com/Mitim-84/WFC-Gen).
 
 ## How to build
