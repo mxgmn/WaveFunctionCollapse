@@ -149,6 +149,9 @@ that the resulting observed zone is navigable at each step.
 * [Isaac Karth](https://github.com/ikarth) and [Adam M. Smith](https://github.com/rndmcnlly) published a [preprint](https://arxiv.org/abs/1809.04432) where they describe a system based on WFC that learns from both positive and negative examples, and discuss it in a general context of dialogs with example-driven generators.
 * Brendan Anthony [uses](https://steamcommunity.com/games/314230/announcements/detail/3369147113795750369) WFC to generate wall decorations in the game [Rodina](https://store.steampowered.com/app/314230/Rodina/).
 * Tim Kong implemented the [overlapping model in Haxe](https://github.com/Mitim-84/WFC-Gen).
+* In order to generate connected structures, Boris the Brave applied the [chiseling method](https://www.boristhebrave.com/2018/04/28/random-paths-via-chiseling) to WFC. He published a [library](https://boristhebrave.github.io/DeBroglie) that supports hex grids, additional constraints and backtracking.
+* [Marian Kleineberg](https://github.com/marian42) created a [city generator](https://marian42.itch.io/wfc) based on the tiled model for Procjam 2018.
+* Sol Bekic [programmed](https://github.com/s-ol/gpWFC) the tiled model that runs on GPU using PyOpenCL. Instead of keeping a queue of nodes to propagate from, it propagates from every node on the grid in parallel.
 
 ## How to build
 WFC is a console application that depends only on the standard library. Build instructions from the community for various platforms can be found in the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
