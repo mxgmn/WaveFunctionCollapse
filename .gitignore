@@ -45,3 +45,9 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#Dotnet build and IDE artefacts
+bin/
+obj/
+.vs/
+.idea/
