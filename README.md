@@ -109,6 +109,15 @@ This project builds upon Paul Merrell's work on model synthesis, in particular d
 
 It was also heavily influenced by declarative texture synthesis chapter of [Paul F. Harrison's dissertation](http://logarithmic.net/pfh-files/thesis/dissertation.pdf). Paul defines adjacency data of tiles by labeling their borders and uses backtracking search to fill the tilemap.
 
+
+## How to build
+
+WFC is a console application that depends only on the standard library. If you have dotnet Core on Linux MacOs or Windows, run WFC with 
+```
+dotnet run 
+```
+Get dotnet core from (https://www.microsoft.com/net/download). Otherwise, build instructions from the community for various platforms can be found in the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
+
 ## Notable ports, forks and spinoffs
 
 * Emil Ernerfeldt made a [C++ port](https://github.com/emilk/wfc).
@@ -153,9 +162,6 @@ that the resulting observed zone is navigable at each step.
 * [Marian Kleineberg](https://github.com/marian42) created a [city generator](https://marian42.itch.io/wfc) based on the tiled model for Procjam 2018.
 * Sol Bekic [programmed](https://github.com/s-ol/gpWFC) the tiled model that runs on GPU using PyOpenCL. Instead of keeping a queue of nodes to propagate from, it propagates from every node on the grid in parallel.
 * Wouter van Oortmerssen [implemented](https://github.com/aardappel/lobster/commit/703f67472bfd80c26bb626e1d5c22ec91047da98) the tiled model in a single C++ function, with a structure similar to a priority queue for faster observation.
-
-## How to build
-WFC is a console application that depends only on the standard library. Build instructions from the community for various platforms can be found in the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
 
 ## Credits
 Some samples are taken from the games Ultima IV and [Dungeon Crawl](https://github.com/crawl/crawl). Circles tileset is taken from [Mario Klingemann](https://twitter.com/quasimondo/status/778196128957403136). Idea of generating integrated circuits was suggested to me by [Moonasaur](https://twitter.com/Moonasaur/status/759890746350731264) and their style was taken from Zachtronics' [Ruckingenur II](http://www.zachtronics.com/ruckingenur-ii/). Cat overlapping sample is taken from the Nyan Cat video, Qud sample was made by [Brian Bucklew](https://github.com/unormal), Magic Office + Spirals samples - by rid5x, Colored City + Link + Link 2 + Mazelike + Red Dot + Smile City overlapping samples - by Arvi Teikari. Summer tileset was made by Hermann Hillmann. Voxel models were rendered in [MagicaVoxel](http://ephtracy.github.io/).
