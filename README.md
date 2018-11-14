@@ -112,11 +112,11 @@ It was also heavily influenced by declarative texture synthesis chapter of [Paul
 
 ## How to build
 
-WFC is a console application that depends only on the standard library. If you have dotnet Core on Linux MacOs or Windows, run WFC with 
+WFC is a console application that depends only on the standard library. Get [.NET Core](https://www.microsoft.com/net/download) for Windows, Linux or macOS and run
 ```
-dotnet run 
+dotnet run WaveFunctionCollapse.csproj
 ```
-Get dotnet core from (https://www.microsoft.com/net/download). Otherwise, build instructions from the community for various platforms can be found in the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
+Alternatively, use build instructions from the community for various platforms from the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
 
 ## Notable ports, forks and spinoffs
 
@@ -124,7 +124,7 @@ Get dotnet core from (https://www.microsoft.com/net/download). Otherwise, build 
 * [Max Aller](https://github.com/nanodeath) made a Kotlin (JVM) library, [Kollapse](https://gitlab.com/nanodeath/kollapse).
 * [Kevin Chapelier](https://github.com/kchapelier) made a [JavaScript port](http://www.kchapelier.com/wfc-example/overlapping-model.html).
 * Oskar Stalberg programmed a 3d tiled model, a 2d tiled model for irregular grids on a sphere and is building beautiful 3d tilesets for them: [1](https://twitter.com/OskSta/status/787319655648100352), [2](https://twitter.com/OskSta/status/784847588893814785), [3](https://twitter.com/OskSta/status/784847933686575104), [4](https://twitter.com/OskSta/status/784848286272327680), [5](https://twitter.com/OskSta/status/793545297376972801), [6](https://twitter.com/OskSta/status/793806535898136576), [7](https://twitter.com/OskSta/status/802496920790777856), [8](https://twitter.com/OskSta/status/804291629561577472), [9](https://twitter.com/OskSta/status/806856212260278272), [10](https://twitter.com/OskSta/status/806904557502464000), [11](https://twitter.com/OskSta/status/818857408848130048), [12](https://twitter.com/OskSta/status/832633189277409280), [13](https://twitter.com/OskSta/status/851170356530475008), [14](https://twitter.com/OskSta/status/858301207936458752), [15](https://twitter.com/OskSta/status/863019585162932224).
-* [Joseph Parker](https://github.com/selfsame) adapted [WFC to Unity](https://selfsame.itch.io/unitywfc) and used it generate skateparks in the [Proc Skater 2016](https://arcadia-clojure.itch.io/proc-skater-2016) game, [fantastic plateaus](https://twitter.com/jplur_/status/929482200034226176) in the 2017 game [Swapland](https://arcadia-clojure.itch.io/swapland) and platform levels in the 2018 game [Bug with a Gun](https://selfsame.itch.io/bug-with-a-gun).
+* [Joseph Parker](https://github.com/selfsame) adapted [WFC to Unity](https://selfsame.itch.io/unitywfc) and used it generate skateparks in the [Proc Skater 2016](https://arcadia-clojure.itch.io/proc-skater-2016) game, [fantastic plateaus](https://twitter.com/jplur_/status/929482200034226176) in the 2017 game [Swapland](https://arcadia-clojure.itch.io/swapland) and [platform levels](https://twitter.com/jplur_/status/1053458654454865921) in the 2018 game [Bug with a Gun](https://selfsame.itch.io/bug-with-a-gun).
 * [Martin O'Leary](https://github.com/mewo2) applied a [WFC-like algorithm](https://github.com/mewo2/oisin) to poetry generation: [1](https://twitter.com/mewo2/status/789167437518217216), [2](https://twitter.com/mewo2/status/789177702620114945), [3](https://twitter.com/mewo2/status/789187174683987968), [4](https://twitter.com/mewo2/status/789897712372183041).
 * [Nick Nenov](https://github.com/NNNenov) made a [3d voxel tileset](https://twitter.com/NNNenov/status/789903180226301953) based on my Castle tileset. Nick uses text output option in the tiled model to reconstruct 3d models in Cinema 4D.
 * Sean Leffler implemented the [overlapping model in Rust](https://github.com/sdleffler/collapse).
@@ -159,7 +159,7 @@ that the resulting observed zone is navigable at each step.
 * Brendan Anthony [uses](https://steamcommunity.com/games/314230/announcements/detail/3369147113795750369) WFC to generate wall decorations in the game [Rodina](https://store.steampowered.com/app/314230/Rodina/).
 * Tim Kong implemented the [overlapping model in Haxe](https://github.com/Mitim-84/WFC-Gen).
 * In order to generate connected structures, Boris the Brave applied the [chiseling method](https://www.boristhebrave.com/2018/04/28/random-paths-via-chiseling) to WFC. He published a [library](https://boristhebrave.github.io/DeBroglie) that supports hex grids, additional constraints and backtracking.
-* [Marian Kleineberg](https://github.com/marian42) created a [city generator](https://marian42.itch.io/wfc) based on the tiled model for Procjam 2018.
+* [Marian Kleineberg](https://github.com/marian42) [created](https://twitter.com/marian42_/status/1061785383057440768) a [city generator](https://marian42.itch.io/wfc) based on the tiled model for Procjam 2018.
 * Sol Bekic [programmed](https://github.com/s-ol/gpWFC) the tiled model that runs on GPU using PyOpenCL. Instead of keeping a queue of nodes to propagate from, it propagates from every node on the grid in parallel.
 * Wouter van Oortmerssen [implemented](https://github.com/aardappel/lobster/commit/703f67472bfd80c26bb626e1d5c22ec91047da98) the tiled model in a single C++ function, with a structure similar to a priority queue for faster observation.
 
