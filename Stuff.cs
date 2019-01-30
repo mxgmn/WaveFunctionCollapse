@@ -16,13 +16,6 @@ static class Stuff
 	public static int Random(this double[] a, double r)
 	{
 		double sum = a.Sum();
-
-		if (sum == 0)
-		{
-			for (int j = 0; j < a.Length; j++) a[j] = 1;
-			sum = a.Sum();
-		}
-
 		for (int j = 0; j < a.Length; j++) a[j] /= sum;
 
 		int i = 0;

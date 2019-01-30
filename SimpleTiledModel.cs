@@ -233,7 +233,7 @@ class SimpleTiledModel : Model
 							else
 							{
 								double r = 0, g = 0, b = 0;
-								for (int t = 0; t < T; t++) if (wave[x + y * FMX][t])
+								for (int t = 0; t < T; t++) if (a[t])
 									{
 										Color c = tiles[t][xt + yt * tilesize];
 										r += (double)c.R * weights[t] * lambda;
