@@ -9,7 +9,7 @@ Local similarity means that
 * (C1) Each NxN pattern of pixels in the output should occur at least once in the input.
 * (Weak C2) Distribution of NxN patterns in the input should be similar to the distribution of NxN patterns over a sufficiently large number of outputs. In other words, probability to meet a particular pattern in the output should be close to the density of such patterns in the input.
 
-In the examples typical value of N is 3.
+In the examples a typical value of N is 3.
 
 <p align="center"><img alt="local similarity" src="http://i.imgur.com/KULGX86.png"></p>
 
@@ -142,7 +142,7 @@ Alternatively, use build instructions from the community for various platforms f
 * Sylvain Lefebvre made a [C++ implementation](https://github.com/sylefeb/VoxModSynth) of 3d model synthesis, described the thought process of designing a sample and provided an example where adjacency constraints ensure that the output is connected (walkable).
 * I generalized 3d WFC to work with cube symmetry group and made a tileset that generates [Escheresque scenes](https://twitter.com/ExUtumno/status/895684431477747715).
 * There are many ways to visualize partially observed wave states. In the code, color values of possible options are averaged to produce the resulting color. Oskar Stalberg [shows](https://twitter.com/OskSta/status/863019585162932224) partially observed states as semi-transparent boxes, where the box is bigger for a state with more options. In the voxel setting I [visualize](https://twitter.com/ExUtumno/status/900395635412787202) wave states with per-voxel voting.
-* Remy Devaux implemented the tiled model in PICO-8 and wrote an [article](https://trasevol.dog/2017/09/01/di19/) about generation of coherent data with the explanation of WFC.
+* Remy Devaux implemented the tiled model in PICO-8 and wrote an [article](https://trasevol.dog/2017/09/01/di19/) about generation of coherent data with an explanation of WFC.
 * For the upcoming game [Bad North](https://www.badnorth.com/) Oskar Stalberg [uses](https://twitter.com/OskSta/status/917405214638006273) a heuristic that tries to select such tiles
 that the resulting observed zone is navigable at each step.
 * William Manning [implemented](https://github.com/heyx3/easywfc) the overlapping model in C# with the primary goal of making code readable, and provided it with WPF GUI.
@@ -167,8 +167,8 @@ that the resulting observed zone is navigable at each step.
 * Breanna Baltaxe-Admony [applied](https://github.com/bbaltaxe/wfc-piano-roll) WFC to music generation.
 * Shawn Ridgeway made a [Go port](https://github.com/shawnridgeway/wfc).
 * For the Global Game Jam 2019, [Andy Wallace](https://github.com/andymasteroffish) made a [game](http://andymakesgames.tumblr.com/post/182363131350/global-game-jam-2019-maureens-chaotic-dungeon) in which the player can interact with WFC-based level generator by resetting portions of the level with various weapons.
-* Stephen Sherratt wrote a [detailed explanation](https://gridbugs.org/wave-function-collapse/) of the overlapping model and made a [Rust library](https://github.com/stevebob/wfc).
-* Florian Drux created a [generalization that works on graphs](https://github.com/lamelizard/GraphWaveFunctionCollapse/blob/master/thesis.pdf) and [implemented](https://github.com/lamelizard/GraphWaveFunctionCollapse) it in python.
+* Stephen Sherratt wrote a [detailed explanation](https://gridbugs.org/wave-function-collapse/) of the overlapping model and made a [Rust library](https://github.com/stevebob/wfc). For the 7DRL Challenge 2019 he made a roguelike [Get Well Soon](https://gridbugs.org/get-well-soon/) that [uses](https://gridbugs.org/7drl2019-day1/) WFC to generate levels.
+* Florian Drux created a [generalization](https://github.com/lamelizard/GraphWaveFunctionCollapse/blob/master/thesis.pdf) that works on graphs with arbitrary local structure and [implemented](https://github.com/lamelizard/GraphWaveFunctionCollapse) it in Python.
 
 ## Credits
 Some samples are taken from the games Ultima IV and [Dungeon Crawl](https://github.com/crawl/crawl). Circles tileset is taken from [Mario Klingemann](https://twitter.com/quasimondo/status/778196128957403136). Idea of generating integrated circuits was suggested to me by [Moonasaur](https://twitter.com/Moonasaur/status/759890746350731264) and their style was taken from Zachtronics' [Ruckingenur II](http://www.zachtronics.com/ruckingenur-ii/). Cat overlapping sample is taken from the Nyan Cat video, Qud sample was made by [Brian Bucklew](https://github.com/unormal), Magic Office + Spirals samples - by rid5x, Colored City + Link + Link 2 + Mazelike + Red Dot + Smile City overlapping samples - by Arvi Teikari. Summer tileset was made by Hermann Hillmann. Voxel models were rendered in [MagicaVoxel](http://ephtracy.github.io/).
