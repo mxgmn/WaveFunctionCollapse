@@ -1,7 +1,7 @@
 # WaveFunctionCollapse
 This program generates bitmaps that are locally similar to the input bitmap.
 
-<p align="center"><img alt="main collage" src="http://i.imgur.com/g1yGvL7.png"></p>
+<p align="center"><img alt="main collage" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc.png"></p>
 <p align="center"><img alt="main gif" src="http://i.imgur.com/sNuBVSr.gif"></p>
 
 Local similarity means that
@@ -11,7 +11,7 @@ Local similarity means that
 
 In the examples a typical value of N is 3.
 
-<p align="center"><img alt="local similarity" src="http://i.imgur.com/KULGX86.png"></p>
+<p align="center"><img alt="local similarity" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-patterns.png"></p>
 
 WFC initializes output bitmap in a completely unobserved state, where each pixel value is in superposition of colors of the input bitmap (so if the input was black & white then the unobserved states are shown in different shades of grey). The coefficients in these superpositions are real numbers, not complex numbers, so it doesn't do the actual quantum mechanics, but it was inspired by QM. Then the program goes into the observation-propagation cycle:
 
@@ -48,20 +48,20 @@ The simplest nontrivial case of the algorithm is when NxN=1x2 (well, NxM). If we
 
 Lists of all the possible pairs of adjacent tiles in practical tilesets can be quite long, so I implemented a symmetry system for tiles to shorten the enumeration. In this system each tile should be assigned with its symmetry type.
 
-<p align="center"><img alt="symmetries" src="http://i.imgur.com/9H0frmK.png"></p>
+<p align="center"><img alt="symmetries" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-symmetry-system.png"></p>
 
 Note that the tiles have the same symmetry type as their assigned letters (or, in other words, actions of the 
 dihedral group D4 are isomorphic for tiles and their corresponding letters). With this system it's enough to enumerate pairs of adjacent tiles only up to symmetry, which makes lists of adjacencies for tilesets with many symmetrical tiles (even the summer tileset, despite drawings not being symmetrical the system considers such tiles to be symmetrical) several times shorter.
 
 <p align="center">
-	<img alt="knots" src="http://i.imgur.com/EnBkcVN.png">
-	<img alt="tiled rooms" src="http://i.imgur.com/BruxOx9.png">
-	<img alt="circuit 1" src="http://i.imgur.com/BYt7AR6.png">
-	<img alt="circuit 2" src="http://i.imgur.com/yYHbMx8.png">
-	<img alt="circles" src="http://i.imgur.com/Hrs0Ir8.png">
-	<img alt="castle" src="http://i.imgur.com/Nd2mQOC.png">
-	<img alt="summer 1" src="http://i.imgur.com/re8WBud.png">
-	<img alt="summer 2" src="http://i.imgur.com/OmUHk1t.png">
+	<img alt="knots" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-knots.png">
+	<img alt="tiled rooms" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-rooms.png">
+	<img alt="circuit 1" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-circuit-1.png">
+	<img alt="circuit 2" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-circuit-2.png">
+	<img alt="circles" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-circles.png">
+	<img alt="castle" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-castle.png">
+	<img alt="summer 1" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-summer-1.png">
+	<img alt="summer 2" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-summer-2.png">
 </p>
 
 Note that the unrestrained knot tileset (with all 5 tiles being allowed) is not interesting for WFC, because you can't run into a situation where you can't place a tile. We call tilesets with this property "easy". Without special heuristics easy tilesets don't produce interesting global arrangements, because correlations of tiles in easy tilesets quickly fall off with a distance. Many easy tilesets can be found on [cr31's site](http://cr31.co.uk/stagecast/wang/tiles_e.html). Consider the "Dual" 2-edge tileset there. How can it generate knots (without t-junctions, not easy) while being easy? The answer is, it can only generate a narrow class of knots, it can't produce an arbitrary knot.
@@ -71,7 +71,7 @@ Note also that Circuit, Summer and Rooms tilesets are non-Wang. That is, their a
 ## Higher dimensions
 WFC algorithm in higher dimensions works completely the same way as in dimension 2, though performance becomes an issue. These voxel models were generated with N=2 overlapping tiled model using 5x5x5 and 5x5x2 blocks and additional heuristics (height, density, curvature, ...).
 
-<p align="center"><img alt="voxels" src="http://i.imgur.com/hsqPdQl.png"></p>
+<p align="center"><img alt="voxels" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-castles-3d.png"></p>
 
 Higher resolution screenshots: [1](http://i.imgur.com/0bsjlBY.png), [2](http://i.imgur.com/GduN0Vr.png), [3](http://i.imgur.com/IEOsbIy.png).
 
@@ -169,9 +169,10 @@ that the resulting observed zone is navigable at each step.
 * For the Global Game Jam 2019, [Andy Wallace](https://github.com/andymasteroffish) made a [game](http://andymakesgames.tumblr.com/post/182363131350/global-game-jam-2019-maureens-chaotic-dungeon) in which the player can interact with WFC-based level generator by resetting portions of the level with various weapons.
 * Stephen Sherratt wrote a [detailed explanation](https://gridbugs.org/wave-function-collapse/) of the overlapping model and made a [Rust library](https://github.com/stevebob/wfc). For the 7DRL Challenge 2019 he made a roguelike [Get Well Soon](https://gridbugs.org/get-well-soon/) that [uses](https://gridbugs.org/7drl2019-day1/) WFC to generate levels.
 * Florian Drux created a [generalization](https://github.com/lamelizard/GraphWaveFunctionCollapse/blob/master/thesis.pdf) that works on graphs with arbitrary local structure and [implemented](https://github.com/lamelizard/GraphWaveFunctionCollapse) it in Python.
+* Bob Burrough [discovered](https://twitter.com/ExUtumno/status/1119996185199116289) a percolation-like phase transition in one of the tilesets that manifests in spiking contradiction rate.
 
 ## Credits
 Some samples are taken from the games Ultima IV and [Dungeon Crawl](https://github.com/crawl/crawl). Circles tileset is taken from [Mario Klingemann](https://twitter.com/quasimondo/status/778196128957403136). Idea of generating integrated circuits was suggested to me by [Moonasaur](https://twitter.com/Moonasaur/status/759890746350731264) and their style was taken from Zachtronics' [Ruckingenur II](http://www.zachtronics.com/ruckingenur-ii/). Cat overlapping sample is taken from the Nyan Cat video, Qud sample was made by [Brian Bucklew](https://github.com/unormal), Magic Office + Spirals samples - by rid5x, Colored City + Link + Link 2 + Mazelike + Red Dot + Smile City overlapping samples - by Arvi Teikari. Summer tileset was made by Hermann Hillmann. Voxel models were rendered in [MagicaVoxel](http://ephtracy.github.io/).
 
-<p align="center"><img alt="second collage" src="http://i.imgur.com/CZsvnc7.png"></p>
-<p align="center"><img alt="voxel perspective" src="http://i.imgur.com/RywXCHn.png"></p>
+<p align="center"><img alt="second collage" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-2.png"></p>
+<p align="center"><img alt="voxel perspective" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-castle-3d.png"></p>
