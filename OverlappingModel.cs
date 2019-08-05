@@ -205,8 +205,8 @@ class OverlappingModel : Model
 		}
 
 		var bits = result.LockBits(new Rectangle(0, 0, result.Width, result.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-        System.Runtime.InteropServices.Marshal.Copy(bitmapData, 0, bits.Scan0, bitmapData.Length);
-        result.UnlockBits(bits);
+		System.Runtime.InteropServices.Marshal.Copy(bitmapData, 0, bits.Scan0, bitmapData.Length);
+		result.UnlockBits(bits);
 
 		return result;
 	}
