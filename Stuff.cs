@@ -31,13 +31,6 @@ static class Stuff
 		return 0;
 	}
 
-	public static long Power(int a, int n)
-	{
-		long product = 1;
-		for (int i = 0; i < n; i++) product *= a;
-		return product;
-	}
-
 	public static T Get<T>(this XElement xelem, string attribute, T defaultT = default(T))
 	{
 		XAttribute a = xelem.Attribute(attribute);

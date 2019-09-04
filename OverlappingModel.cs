@@ -10,6 +10,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
+using WaveFunctionCollapse.Extensions;
 
 class OverlappingModel : Model
 {
@@ -45,7 +46,7 @@ class OverlappingModel : Model
 			}
 
 		int C = colors.Count;
-		long W = Stuff.Power(C, N * N);
+		long W = C.Power(N * N);
 
 		byte[] pattern (Func<int, int, byte> f)
 		{
