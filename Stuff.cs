@@ -30,6 +30,4 @@ static class Stuff
 
 		return 0;
 	}
-
-	public static IEnumerable<XElement> Elements(this XElement x, params string[] names) => x.Elements().Where(xelem => names.Any(s => s == xelem.Name));
 }
