@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Xml.Linq;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
+using WaveFunctionCollapse.Extensions;
 
 class SimpleTiledModel : Model
 {

@@ -9,6 +9,7 @@ The software is provided "as is", without warranty of any kind, express or impli
 using System;
 using System.Xml.Linq;
 using System.Diagnostics;
+using WaveFunctionCollapse.Extensions;
 
 static class Program
 {

@@ -31,11 +31,5 @@ static class Stuff
 		return 0;
 	}
 
-	public static T Get<T>(this XElement xelem, string attribute, T defaultT = default(T))
-	{
-		XAttribute a = xelem.Attribute(attribute);
-		return a == null ? defaultT : (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(a.Value);
-	}
-
 	public static IEnumerable<XElement> Elements(this XElement x, params string[] names) => x.Elements().Where(xelem => names.Any(s => s == xelem.Name));
 }
