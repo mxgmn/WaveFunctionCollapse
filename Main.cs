@@ -47,13 +47,14 @@ static class Program
             }
             else if (xelem.Name == "simpletiled")
             {
-                model = new SimpleTiledModel(
-                    name,
-                    xelem.Get<string>("subset"),
-                    xelem.Get(WIDTH_KEY, 10),
-                    xelem.Get(HEIGHT_KEY, 10),
-                    xelem.Get(PERIODIC_KEY, false),
-                    xelem.Get("black", false));
+                model = new SimpleTiledModelBuilder()
+                    .WithName(name)
+                    .WithSubsetName(xelem.Get<string>("subset"))
+                    .WithWidth(xelem.Get(WIDTH_KEY, 10))
+                    .WithHeight(xelem.Get(HEIGHT_KEY, 10))
+                    .WithPeriodic(xelem.Get(PERIODIC_KEY, false))
+                    .WithBlack(xelem.Get("black", false))
+                    .Build();
             }
             else continue;
 

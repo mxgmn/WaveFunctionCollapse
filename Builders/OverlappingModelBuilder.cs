@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WaveFunctionCollapse.Builders
+﻿namespace WaveFunctionCollapse.Builders
 {
     /// <summary>
     /// Class to improve the creation of OverlappingModels

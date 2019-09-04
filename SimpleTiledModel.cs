@@ -14,7 +14,7 @@ using System.Drawing.Imaging;
 using System.Collections.Generic;
 using WaveFunctionCollapse.Extensions;
 
-class SimpleTiledModel : Model
+public class SimpleTiledModel : Model
 {
 	List<Color[]> tiles;
 	List<string> tilenames;
