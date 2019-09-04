@@ -10,53 +10,77 @@ using System;
 using System.Xml.Linq;
 using System.Diagnostics;
 using WaveFunctionCollapse.Extensions;
+using WaveFunctionCollapse.Builders;
 
 static class Program
 {
-	static void Main()
-	{
-		Stopwatch sw = Stopwatch.StartNew();
+    private const string WIDTH_KEY = "width";
+    private const string HEIGHT_KEY = "height";
+    private const string PERIODIC_KEY = "periodic";
 
-		Random random = new Random();
-		XDocument xdoc = XDocument.Load("samples.xml");
+    static void Main()
+    {
+        Stopwatch sw = Stopwatch.StartNew();
 
-		int counter = 1;
-		foreach (XElement xelem in xdoc.Root.Elements("overlapping", "simpletiled"))
-		{
-			Model model;
-			string name = xelem.Get<string>("name");
-			Console.WriteLine($"< {name}");
+        Random random = new Random();
+        XDocument xdoc = XDocument.Load("samples.xml");
 
-			if (xelem.Name == "overlapping") model = new OverlappingModel(name, xelem.Get("N", 2), xelem.Get("width", 48), xelem.Get("height", 48), 
-				xelem.Get("periodicInput", true), xelem.Get("periodic", false), xelem.Get("symmetry", 8), xelem.Get("ground", 0));
-			else if (xelem.Name == "simpletiled") model = new SimpleTiledModel(name, xelem.Get<string>("subset"), 
-				xelem.Get("width", 10), xelem.Get("height", 10), xelem.Get("periodic", false), xelem.Get("black", false));
-			else continue;
+        int counter = 1;
+        foreach (XElement xelem in xdoc.Root.Elements("overlapping", "simpletiled"))
+        {
+            Model model;
+            string name = xelem.Get<string>("name");
+            Console.WriteLine($"< {name}");
 
-			for (int i = 0; i < xelem.Get("screenshots", 2); i++)
-			{
-				for (int k = 0; k < 10; k++)
-				{
-					Console.Write("> ");
-					int seed = random.Next();
-					bool finished = model.Run(seed, xelem.Get("limit", 0));
-					if (finished)
-					{
-						Console.WriteLine("DONE");
+            if (xelem.Name == "overlapping")
+            {
+                model = new OverlappingModelBuilder()
+                    .WithN(xelem.Get("N", 2))
+                    .WithName(name)
+                    .WithHeight(xelem.Get(WIDTH_KEY, 48))
+                    .WithWidth(xelem.Get(HEIGHT_KEY, 48))
+                    .WithPeriodicInput(xelem.Get("periodicInput", true))
+                    .WithPeriodicOutput(xelem.Get(PERIODIC_KEY, false))
+                    .WithSymmetry(xelem.Get("symmetry", 8))
+                    .WithGround(xelem.Get("ground", 0))
+                    .Build();
+            }
+            else if (xelem.Name == "simpletiled")
+            {
+                model = new SimpleTiledModel(
+                    name,
+                    xelem.Get<string>("subset"),
+                    xelem.Get(WIDTH_KEY, 10),
+                    xelem.Get(HEIGHT_KEY, 10),
+                    xelem.Get(PERIODIC_KEY, false),
+                    xelem.Get("black", false));
+            }
+            else continue;
 
-						model.Graphics().Save($"{counter} {name} {i}.png");
-						if (model is SimpleTiledModel && xelem.Get("textOutput", false))
-							System.IO.File.WriteAllText($"{counter} {name} {i}.txt", (model as SimpleTiledModel).TextOutput());
+            for (int i = 0; i < xelem.Get("screenshots", 2); i++)
+            {
+                for (int k = 0; k < 10; k++)
+                {
+                    Console.Write("> ");
+                    int seed = random.Next();
+                    bool finished = model.Run(seed, xelem.Get("limit", 0));
+                    if (finished)
+                    {
+                        Console.WriteLine("DONE");
 
-						break;
-					}
-					else Console.WriteLine("CONTRADICTION");
-				}
-			}
+                        model.Graphics().Save($"{counter} {name} {i}.png");
+                        if (model is SimpleTiledModel && xelem.Get("textOutput", false))
+                            System.IO.File.WriteAllText($"{counter} {name} {i}.txt", (model as SimpleTiledModel).TextOutput());
 
-			counter++;
-		}
+                        break;
+                    }
+                    else Console.WriteLine("CONTRADICTION");
+                }
+            }
 
-		Console.WriteLine($"time = {sw.ElapsedMilliseconds}");
-	}
+            counter++;
+        }
+
+        Console.WriteLine($"time = {sw.ElapsedMilliseconds}");
+    }
 }

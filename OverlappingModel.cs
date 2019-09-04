@@ -12,7 +12,7 @@ using System.Drawing.Imaging;
 using System.Collections.Generic;
 using WaveFunctionCollapse.Extensions;
 
-class OverlappingModel : Model
+public class OverlappingModel : Model
 {
 	int N;
 	byte[][] patterns;
