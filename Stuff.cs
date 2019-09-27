@@ -13,36 +13,36 @@ using System.Collections.Generic;
 
 static class Stuff
 {
-	public static int Random(this double[] a, double r)
-	{
-		double sum = a.Sum();
-		for (int j = 0; j < a.Length; j++) a[j] /= sum;
+    public static int Random(this double[] a, double r)
+    {
+        double sum = a.Sum();
+        for (int j = 0; j < a.Length; j++) a[j] /= sum;
 
-		int i = 0;
-		double x = 0;
+        int i = 0;
+        double x = 0;
 
-		while (i < a.Length)
-		{
-			x += a[i];
-			if (r <= x) return i;
-			i++;
-		}
+        while (i < a.Length)
+        {
+            x += a[i];
+            if (r <= x) return i;
+            i++;
+        }
 
-		return 0;
-	}
+        return 0;
+    }
 
-	public static long Power(int a, int n)
-	{
-		long product = 1;
-		for (int i = 0; i < n; i++) product *= a;
-		return product;
-	}
+    public static long Power(int a, int n)
+    {
+        long product = 1;
+        for (int i = 0; i < n; i++) product *= a;
+        return product;
+    }
 
-	public static T Get<T>(this XElement xelem, string attribute, T defaultT = default(T))
-	{
-		XAttribute a = xelem.Attribute(attribute);
-		return a == null ? defaultT : (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(a.Value);
-	}
+    public static T Get<T>(this XElement xelem, string attribute, T defaultT = default(T))
+    {
+        XAttribute a = xelem.Attribute(attribute);
+        return a == null ? defaultT : (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(a.Value);
+    }
 
-	public static IEnumerable<XElement> Elements(this XElement x, params string[] names) => x.Elements().Where(xelem => names.Any(s => s == xelem.Name));
+    public static IEnumerable<XElement> Elements(this XElement x, params string[] names) => x.Elements().Where(xelem => names.Any(s => s == xelem.Name));
 }

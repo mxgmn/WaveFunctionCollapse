@@ -6,22 +6,22 @@
 	<overlapping name="Hogs" N="3" periodic="True"/>
 	<overlapping name="Hogs" N="2" periodic="True"/>
 	<overlapping name="Knot" N="3" periodic="True"/>
-	<overlapping name="Less Rooms" N="3" periodic="True"/>
+	<overlapping name="LessRooms" N="3" periodic="True"/>
 	<overlapping name="Mountains" N="3" symmetry="2" periodic="True"/>
 	<overlapping name="Office" N="3" periodic="True"/>
 	<overlapping name="Paths" N="3" periodic="True"/>
 	<overlapping name="Platformer" N="2" symmetry="2" ground="-1" periodic="True"/>
 	<overlapping name="Platformer" N="3" symmetry="2" ground="-1" periodic="True"/>
-	<overlapping name="Red Maze" N="2"/>
+	<overlapping name="RedMaze" N="2"/>
 	<overlapping name="Rooms" N="3" screenshots="3" periodic="True"/>
-	<overlapping name="Rule 126" N="3" symmetry="2" periodicInput="False" periodic="False"/>
-	<overlapping name="Simple Knot" N="3" periodic="True"/>
-	<overlapping name="Simple Maze" N="2"/>
-	<overlapping name="Simple Wall" N="3" symmetry="2" periodic="True"/>
-	<overlapping name="Simple Wall" N="3" periodic="True"/>
-	<overlapping name="Simple Wall" N="2" symmetry="2" periodic="True"/>
-	<overlapping name="Simple Wall" N="2" periodic="True"/>
-	<overlapping name="Trick Knot" N="3" periodic="True"/>
+	<overlapping name="Rule126" N="3" symmetry="2" periodicInput="False" periodic="False"/>
+	<overlapping name="SimpleKnot" N="3" periodic="True"/>
+	<overlapping name="SimpleMaze" N="2"/>
+	<overlapping name="SimpleWall" N="3" symmetry="2" periodic="True"/>
+	<overlapping name="SimpleWall" N="3" periodic="True"/>
+	<overlapping name="SimpleWall" N="2" symmetry="2" periodic="True"/>
+	<overlapping name="SimpleWall" N="2" periodic="True"/>
+	<overlapping name="TrickKnot" N="3" periodic="True"/>
 	<overlapping name="Village" N="3" symmetry="2" periodic="True"/>
 	<overlapping name="Water" N="3" symmetry="1" periodic="True"/>
 	<simpletiled name="Summer" width="15" height="15"/>
@@ -45,25 +45,25 @@
 	
 	<overlapping name="Cat" N="3" symmetry="2" periodic="True" width="80" height="80"/>
 	<overlapping name="Cats" N="3" symmetry="2" periodic="True"/>
-	<overlapping name="Skyline 2" N="3" symmetry="2" periodic="True" ground="-1"/>
+	<overlapping name="Skyline2" N="3" symmetry="2" periodic="True" ground="-1"/>
 	<overlapping name="Angular" N="3" periodic="True"/>
 	<overlapping name="City" N="3" periodic="True" width="80" height="80"/>
-	<overlapping name="Colored City" N="3" periodic="True"/>
+	<overlapping name="ColoredCity" N="3" periodic="True"/>
 	<overlapping name="Dungeon" N="3" periodic="True"/>
 	<overlapping name="Lake" N="3" periodic="True" width="60" height="60"/>
 	<overlapping name="Link" N="3" periodic="True"/>
-	<overlapping name="Link 2" N="3" periodic="True"/>
+	<overlapping name="Link2" N="3" periodic="True"/>
 	<overlapping name="Mazelike" N="3" periodic="True"/>
 	<overlapping name="Nested" N="3" periodic="True"/>
-	<overlapping name="Magic Office" N="3" periodic="True"/>
-	<overlapping name="Office 2" N="3" periodic="True"/>
+	<overlapping name="MagicOffice" N="3" periodic="True"/>
+	<overlapping name="Office2" N="3" periodic="True"/>
 	<overlapping name="Qud" N="3" periodic="True" width="80" height="80"/>
-	<overlapping name="Red Dot" N="3" periodic="True"/>
-	<overlapping name="Scaled Maze" N="2" periodic="True"/>
+	<overlapping name="RedDot" N="3" periodic="True"/>
+	<overlapping name="ScaledMaze" N="2" periodic="True"/>
 	<overlapping name="Sewers" N="3" periodic="True"/>
-	<overlapping name="Skew 1" N="3" periodic="True"/>
-	<overlapping name="Skew 2" N="3" periodic="True"/>
-	<overlapping name="Smile City" N="3" periodic="True"/>
+	<overlapping name="Skew1" N="3" periodic="True"/>
+	<overlapping name="Skew2" N="3" periodic="True"/>
+	<overlapping name="SmileCity" N="3" periodic="True"/>
 	<overlapping name="Spirals" N="3" periodic="True"/>
 	<overlapping name="Town" N="3" periodic="True"/>
 	
