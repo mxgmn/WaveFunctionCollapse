@@ -29,14 +29,14 @@ Watch a video demonstration of WFC algorithm on YouTube: [https://youtu.be/DOQTr
 ## Algorithm
 1. Read the input bitmap and count NxN patterns.
     1. (optional) Augment pattern data with rotations and reflections.
-2. Create an array with the dimensions of the output (called "wave" in the source). Each element of this array represents a state of an NxN region in the output. A state of an NxN region is a superpostion of NxN patterns of the input with boolean coefficients (so a state of a pixel in the output is a superposition of input colors with real coefficients). False coefficient means that the corresponding pattern is forbidden, true coefficient means that the corresponding pattern is not yet forbidden.
+2. Create an array with the dimensions of the output (called "wave" in the source). Each element of this array represents a state of an NxN region in the output. A state of an NxN region is a superposition of NxN patterns of the input with boolean coefficients (so a state of a pixel in the output is a superposition of input colors with real coefficients). False coefficient means that the corresponding pattern is forbidden, true coefficient means that the corresponding pattern is not yet forbidden.
 3. Initialize the wave in the completely unobserved state, i.e. with all the boolean coefficients being true.
 4. Repeat the following steps:
     1. Observation:
         1. Find a wave element with the minimal nonzero entropy. If there is no such elements (if all elements have zero or undefined entropy) then break the cycle (4) and go to step (5).
         2. Collapse this element into a definite state according to its coefficients and the distribution of NxN patterns in the input.
     2. Propagation: propagate information gained on the previous observation step.
-5. By now all the wave elements are either in a completely observed state (all the coefficients except one being zero) or in the contradictive state (all the coefficients being zero). In the first case return the output. In the second case finish the work without returning anything.
+5. By now all the wave elements are either in a completely observed state (all the coefficients except one being zero) or in the contradictory state (all the coefficients being zero). In the first case return the output. In the second case finish the work without returning anything.
 
 ## Tilemap generation
 The simplest nontrivial case of the algorithm is when NxN=1x2 (well, NxM). If we simplify it even further by storing not the probabilities of pairs of colors but the probabilities of colors themselves, we get what we call a "simple tiled model". The propagation phase in this model is just adjacency constraint propagation. It's convenient to initialize the simple tiled model with a list of tiles and their adjacency data (adjacency data can be viewed as a large set of very small samples) rather than a sample bitmap.
@@ -78,7 +78,7 @@ Higher resolution screenshots: [1](http://i.imgur.com/0bsjlBY.png), [2](http://i
 Voxel models generated with WFC and other algorithms will be in a separate repo.
 
 ## Constrained synthesis
-WFC algorithm supports constraints. Therefore, it can be easely combined with other generative algorithms or with manual creation.
+WFC algorithm supports constraints. Therefore, it can be easily combined with other generative algorithms or with manual creation.
 
 Here is WFC autocompleting a level started by a human:
 
@@ -87,7 +87,7 @@ Here is WFC autocompleting a level started by a human:
   <a href="http://i.imgur.com/X3aNDUv.gifv">GIFV</a>
 </p>
 
-[ConvChain](https://github.com/mxgmn/ConvChain) algorithm satisfies the strong version of the condition (C2): the limit distribution of NxN patterns in the outputs it is producing is exactly the same as the distributions of patterns in the input. However, ConvChain doesn't satisfy (C1): it often produces noticeable artefacts. It makes sense to run ConvChain first to get a well-sampled configuration and then run WFC to correct local artefacts. This is similar to a common strategy in optimization: first run a Monte-Carlo method to find a point close to a global optimum and then run a gradient descent from that point for greater accuracy.
+[ConvChain](https://github.com/mxgmn/ConvChain) algorithm satisfies the strong version of the condition (C2): the limit distribution of NxN patterns in the outputs it is producing is exactly the same as the distributions of patterns in the input. However, ConvChain doesn't satisfy (C1): it often produces noticeable defects. It makes sense to run ConvChain first to get a well-sampled configuration and then run WFC to correct local defects. This is similar to a common strategy in optimization: first run a Monte-Carlo method to find a point close to a global optimum and then run a gradient descent from that point for greater accuracy.
 
 P. F. Harrison's [texture synthesis](https://github.com/mxgmn/SynTex) algorithm is significantly faster than WFC, but it has trouble with long correlations (for example, it's difficult for this algorithm to synthesize brick wall textures with correctly aligned bricks). But this is exactly where WFC shines, and Harrison's algorithm supports constraints. It makes sense first to generate a perfect brick wall blueprint with WFC and then run a constrained texture synthesis algorithm on that blueprint.
 
@@ -170,10 +170,12 @@ that the resulting observed zone is navigable at each step.
 * Stephen Sherratt wrote a [detailed explanation](https://gridbugs.org/wave-function-collapse/) of the overlapping model and made a [Rust library](https://github.com/stevebob/wfc). For the 7DRL Challenge 2019 he made a roguelike [Get Well Soon](https://gridbugs.org/get-well-soon/) that [uses](https://gridbugs.org/7drl2019-day1/) WFC to generate levels.
 * Florian Drux created a [generalization](https://github.com/lamelizard/GraphWaveFunctionCollapse/blob/master/thesis.pdf) that works on graphs with arbitrary local structure and [implemented](https://github.com/lamelizard/GraphWaveFunctionCollapse) it in Python.
 * Bob Burrough [discovered](https://twitter.com/ExUtumno/status/1119996185199116289) a percolation-like phase transition in one of the tilesets that manifests in spiking contradiction rate.
-* Oskar Stalberg combined WFC with marching squares/cubes on an irregular grid: [1](https://twitter.com/OskSta/status/1164926304640229376), [2](https://twitter.com/OskSta/status/1168168400155267072).
+* Oskar Stalberg combined WFC with marching squares/cubes on an irregular grid: [1](https://twitter.com/OskSta/status/1164926304640229376), [2](https://twitter.com/OskSta/status/1168168400155267072), [3](https://twitter.com/OskSta/status/1181464374839521280).
+* In his Rust roguelike tutorial, [Herbert Wolverson](https://github.com/thebracket) wrote a [chapter](http://bfnightly.bracketproductions.com/rustbook/chapter_33.html) about implementing the WFC algorithm from scratch.
+* At the Roguelike Celebration 2019, [Brian Bucklew](https://github.com/unormal) gave a [talk](https://www.youtube.com/watch?v=fnFj3dOKcIQ) about WFC and how Freehold Games uses it to generate levels in [Caves of Qud](https://store.steampowered.com/app/333640/Caves_of_Qud/). The talk discusses problems with overfitting and homogeny, level connectedness and combining WFC with constructive procgen methods.
 
 ## Credits
-Some samples are taken from the games Ultima IV and [Dungeon Crawl](https://github.com/crawl/crawl). Circles tileset is taken from [Mario Klingemann](https://twitter.com/quasimondo/status/778196128957403136). Idea of generating integrated circuits was suggested to me by [Moonasaur](https://twitter.com/Moonasaur/status/759890746350731264) and their style was taken from Zachtronics' [Ruckingenur II](http://www.zachtronics.com/ruckingenur-ii/). Cat overlapping sample is taken from the Nyan Cat video, Qud sample was made by [Brian Bucklew](https://github.com/unormal), Magic Office + Spirals samples - by rid5x, Colored City + Link + Link 2 + Mazelike + Red Dot + Smile City overlapping samples - by Arvi Teikari. Summer tileset was made by Hermann Hillmann. Voxel models were rendered in [MagicaVoxel](http://ephtracy.github.io/).
+Some samples are taken from the games Ultima IV and [Dungeon Crawl](https://github.com/crawl/crawl). Circles tileset is taken from [Mario Klingemann](https://twitter.com/quasimondo/status/778196128957403136). Idea of generating integrated circuits was suggested to me by [Moonasaur](https://twitter.com/Moonasaur/status/759890746350731264) and their style was taken from Zachtronics' [Ruckingenur II](http://www.zachtronics.com/ruckingenur-ii/). Cat overlapping sample is taken from the Nyan Cat video, Qud sample was made by [Brian Bucklew](https://github.com/unormal), MagicOffice + Spirals samples - by rid5x, ColoredCity + Link + Link 2 + Mazelike + RedDot + SmileCity overlapping samples - by Arvi Teikari. Summer tileset was made by Hermann Hillmann. Voxel models were rendered in [MagicaVoxel](http://ephtracy.github.io/).
 
 <p align="center"><img alt="second collage" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-2.png"></p>
 <p align="center"><img alt="voxel perspective" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-castle-3d.png"></p>
