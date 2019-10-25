@@ -31,7 +31,7 @@ static class Stuff
         return 0;
     }
 
-    public static long Power(int a, int n)
+    public static long ToPower(this int a, int n)
     {
         long product = 1;
         for (int i = 0; i < n; i++) product *= a;
@@ -44,5 +44,5 @@ static class Stuff
         return a == null ? defaultT : (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(a.Value);
     }
 
-    public static IEnumerable<XElement> Elements(this XElement x, params string[] names) => x.Elements().Where(xelem => names.Any(s => s == xelem.Name));
+    public static IEnumerable<XElement> Elements(this XElement xelement, params string[] names) => xelement.Elements().Where(e => names.Any(n => n == e.Name));
 }

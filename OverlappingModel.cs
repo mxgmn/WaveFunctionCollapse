@@ -45,7 +45,7 @@ class OverlappingModel : Model
             }
 
         int C = colors.Count;
-        long W = Stuff.Power(C, N * N);
+        long W = C.ToPower(N * N);
 
         byte[] pattern(Func<int, int, byte> f)
         {
