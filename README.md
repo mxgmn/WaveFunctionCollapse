@@ -1,6 +1,5 @@
 # WaveFunctionCollapse
 This program generates bitmaps that are locally similar to the input bitmap.
-
 <p align="center"><img alt="main collage" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc.png"></p>
 <p align="center"><img alt="main gif" src="http://i.imgur.com/sNuBVSr.gif"></p>
 
@@ -10,7 +9,6 @@ Local similarity means that
 * (Weak C2) Distribution of NxN patterns in the input should be similar to the distribution of NxN patterns over a sufficiently large number of outputs. In other words, probability to meet a particular pattern in the output should be close to the density of such patterns in the input.
 
 In the examples a typical value of N is 3.
-
 <p align="center"><img alt="local similarity" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-patterns.png"></p>
 
 WFC initializes output bitmap in a completely unobserved state, where each pixel value is in superposition of colors of the input bitmap (so if the input was black & white then the unobserved states are shown in different shades of grey). The coefficients in these superpositions are real numbers, not complex numbers, so it doesn't do the actual quantum mechanics, but it was inspired by QM. Then the program goes into the observation-propagation cycle:
@@ -40,19 +38,13 @@ Watch a video demonstration of WFC algorithm on YouTube: [https://youtu.be/DOQTr
 
 ## Tilemap generation
 The simplest nontrivial case of the algorithm is when NxN=1x2 (well, NxM). If we simplify it even further by storing not the probabilities of pairs of colors but the probabilities of colors themselves, we get what we call a "simple tiled model". The propagation phase in this model is just adjacency constraint propagation. It's convenient to initialize the simple tiled model with a list of tiles and their adjacency data (adjacency data can be viewed as a large set of very small samples) rather than a sample bitmap.
-
-<p align="center">
-  <a href="http://i.imgur.com/jIctSoT.gif">GIF</a> |
-  <a href="http://i.imgur.com/jIctSoT.gifv">GIFV</a>
-</p>
+<p align="center"><img alt="tilemap generation" src="http://i.imgur.com/jIctSoT.gif"></p>
 
 Lists of all the possible pairs of adjacent tiles in practical tilesets can be quite long, so I implemented a symmetry system for tiles to shorten the enumeration. In this system each tile should be assigned with its symmetry type.
-
 <p align="center"><img alt="symmetries" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-symmetry-system.png"></p>
 
 Note that the tiles have the same symmetry type as their assigned letters (or, in other words, actions of the 
 dihedral group D4 are isomorphic for tiles and their corresponding letters). With this system it's enough to enumerate pairs of adjacent tiles only up to symmetry, which makes lists of adjacencies for tilesets with many symmetrical tiles (even the summer tileset, despite drawings not being symmetrical the system considers such tiles to be symmetrical) several times shorter.
-
 <p align="center">
 	<img alt="knots" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-knots.png">
 	<img alt="tiled rooms" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-rooms.png">
@@ -70,7 +62,6 @@ Note also that Circuit, Summer and Rooms tilesets are non-Wang. That is, their a
 
 ## Higher dimensions
 WFC algorithm in higher dimensions works completely the same way as in dimension 2, though performance becomes an issue. These voxel models were generated with N=2 overlapping tiled model using 5x5x5 and 5x5x2 blocks and additional heuristics (height, density, curvature, ...).
-
 <p align="center"><img alt="voxels" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-castles-3d.png"></p>
 
 Higher resolution screenshots: [1](http://i.imgur.com/0bsjlBY.png), [2](http://i.imgur.com/GduN0Vr.png), [3](http://i.imgur.com/IEOsbIy.png).
@@ -81,11 +72,7 @@ Voxel models generated with WFC and other algorithms will be in a separate repo.
 WFC algorithm supports constraints. Therefore, it can be easily combined with other generative algorithms or with manual creation.
 
 Here is WFC autocompleting a level started by a human:
-
-<p align="center">
-  <a href="http://i.imgur.com/X3aNDUv.gif">GIF</a> |
-  <a href="http://i.imgur.com/X3aNDUv.gifv">GIFV</a>
-</p>
+<p align="center"><img alt="constrained synthesis" src="http://i.imgur.com/X3aNDUv.gif"></p>
 
 [ConvChain](https://github.com/mxgmn/ConvChain) algorithm satisfies the strong version of the condition (C2): the limit distribution of NxN patterns in the outputs it is producing is exactly the same as the distributions of patterns in the input. However, ConvChain doesn't satisfy (C1): it often produces noticeable defects. It makes sense to run ConvChain first to get a well-sampled configuration and then run WFC to correct local defects. This is similar to a common strategy in optimization: first run a Monte-Carlo method to find a point close to a global optimum and then run a gradient descent from that point for greater accuracy.
 
@@ -111,7 +98,6 @@ It was also heavily influenced by declarative texture synthesis chapter of [Paul
 
 
 ## How to build
-
 WFC is a console application that depends only on the standard library. Get [.NET Core](https://www.microsoft.com/net/download) for Windows, Linux or macOS and run
 ```
 dotnet run WaveFunctionCollapse.csproj
@@ -119,7 +105,6 @@ dotnet run WaveFunctionCollapse.csproj
 Alternatively, use build instructions from the community for various platforms from the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
 
 ## Notable ports, forks and spinoffs
-
 * Emil Ernerfeldt made a [C++ port](https://github.com/emilk/wfc).
 * [Max Aller](https://github.com/nanodeath) made a Kotlin (JVM) library, [Kollapse](https://gitlab.com/nanodeath/kollapse). Joseph Roskopf made a line by line Kotlin [port](https://github.com/j-roskopf/WFC) of the optimized 2018 version. Edwin Jakobs made a [Kotlin library](https://github.com/edwinRNDR/wfc) that supports [3d examples](https://www.youtube.com/watch?v=g4Ih8wxBh1E).
 * [Kevin Chapelier](https://github.com/kchapelier) made a [JavaScript port](http://www.kchapelier.com/wfc-example/overlapping-model.html).
@@ -184,7 +169,6 @@ that the resulting observed zone is navigable at each step.
 * Łukasz Jakubowski, Maciej Kaszlewicz, Paweł Kroll and Stefan Radziuk [implemented](https://github.com/ic-pcg/waveFunctionCollapse) the tiled model in C.
 
 ## Credits
-Some samples are taken from the games Ultima IV and [Dungeon Crawl](https://github.com/crawl/crawl). Circles tileset is taken from [Mario Klingemann](https://twitter.com/quasimondo/status/778196128957403136). Idea of generating integrated circuits was suggested to me by [Moonasaur](https://twitter.com/Moonasaur/status/759890746350731264) and their style was taken from Zachtronics' [Ruckingenur II](http://www.zachtronics.com/ruckingenur-ii/). Cat overlapping sample is taken from the Nyan Cat video, Qud sample was made by [Brian Bucklew](https://github.com/unormal), MagicOffice + Spirals samples - by rid5x, ColoredCity + Link + Link 2 + Mazelike + RedDot + SmileCity overlapping samples - by Arvi Teikari. Summer tileset was made by Hermann Hillmann. Voxel models were rendered in [MagicaVoxel](http://ephtracy.github.io/).
-
+Some samples are taken from the games Ultima IV and [Dungeon Crawl Stone Soup](https://github.com/crawl/crawl). Circles tileset is taken from [Mario Klingemann](https://twitter.com/quasimondo/status/778196128957403136). FloorPlan tileset is taken from [Lingdong Huang](https://github.com/LingDong-/ndwfc). Idea of generating integrated circuits was suggested to me by [Moonasaur](https://twitter.com/Moonasaur/status/759890746350731264) and their style was taken from Zachtronics' [Ruckingenur II](http://www.zachtronics.com/ruckingenur-ii/). Cat overlapping sample is taken from the Nyan Cat video, Qud sample was made by Brian Bucklew, MagicOffice + Spirals samples - by rid5x, ColoredCity + Link + Link 2 + Mazelike + RedDot + SmileCity overlapping samples - by Arvi Teikari, Wall sample - by Arcaniax. Summer tileset was made by Hermann Hillmann. Voxel models were rendered in [MagicaVoxel](http://ephtracy.github.io/).
 <p align="center"><img alt="second collage" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-2.png"></p>
 <p align="center"><img alt="voxel perspective" src="https://raw.githubusercontent.com/mxgmn/Blog/master/resources/wfc-castle-3d.png"></p>
