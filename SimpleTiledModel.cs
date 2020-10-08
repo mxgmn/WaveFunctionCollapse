@@ -30,7 +30,7 @@ class SimpleTiledModel : Model
         bool unique = xroot.Get("unique", false);
 
         List<string> subset = null;
-        if (subsetName != default(string))
+        if (subsetName != null)
         {
             XElement xsubset = xroot.Element("subsets").Elements("subset").FirstOrDefault(x => x.Get<string>("name") == subsetName);
             if (xsubset == null) Console.WriteLine($"ERROR: subset {subsetName} is not found");
@@ -45,6 +45,7 @@ class SimpleTiledModel : Model
         };
 
         Color[] rotate(Color[] array) => tile((x, y) => array[tilesize - 1 - y + x * tilesize]);
+        Color[] reflect(Color[] array) => tile((x, y) => array[tilesize - 1 - x + y * tilesize]);
 
         tiles = new List<Color[]>();
         tilenames = new List<string>();
@@ -85,6 +86,12 @@ class SimpleTiledModel : Model
                 cardinality = 2;
                 a = i => 1 - i;
                 b = i => 1 - i;
+            }
+            else if (sym == 'F')
+            {
+                cardinality = 8;
+                a = i => i < 4 ? (i + 1) % 4 : 4 + (i - 1) % 4;
+                b = i => i < 4 ? i + 4 : i - 4;
             }
             else
             {
@@ -132,7 +139,8 @@ class SimpleTiledModel : Model
 
                 for (int t = 1; t < cardinality; t++)
                 {
-                    tiles.Add(rotate(tiles[T + t - 1]));
+                    if (t <= 3) tiles.Add(rotate(tiles[T + t - 1]));
+                    if (t >= 4) tiles.Add(reflect(tiles[T + t - 4]));
                     tilenames.Add($"{tilename} {t}");
                 }
             }
@@ -194,6 +202,7 @@ class SimpleTiledModel : Model
                 for (int t2 = 0; t2 < T; t2++) if (tp[t2]) sp.Add(t2);
 
                 int ST = sp.Count;
+                if (ST == 0) Console.WriteLine($"ERROR: tile {tilenames[t1]} has no neighbors in direction {d}");
                 propagator[d][t1] = new int[ST];
                 for (int st = 0; st < ST; st++) propagator[d][t1][st] = sp[st];
             }

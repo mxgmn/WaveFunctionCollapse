@@ -38,12 +38,13 @@
 	<simpletiled name="Knots" subset="Fabric" width="24" height="24" periodic="True"/>
 	<simpletiled name="Knots" subset="Dense Fabric" width="24" height="24" periodic="True"/>
 	<simpletiled name="Rooms" width="30" height="30"/>
-	<simpletiled name="Circles" width="24" height="24"/>
-	<simpletiled name="Circles" subset="Large Circles" width="24" height="24"/>
-	<simpletiled name="Circles" subset="Large Circles and Solid" width="24" height="24"/>
-	<simpletiled name="Circles" subset="No Solid" width="24" height="24"/>
-	
-	<overlapping name="Cat" N="3" symmetry="2" periodic="True" width="80" height="80"/>
+	<simpletiled name="Circles" width="24" height="24" screenshots="1"/>
+	<simpletiled name="Circles" subset="Large Circles" width="24" height="24" screenshots="1"/>
+	<simpletiled name="Circles" subset="Large Circles and Solid" width="24" height="24" screenshots="1"/>
+	<simpletiled name="Circles" subset="No Solid" width="24" height="24" screenshots="1"/>
+  <simpletiled name="FloorPlan" width="20" height="20" screenshots="3"/>
+
+  <overlapping name="Cat" N="3" symmetry="2" periodic="True" width="80" height="80"/>
 	<overlapping name="Cats" N="3" symmetry="2" periodic="True"/>
 	<overlapping name="Skyline2" N="3" symmetry="2" periodic="True" ground="-1"/>
 	<overlapping name="Angular" N="3" periodic="True"/>
@@ -66,8 +67,11 @@
 	<overlapping name="SmileCity" N="3" periodic="True"/>
 	<overlapping name="Spirals" N="3" periodic="True"/>
 	<overlapping name="Town" N="3" periodic="True"/>
-	
-	<overlapping name="3Bricks" N="3" symmetry="1" periodic="True"/>
+  <overlapping name="Wall" N="2" symmetry="1" screenshots="1"/>
+  <overlapping name="Wall" N="3" symmetry="2" screenshots="1"/>
+  <overlapping name="Wall" N="3" screenshots="1"/>
+
+  <overlapping name="3Bricks" N="3" symmetry="1" periodic="True"/>
 	<overlapping name="Village" N="3" symmetry="2" limit="50" periodic="True"/>
 	<simpletiled name="Summer" width="15" height="15" periodic="False" limit="15"/>
 

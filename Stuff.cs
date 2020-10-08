@@ -38,7 +38,7 @@ static class Stuff
         return product;
     }
 
-    public static T Get<T>(this XElement xelem, string attribute, T defaultT = default(T))
+    public static T Get<T>(this XElement xelem, string attribute, T defaultT = default)
     {
         XAttribute a = xelem.Attribute(attribute);
         return a == null ? defaultT : (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(a.Value);
