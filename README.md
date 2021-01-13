@@ -16,7 +16,7 @@ WFC initializes output bitmap in a completely unobserved state, where each pixel
 * On each observation step an NxN region is chosen among the unobserved which has the lowest Shannon entropy. This region's state then collapses into a definite state according to its coefficients and the distribution of NxN patterns in the input.
 * On each propagation step new information gained from the collapse on the previous step propagates through the output.
 
-On each step the overall entropy decreases and in the end we have a completely observed state, the wave function has collapsed.
+On each step the number of non-zero coefficients decreases and in the end we have a completely observed state, the wave function has collapsed.
 
 It may happen that during propagation all the coefficients for a certain pixel become zero. That means that the algorithm has run into a contradiction and can not continue. The problem of determining whether a certain bitmap allows other nontrivial bitmaps satisfying condition (C1) is NP-hard, so it's impossible to create a fast solution that always finishes. In practice, however, the algorithm runs into contradictions surprisingly rarely.
 
@@ -88,8 +88,6 @@ P. F. Harrison's [texture synthesis](https://github.com/mxgmn/SynTex) algorithm 
 Why the minimal entropy heuristic? I noticed that when humans draw something they often follow the minimal entropy heuristic themselves. That's why the algorithm is so enjoyable to watch.
 
 The overlapping model relates to the simple tiled model the same way higher order Markov chains relate to order one Markov chains.
-
-Note that the entropy of any node can't increase during the propagation phase, i.e. possibilities are not arising, but can be canceled. When propagation step can not decrease entropy further, we activate observation step. If the observation step can not decrease entropy, that means that the algorithm has finished working.
 
 WFC's propagation phase is very similar to the loopy belief propagation algorithm. In fact, I first programmed belief propagation, but then switched to constraint propagation with a saved stationary distribution, because BP is significantly slower without a massive parallelization (on a CPU) and didn't produce significantly better results in my problems.
 
