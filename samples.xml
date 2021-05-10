@@ -70,6 +70,11 @@
   <overlapping name="Wall" N="2" symmetry="1" screenshots="1"/>
   <overlapping name="Wall" N="3" symmetry="2" screenshots="1"/>
   <overlapping name="Wall" N="3" screenshots="1"/>
+  <overlapping name="Lines" N="3"/>
+  <overlapping name="WalledDot" N="3"/>
+  <overlapping name="NotKnot" N="3" periodic="True" periodicInput="False"/>
+  <overlapping name="Sand" N="3" periodic="True" periodicInput="False" screenshots="3"/>
+  <overlapping name="Wrinkles" N="3" periodic="True" width="120" height="120"/>
 
   <overlapping name="3Bricks" N="3" symmetry="1" periodic="True"/>
   <overlapping name="Village" N="3" symmetry="2" limit="50" periodic="True"/>
