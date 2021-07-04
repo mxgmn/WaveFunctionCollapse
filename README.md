@@ -96,10 +96,11 @@ Note that the "Simple Knot" and "Trick Knot" samples have 3 colors, not 2.
 One of the dimensions can be time. In particular, d-dimensional WFC captures the behaviour of any (d-1)-dimensional cellular automata.
 
 ## References
-This project builds upon Paul Merrell's work on model synthesis, in particular discrete model synthesis chapter of [his dissertation](http://graphics.stanford.edu/~pmerrell/thesis.pdf). Paul propagates adjacency constraints in what we call a simple tiled model with a heuristic that tries to complete propagation in a small moving region.
+This project builds upon Paul Merrell's work on model synthesis, in particular discrete model synthesis chapter of [his dissertation](http://graphics.stanford.edu/~pmerrell/thesis.pdf). The author propagates adjacency constraints in what we call a simple tiled model with a heuristic that tries to complete propagation in a small moving region.
 
-It was also heavily influenced by declarative texture synthesis chapter of [Paul F. Harrison's dissertation](http://logarithmic.net/pfh-files/thesis/dissertation.pdf). Paul defines adjacency data of tiles by labeling their borders and uses backtracking search to fill the tilemap.
+WFC translates a texture synthesis problem into a [constraint satisfaction problem](https://www.cs.ubc.ca/~mack/Publications/AI77.pdf). Currently it uses the [AC-4 algorithm](http://www.cs.utah.edu/~tch/CS4300/resources/AC4.pdf) by Roger Mohr and Thomas C. Henderson.
 
+WFC was also heavily influenced by declarative texture synthesis chapter of [Paul F. Harrison's dissertation](http://logarithmic.net/pfh-files/thesis/dissertation.pdf). The author defines adjacency data of tiles by labeling their borders and uses backtracking search to fill the tilemap.
 
 ## How to build
 WFC is a console application that depends only on the standard library. Get [.NET Core](https://www.microsoft.com/net/download) for Windows, Linux or macOS and run
