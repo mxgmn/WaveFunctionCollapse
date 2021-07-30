@@ -96,7 +96,7 @@ Note that the "Simple Knot" and "Trick Knot" samples have 3 colors, not 2.
 One of the dimensions can be time. In particular, d-dimensional WFC captures the behaviour of any (d-1)-dimensional cellular automata.
 
 ## Used work
-1. Paul C. Merrell, [Model Synthesis](http://graphics.stanford.edu/~pmerrell/thesis.pdf), 2009. WFC builds upon Paul Merrell's work on model synthesis. The author propagates adjacency constraints in what we call a simple tiled model with a heuristic that tries to complete propagation in a small moving region.
+1. Paul C. Merrell, [Model Synthesis](http://graphics.stanford.edu/~pmerrell/thesis.pdf), 2009. WFC builds upon Paul Merrell's work on model synthesis. The author propagates adjacency constraints in what we call a simple tiled model with a heuristic that tries to complete propagation in a small moving region. Recently the author created a [page](https://paulmerrell.org/model-synthesis/) and published [code](https://github.com/merrell42/model-synthesis) for model synthesis.
 2. Alan K. Mackworth, [Consistency in Networks of Relations](https://www.cs.ubc.ca/~mack/Publications/AI77.pdf), 1977. WFC translates a texture synthesis problem into a constraint satisfaction problem. Currently it uses the [AC-4 algorithm](http://www.cs.utah.edu/~tch/CS4300/resources/AC4.pdf) by Roger Mohr and Thomas C. Henderson, 1986.
 3. Paul F. Harrison, [Image Texture Tools](http://logarithmic.net/pfh-files/thesis/dissertation.pdf), 2005. WFC was also influenced by the declarative texture synthesis chapter of Paul Harrison's dissertation. The author defines adjacency data of tiles by labeling their borders and uses backtracking search to fill the tilemap.
 
