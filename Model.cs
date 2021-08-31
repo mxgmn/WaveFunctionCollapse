@@ -17,28 +17,34 @@ abstract class Model
     protected int[] observed;
 
     (int, int)[] stack;
-    int stacksize;
+    int stacksize, observedSoFar;
 
     protected Random random;
-    protected int FMX, FMY, T;
+    protected int MX, MY, T, N;
     protected bool periodic;
 
     protected double[] weights;
-    double[] weightLogWeights;
+    double[] weightLogWeights, distribution;
 
     int[] sumsOfOnes;
     double sumOfWeights, sumOfWeightLogWeights, startingEntropy;
     double[] sumsOfWeights, sumsOfWeightLogWeights, entropies;
 
-    protected Model(int width, int height)
+    public enum Heuristic { Entropy, MRV, Scanline };
+    Heuristic heuristic;
+
+    protected Model(int width, int height, int N, bool periodic, Heuristic heuristic)
     {
-        FMX = width;
-        FMY = height;
+        MX = width;
+        MY = height;
+        this.N = N;
+        this.periodic = periodic;
+        this.heuristic = heuristic;
     }
 
     void Init()
     {
-        wave = new bool[FMX * FMY][];
+        wave = new bool[MX * MY][];
         compatible = new int[wave.Length][][];
         for (int i = 0; i < wave.Length; i++)
         {
@@ -46,6 +52,8 @@ abstract class Model
             compatible[i] = new int[T][];
             for (int t = 0; t < T; t++) compatible[i][t] = new int[4];
         }
+        distribution = new double[T];
+        observed = new int[MX * MY];
 
         weightLogWeights = new double[T];
         sumOfWeights = 0;
@@ -60,29 +68,65 @@ abstract class Model
 
         startingEntropy = Math.Log(sumOfWeights) - sumOfWeightLogWeights / sumOfWeights;
 
-        sumsOfOnes = new int[FMX * FMY];
-        sumsOfWeights = new double[FMX * FMY];
-        sumsOfWeightLogWeights = new double[FMX * FMY];
-        entropies = new double[FMX * FMY];
+        sumsOfOnes = new int[MX * MY];
+        sumsOfWeights = new double[MX * MY];
+        sumsOfWeightLogWeights = new double[MX * MY];
+        entropies = new double[MX * MY];
 
         stack = new (int, int)[wave.Length * T];
         stacksize = 0;
     }
 
-    bool? Observe()
+    public bool Run(int seed, int limit)
     {
+        if (wave == null) Init();
+
+        Clear();
+        random = new Random(seed);
+
+        for (int l = 0; l < limit || limit < 0; l++)
+        {
+            int node = NextUnobservedNode();
+            if (node >= 0)
+            {
+                Observe(node);
+                bool success = Propagate();
+                if (!success) return false;
+            }
+            else
+            {
+                for (int i = 0; i < wave.Length; i++) for (int t = 0; t < T; t++) if (wave[i][t]) { observed[i] = t; break; }
+                return true;
+            }
+        }
+
+        return true;
+    }
+
+    protected int NextUnobservedNode()
+    {
+        if (heuristic == Heuristic.Scanline)
+        {
+            for (int i = observedSoFar; i < wave.Length; i++)
+            {
+                if (!periodic && (i % MX + N > MX || i / MX + N > MY)) continue;
+                if (sumsOfOnes[i] > 1)
+                {
+                    observedSoFar = i + 1;
+                    return i;
+                }
+            }
+            return -1;
+        }
+
         double min = 1E+3;
         int argmin = -1;
-
         for (int i = 0; i < wave.Length; i++)
         {
-            if (OnBoundary(i % FMX, i / FMX)) continue;
-
-            int amount = sumsOfOnes[i];
-            if (amount == 0) return false;
-
-            double entropy = entropies[i];
-            if (amount > 1 && entropy <= min)
+            if (!periodic && (i % MX + N > MX || i / MX + N > MY)) continue;
+            int remainingValues = sumsOfOnes[i];
+            double entropy = heuristic == Heuristic.Entropy ? entropies[i] : remainingValues;
+            if (remainingValues > 1 && entropy <= min)
             {
                 double noise = 1E-6 * random.NextDouble();
                 if (entropy + noise < min)
@@ -92,47 +136,40 @@ abstract class Model
                 }
             }
         }
-
-        if (argmin == -1)
-        {
-            observed = new int[FMX * FMY];
-            for (int i = 0; i < wave.Length; i++) for (int t = 0; t < T; t++) if (wave[i][t]) { observed[i] = t; break; }
-            return true;
-        }
-
-        double[] distribution = new double[T];
-        for (int t = 0; t < T; t++) distribution[t] = wave[argmin][t] ? weights[t] : 0;
-        int r = distribution.Random(random.NextDouble());
-
-        bool[] w = wave[argmin];
-        for (int t = 0; t < T; t++) if (w[t] != (t == r)) Ban(argmin, t);
-
-        return null;
+        return argmin;
     }
 
-    protected void Propagate()
+    void Observe(int node)
+    {
+        bool[] w = wave[node];
+        for (int t = 0; t < T; t++) distribution[t] = w[t] ? weights[t] : 0.0;
+        int r = distribution.Random(random.NextDouble());
+        for (int t = 0; t < T; t++) if (w[t] != (t == r)) Ban(node, t);
+    }
+
+    protected bool Propagate()
     {
         while (stacksize > 0)
         {
-            var e1 = stack[stacksize - 1];
+            (int i1, int t1) = stack[stacksize - 1];
             stacksize--;
 
-            int i1 = e1.Item1;
-            int x1 = i1 % FMX, y1 = i1 / FMX;
+            int x1 = i1 % MX;
+            int y1 = i1 / MX;
 
             for (int d = 0; d < 4; d++)
             {
-                int dx = DX[d], dy = DY[d];
-                int x2 = x1 + dx, y2 = y1 + dy;
-                if (OnBoundary(x2, y2)) continue;
+                int x2 = x1 + dx[d];
+                int y2 = y1 + dy[d];
+                if (!periodic && (x2 < 0 || y2 < 0 || x2 + N > MX || y2 + N > MY)) continue;
 
-                if (x2 < 0) x2 += FMX;
-                else if (x2 >= FMX) x2 -= FMX;
-                if (y2 < 0) y2 += FMY;
-                else if (y2 >= FMY) y2 -= FMY;
+                if (x2 < 0) x2 += MX;
+                else if (x2 >= MX) x2 -= MX;
+                if (y2 < 0) y2 += MY;
+                else if (y2 >= MY) y2 -= MY;
 
-                int i2 = x2 + y2 * FMX;
-                int[] p = propagator[d][e1.Item2];
+                int i2 = x2 + y2 * MX;
+                int[] p = propagator[d][t1];
                 int[][] compat = compatible[i2];
 
                 for (int l = 0; l < p.Length; l++)
@@ -145,23 +182,8 @@ abstract class Model
                 }
             }
         }
-    }
 
-    public bool Run(int seed, int limit)
-    {
-        if (wave == null) Init();
-
-        Clear();
-        random = new Random(seed);
-
-        for (int l = 0; l < limit || limit == 0; l++)
-        {
-            bool? result = Observe();
-            if (result != null) return (bool)result;
-            Propagate();
-        }
-
-        return true;
+        return sumsOfOnes[0] > 0;
     }
 
     protected void Ban(int i, int t)
@@ -196,12 +218,12 @@ abstract class Model
             sumsOfWeightLogWeights[i] = sumOfWeightLogWeights;
             entropies[i] = startingEntropy;
         }
+        observedSoFar = 0;
     }
 
-    protected abstract bool OnBoundary(int x, int y);
     public abstract System.Drawing.Bitmap Graphics();
 
-    protected static int[] DX = { -1, 0, 1, 0 };
-    protected static int[] DY = { 0, 1, 0, -1 };
+    protected static int[] dx = { -1, 0, 1, 0 };
+    protected static int[] dy = { 0, 1, 0, -1 };
     static int[] opposite = { 2, 3, 0, 1 };
 }

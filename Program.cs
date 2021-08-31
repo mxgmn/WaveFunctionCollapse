@@ -19,18 +19,36 @@ static class Program
         Random random = new Random();
         XDocument xdoc = XDocument.Load("samples.xml");
 
-        int counter = 1;
         foreach (XElement xelem in xdoc.Root.Elements("overlapping", "simpletiled"))
         {
             Model model;
             string name = xelem.Get<string>("name");
             Console.WriteLine($"< {name}");
 
-            if (xelem.Name == "overlapping") model = new OverlappingModel(name, xelem.Get("N", 2), xelem.Get("width", 48), xelem.Get("height", 48),
-                xelem.Get("periodicInput", true), xelem.Get("periodic", false), xelem.Get("symmetry", 8), xelem.Get("ground", 0));
-            else if (xelem.Name == "simpletiled") model = new SimpleTiledModel(name, xelem.Get<string>("subset"),
-                xelem.Get("width", 10), xelem.Get("height", 10), xelem.Get("periodic", false), xelem.Get("black", false));
-            else continue;
+            bool isOverlapping = xelem.Name == "overlapping";
+            int size = xelem.Get("size", isOverlapping ? 48 : 24);
+            int width = xelem.Get("width", size);
+            int height = xelem.Get("height", size);
+            bool periodic = xelem.Get("periodic", false);
+            string heuristicString = xelem.Get<string>("heuristic");
+            var heuristic = heuristicString == "Scanline" ? Model.Heuristic.Scanline : (heuristicString == "MRV" ? Model.Heuristic.MRV : Model.Heuristic.Entropy);
+
+            if (isOverlapping)
+            {
+                int N = xelem.Get("N", 3);
+                bool periodicInput = xelem.Get("periodicInput", true);
+                int symmetry = xelem.Get("symmetry", 8);
+                int ground = xelem.Get("ground", 0);
+
+                model = new OverlappingModel(name, N, width, height, periodicInput, periodic, symmetry, ground, heuristic);
+            }
+            else
+            {
+                string subset = xelem.Get<string>("subset");
+                bool blackBackground = xelem.Get("blackBackground", false);
+
+                model = new SimpleTiledModel(name, subset, width, height, periodic, blackBackground, heuristic);
+            }
 
             for (int i = 0; i < xelem.Get("screenshots", 2); i++)
             {
@@ -38,22 +56,17 @@ static class Program
                 {
                     Console.Write("> ");
                     int seed = random.Next();
-                    bool finished = model.Run(seed, xelem.Get("limit", 0));
-                    if (finished)
+                    bool success = model.Run(seed, xelem.Get("limit", -1));
+                    if (success)
                     {
                         Console.WriteLine("DONE");
-
-                        model.Graphics().Save($"{counter} {name} {i}.png");
-                        if (model is SimpleTiledModel && xelem.Get("textOutput", false))
-                            System.IO.File.WriteAllText($"{counter} {name} {i}.txt", (model as SimpleTiledModel).TextOutput());
-
+                        model.Graphics().Save($"{name} {seed}.png");
+                        if (model is SimpleTiledModel stmodel && xelem.Get("textOutput", false)) System.IO.File.WriteAllText($"{name} {seed}.txt", stmodel.TextOutput());
                         break;
                     }
                     else Console.WriteLine("CONTRADICTION");
                 }
             }
-
-            counter++;
         }
 
         Console.WriteLine($"time = {sw.ElapsedMilliseconds}");

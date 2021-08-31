@@ -1,6 +1,6 @@
 <samples>
   <overlapping name="Chess" N="2" periodic="True"/>
-  <overlapping name="Chess" N="2" width="47" height="47" periodic="True" screenshots="1"/>
+  <overlapping name="Chess" N="2" size="47" periodic="True" screenshots="1"/>
   <overlapping name="Skyline" N="3" symmetry="2" ground="-1" periodic="True"/>
   <overlapping name="Flowers" N="3" symmetry="2" ground="-4" periodic="True"/>
   <overlapping name="Hogs" N="3" periodic="True"/>
@@ -24,41 +24,41 @@
   <overlapping name="TrickKnot" N="3" periodic="True"/>
   <overlapping name="Village" N="3" symmetry="2" periodic="True"/>
   <overlapping name="Water" N="3" symmetry="1" periodic="True"/>
-  <simpletiled name="Summer" width="15" height="15"/>
-  <simpletiled name="Castle" width="20" height="20"/>
-  <simpletiled name="Circuit" subset="Turnless" width="34" height="34" periodic="True" screenshots="3"/>
-  <simpletiled name="Knots" subset="Standard" width="24" height="24" periodic="True"/>
-  <simpletiled name="Knots" subset="Dense" width="24" height="24" periodic="True"/>
-  <simpletiled name="Knots" subset="Crossless" width="24" height="24"/>
-  <simpletiled name="Knots" subset="TE" width="24" height="24"/>
-  <simpletiled name="Knots" subset="T" width="24" height="24"/>
-  <simpletiled name="Knots" subset="CL" width="24" height="24"/>
-  <simpletiled name="Knots" subset="CE" width="24" height="24" periodic="True"/>
-  <simpletiled name="Knots" subset="C" width="24" height="24" periodic="True"/>
-  <simpletiled name="Knots" subset="Fabric" width="24" height="24" periodic="True"/>
-  <simpletiled name="Knots" subset="Dense Fabric" width="24" height="24" periodic="True"/>
-  <simpletiled name="Rooms" width="30" height="30"/>
-  <simpletiled name="Circles" width="24" height="24" screenshots="1"/>
-  <simpletiled name="Circles" subset="Large Circles" width="24" height="24" screenshots="1"/>
-  <simpletiled name="Circles" subset="Large Circles and Solid" width="24" height="24" screenshots="1"/>
-  <simpletiled name="Circles" subset="No Solid" width="24" height="24" screenshots="1"/>
-  <simpletiled name="FloorPlan" width="20" height="20" screenshots="3"/>
+  <simpletiled name="Summer" size="20"/>
+  <simpletiled name="Castle" size="50" heuristic="Scanline"/>
+  <simpletiled name="Circuit" subset="Turnless" size="34" periodic="True" screenshots="3"/>
+  <simpletiled name="Knots" subset="Standard" size="24" periodic="True"/>
+  <simpletiled name="Knots" subset="Dense" size="24" periodic="True"/>
+  <simpletiled name="Knots" subset="Crossless" size="24"/>
+  <simpletiled name="Knots" subset="TE" size="24" screenshots="1"/>
+  <simpletiled name="Knots" subset="T" size="24" screenshots="1"/>
+  <simpletiled name="Knots" subset="CL" size="24"/>
+  <simpletiled name="Knots" subset="CE" size="24" periodic="True"/>
+  <simpletiled name="Knots" subset="C" size="24" periodic="True"/>
+  <simpletiled name="Knots" subset="Fabric" size="24" periodic="True" screenshots="1"/>
+  <simpletiled name="Knots" subset="Dense Fabric" size="24" periodic="True" screenshots="1"/>
+  <simpletiled name="Rooms" size="30"/>
+  <simpletiled name="Circles" size="24" screenshots="1"/>
+  <simpletiled name="Circles" subset="Large Circles" size="24" screenshots="1"/>
+  <simpletiled name="Circles" subset="Large Circles and Solid" size="24" screenshots="1"/>
+  <simpletiled name="Circles" subset="No Solid" size="24" screenshots="1"/>
+  <simpletiled name="FloorPlan" size="20" screenshots="3"/>
 
-  <overlapping name="Cat" N="3" symmetry="2" periodic="True" width="80" height="80"/>
+  <overlapping name="Cat" N="3" symmetry="2" periodic="True" size="80"/>
   <overlapping name="Cats" N="3" symmetry="2" periodic="True"/>
   <overlapping name="Skyline2" N="3" symmetry="2" periodic="True" ground="-1"/>
   <overlapping name="Angular" N="3" periodic="True"/>
-  <overlapping name="City" N="3" periodic="True" width="80" height="80"/>
+  <overlapping name="City" N="3" periodic="True" size="80"/>
   <overlapping name="ColoredCity" N="3" periodic="True"/>
   <overlapping name="Dungeon" N="3" periodic="True"/>
-  <overlapping name="Lake" N="3" periodic="True" width="60" height="60"/>
+  <overlapping name="Lake" N="3" periodic="True" size="60"/>
   <overlapping name="Link" N="3" periodic="True"/>
   <overlapping name="Link2" N="3" periodic="True"/>
   <overlapping name="Mazelike" N="3" periodic="True"/>
   <overlapping name="Nested" N="3" periodic="True"/>
   <overlapping name="MagicOffice" N="3" periodic="True"/>
   <overlapping name="Office2" N="3" periodic="True"/>
-  <overlapping name="Qud" N="3" periodic="True" width="80" height="80"/>
+  <overlapping name="Qud" N="3" periodic="True" size="80"/>
   <overlapping name="RedDot" N="3" periodic="True"/>
   <overlapping name="ScaledMaze" N="2" periodic="True"/>
   <overlapping name="Sewers" N="3" periodic="True"/>
@@ -74,13 +74,13 @@
   <overlapping name="WalledDot" N="3"/>
   <overlapping name="NotKnot" N="3" periodic="True" periodicInput="False"/>
   <overlapping name="Sand" N="3" periodic="True" periodicInput="False" screenshots="3"/>
-  <overlapping name="Wrinkles" N="3" periodic="True" width="120" height="120"/>
-
+  <overlapping name="Wrinkles" N="3" periodic="True" heuristic="MRV" size="120"/>
   <overlapping name="3Bricks" N="3" symmetry="1" periodic="True"/>
-  <overlapping name="Village" N="3" symmetry="2" limit="50" periodic="True"/>
-  <simpletiled name="Summer" width="15" height="15" periodic="False" limit="15"/>
+  
+  <overlapping name="Village" N="3" symmetry="2" periodic="True" limit="50"/>
+  <simpletiled name="Summer" size="15" periodic="False" limit="15"/>
 
-  <simpletiled name="Knots" subset="Standard" width="5" height="5" periodic="True" textOutput="True"/>
-  <simpletiled name="Summer" width="6" height="6" periodic="False" textOutput="True"/>
-  <simpletiled name="Circuit" subset="Turnless" width="7" height="7" periodic="True" textOutput="True"/>
+  <simpletiled name="Knots" subset="Standard" size="5" periodic="True" textOutput="True"/>
+  <simpletiled name="Summer" size="6" periodic="False" textOutput="True"/>
+  <simpletiled name="Circuit" subset="Turnless" size="7" periodic="True" textOutput="True"/>
 </samples>

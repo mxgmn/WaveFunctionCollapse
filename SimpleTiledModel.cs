@@ -18,12 +18,11 @@ class SimpleTiledModel : Model
     List<Color[]> tiles;
     List<string> tilenames;
     int tilesize;
-    bool black;
+    bool blackBackground;
 
-    public SimpleTiledModel(string name, string subsetName, int width, int height, bool periodic, bool black) : base(width, height)
+    public SimpleTiledModel(string name, string subsetName, int width, int height, bool periodic, bool blackBackground, Heuristic heuristic) : base(width, height, 1, periodic, heuristic)
     {
-        this.periodic = periodic;
-        this.black = black;
+        this.blackBackground = blackBackground;
 
         XElement xroot = XDocument.Load($"samples/{name}/data.xml").Root;
         tilesize = xroot.Get("size", 16);
@@ -49,10 +48,10 @@ class SimpleTiledModel : Model
 
         tiles = new List<Color[]>();
         tilenames = new List<string>();
-        var tempStationary = new List<double>();
+        var weightList = new List<double>();
 
-        List<int[]> action = new List<int[]>();
-        Dictionary<string, int> firstOccurrence = new Dictionary<string, int>();
+        var action = new List<int[]>();
+        var firstOccurrence = new Dictionary<string, int>();
 
         foreach (XElement xtile in xroot.Element("tiles").Elements("tile"))
         {
@@ -145,19 +144,19 @@ class SimpleTiledModel : Model
                 }
             }
 
-            for (int t = 0; t < cardinality; t++) tempStationary.Add(xtile.Get("weight", 1.0f));
+            for (int t = 0; t < cardinality; t++) weightList.Add(xtile.Get("weight", 1.0));
         }
 
         T = action.Count;
-        weights = tempStationary.ToArray();
+        weights = weightList.ToArray();
 
         propagator = new int[4][][];
-        var tempPropagator = new bool[4][][];
+        var densePropagator = new bool[4][][];
         for (int d = 0; d < 4; d++)
         {
-            tempPropagator[d] = new bool[T][];
+            densePropagator[d] = new bool[T][];
             propagator[d] = new int[T][];
-            for (int t = 0; t < T; t++) tempPropagator[d][t] = new bool[T];
+            for (int t = 0; t < T; t++) densePropagator[d][t] = new bool[T];
         }
 
         foreach (XElement xneighbor in xroot.Element("neighbors").Elements("neighbor"))
@@ -170,21 +169,21 @@ class SimpleTiledModel : Model
             int L = action[firstOccurrence[left[0]]][left.Length == 1 ? 0 : int.Parse(left[1])], D = action[L][1];
             int R = action[firstOccurrence[right[0]]][right.Length == 1 ? 0 : int.Parse(right[1])], U = action[R][1];
 
-            tempPropagator[0][R][L] = true;
-            tempPropagator[0][action[R][6]][action[L][6]] = true;
-            tempPropagator[0][action[L][4]][action[R][4]] = true;
-            tempPropagator[0][action[L][2]][action[R][2]] = true;
+            densePropagator[0][R][L] = true;
+            densePropagator[0][action[R][6]][action[L][6]] = true;
+            densePropagator[0][action[L][4]][action[R][4]] = true;
+            densePropagator[0][action[L][2]][action[R][2]] = true;
 
-            tempPropagator[1][U][D] = true;
-            tempPropagator[1][action[D][6]][action[U][6]] = true;
-            tempPropagator[1][action[U][4]][action[D][4]] = true;
-            tempPropagator[1][action[D][2]][action[U][2]] = true;
+            densePropagator[1][U][D] = true;
+            densePropagator[1][action[D][6]][action[U][6]] = true;
+            densePropagator[1][action[U][4]][action[D][4]] = true;
+            densePropagator[1][action[D][2]][action[U][2]] = true;
         }
 
         for (int t2 = 0; t2 < T; t2++) for (int t1 = 0; t1 < T; t1++)
             {
-                tempPropagator[2][t2][t1] = tempPropagator[0][t1][t2];
-                tempPropagator[3][t2][t1] = tempPropagator[1][t1][t2];
+                densePropagator[2][t2][t1] = densePropagator[0][t1][t2];
+                densePropagator[3][t2][t1] = densePropagator[1][t1][t2];
             }
 
         List<int>[][] sparsePropagator = new List<int>[4][];
@@ -197,7 +196,7 @@ class SimpleTiledModel : Model
         for (int d = 0; d < 4; d++) for (int t1 = 0; t1 < T; t1++)
             {
                 List<int> sp = sparsePropagator[d][t1];
-                bool[] tp = tempPropagator[d][t1];
+                bool[] tp = densePropagator[d][t1];
 
                 for (int t2 = 0; t2 < T; t2++) if (tp[t2]) sp.Add(t2);
 
@@ -208,37 +207,35 @@ class SimpleTiledModel : Model
             }
     }
 
-    protected override bool OnBoundary(int x, int y) => !periodic && (x < 0 || y < 0 || x >= FMX || y >= FMY);
-
     public override Bitmap Graphics()
     {
-        Bitmap result = new Bitmap(FMX * tilesize, FMY * tilesize);
+        Bitmap result = new Bitmap(MX * tilesize, MY * tilesize);
         int[] bitmapData = new int[result.Height * result.Width];
 
-        if (observed != null)
+        if (NextUnobservedNode() < 0)
         {
-            for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++)
+            for (int x = 0; x < MX; x++) for (int y = 0; y < MY; y++)
                 {
-                    Color[] tile = tiles[observed[x + y * FMX]];
+                    Color[] tile = tiles[observed[x + y * MX]];
                     for (int yt = 0; yt < tilesize; yt++) for (int xt = 0; xt < tilesize; xt++)
                         {
                             Color c = tile[xt + yt * tilesize];
-                            bitmapData[x * tilesize + xt + (y * tilesize + yt) * FMX * tilesize] =
+                            bitmapData[x * tilesize + xt + (y * tilesize + yt) * MX * tilesize] =
                                 unchecked((int)0xff000000 | (c.R << 16) | (c.G << 8) | c.B);
                         }
                 }
         }
         else
         {
-            for (int x = 0; x < FMX; x++) for (int y = 0; y < FMY; y++)
+            for (int x = 0; x < MX; x++) for (int y = 0; y < MY; y++)
                 {
-                    bool[] a = wave[x + y * FMX];
+                    bool[] a = wave[x + y * MX];
                     int amount = (from b in a where b select 1).Sum();
                     double lambda = 1.0 / (from t in Enumerable.Range(0, T) where a[t] select weights[t]).Sum();
 
                     for (int yt = 0; yt < tilesize; yt++) for (int xt = 0; xt < tilesize; xt++)
                         {
-                            if (black && amount == T) bitmapData[x * tilesize + xt + (y * tilesize + yt) * FMX * tilesize] = unchecked((int)0xff000000);
+                            if (blackBackground && amount == T) bitmapData[x * tilesize + xt + (y * tilesize + yt) * MX * tilesize] = unchecked((int)0xff000000);
                             else
                             {
                                 double r = 0, g = 0, b = 0;
@@ -250,7 +247,7 @@ class SimpleTiledModel : Model
                                         b += (double)c.B * weights[t] * lambda;
                                     }
 
-                                bitmapData[x * tilesize + xt + (y * tilesize + yt) * FMX * tilesize] =
+                                bitmapData[x * tilesize + xt + (y * tilesize + yt) * MX * tilesize] =
                                     unchecked((int)0xff000000 | ((int)r << 16) | ((int)g << 8) | (int)b);
                             }
                         }
@@ -267,13 +264,11 @@ class SimpleTiledModel : Model
     public string TextOutput()
     {
         var result = new System.Text.StringBuilder();
-
-        for (int y = 0; y < FMY; y++)
+        for (int y = 0; y < MY; y++)
         {
-            for (int x = 0; x < FMX; x++) result.Append($"{tilenames[observed[x + y * FMX]]}, ");
+            for (int x = 0; x < MX; x++) result.Append($"{tilenames[observed[x + y * MX]]}, ");
             result.Append(Environment.NewLine);
         }
-
         return result.ToString();
     }
 }
