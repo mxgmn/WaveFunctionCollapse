@@ -3,6 +3,7 @@ message: "Please cite if you use WFC in your research."
 authors:
   - family-names: Gumin
     given-names: Maxim
+    email: ExUtumno@gmail.com
 title: Wave Function Collapse Algorithm
 version: 1.0
 date-released: 2016-09-30

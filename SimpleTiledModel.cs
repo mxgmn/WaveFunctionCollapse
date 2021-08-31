@@ -212,7 +212,7 @@ class SimpleTiledModel : Model
         Bitmap result = new Bitmap(MX * tilesize, MY * tilesize);
         int[] bitmapData = new int[result.Height * result.Width];
 
-        if (NextUnobservedNode() < 0)
+        if (observed[0] >= 0)
         {
             for (int x = 0; x < MX; x++) for (int y = 0; y < MY; y++)
                 {

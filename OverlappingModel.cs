@@ -154,7 +154,7 @@ class OverlappingModel : Model
         Bitmap result = new Bitmap(MX, MY);
         int[] bitmapData = new int[result.Height * result.Width];
 
-        if (NextUnobservedNode() < 0)
+        if (observed[0] >= 0)
         {
             for (int y = 0; y < MY; y++)
             {

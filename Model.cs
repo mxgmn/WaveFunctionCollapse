@@ -19,7 +19,6 @@ abstract class Model
     (int, int)[] stack;
     int stacksize, observedSoFar;
 
-    protected Random random;
     protected int MX, MY, T, N;
     protected bool periodic;
 
@@ -82,14 +81,14 @@ abstract class Model
         if (wave == null) Init();
 
         Clear();
-        random = new Random(seed);
+        Random random = new Random(seed);
 
         for (int l = 0; l < limit || limit < 0; l++)
         {
-            int node = NextUnobservedNode();
+            int node = NextUnobservedNode(random);
             if (node >= 0)
             {
-                Observe(node);
+                Observe(node, random);
                 bool success = Propagate();
                 if (!success) return false;
             }
@@ -103,7 +102,7 @@ abstract class Model
         return true;
     }
 
-    protected int NextUnobservedNode()
+    protected int NextUnobservedNode(Random random)
     {
         if (heuristic == Heuristic.Scanline)
         {
@@ -139,7 +138,7 @@ abstract class Model
         return argmin;
     }
 
-    void Observe(int node)
+    void Observe(int node, Random random)
     {
         bool[] w = wave[node];
         for (int t = 0; t < T; t++) distribution[t] = w[t] ? weights[t] : 0.0;
@@ -217,6 +216,7 @@ abstract class Model
             sumsOfWeights[i] = sumOfWeights;
             sumsOfWeightLogWeights[i] = sumOfWeightLogWeights;
             entropies[i] = startingEntropy;
+            observed[i] = -1;
         }
         observedSoFar = 0;
     }
