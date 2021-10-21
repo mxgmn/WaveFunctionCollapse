@@ -81,10 +81,11 @@
   <overlapping name="Disk" N="3" symmetry="1" periodic="True" heuristic="MRV" size="90" screenshots="1"/>
   <overlapping name="Disk" N="3" periodic="True" heuristic="MRV" size="90" screenshots="1"/>
   <overlapping name="Disk" N="4" periodic="True" heuristic="MRV" size="90" screenshots="1"/>
-  <overlapping name="Font" N="4" symmetry="1" heuristic="MRV" size="90"/>
+  <overlapping name="BrownFox" N="4" symmetry="1" heuristic="MRV" size="90" screenshots="1"/>
+  <overlapping name="Font" N="5" symmetry="2" periodic="True" heuristic="MRV" size="90" screenshots="1"/>
   
-  <overlapping name="Village" N="3" symmetry="2" size="36" periodic="True" limit="50"/>
-  <simpletiled name="Summer" size="10" periodic="False" limit="15"/>
+  <overlapping name="Village" N="3" symmetry="2" size="36" periodic="True" limit="90"/>
+  <simpletiled name="Summer" size="10" periodic="False" limit="25"/>
 
   <simpletiled name="Knots" subset="Standard" size="5" periodic="True" textOutput="True"/>
   <simpletiled name="Summer" size="6" periodic="False" textOutput="True"/>

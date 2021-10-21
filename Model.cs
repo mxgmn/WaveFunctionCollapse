@@ -118,7 +118,7 @@ abstract class Model
             return -1;
         }
 
-        double min = 1E+3;
+        double min = 1E+4;
         int argmin = -1;
         for (int i = 0; i < wave.Length; i++)
         {

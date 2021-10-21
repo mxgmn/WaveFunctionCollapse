@@ -11,24 +11,21 @@ using System.Xml.Linq;
 using System.ComponentModel;
 using System.Collections.Generic;
 
-static class Stuff
+static class Helper
 {
-    public static int Random(this double[] a, double r)
+    public static int Random(this double[] weights, double r)
     {
-        double sum = a.Sum();
-        for (int j = 0; j < a.Length; j++) a[j] /= sum;
+        double sum = 0;
+        for (int i = 0; i < weights.Length; i++) sum += weights[i];
+        double threshold = r * sum;
 
-        int i = 0;
-        double x = 0;
-
-        while (i < a.Length)
+        double partialSum = 0;
+        for (int i = 0; i < weights.Length; i++)
         {
-            x += a[i];
-            if (r <= x) return i;
-            i++;
+            partialSum += weights[i];
+            if (partialSum >= threshold) return i;
         }
-
-        return 0;
+        return -1;
     }
 
     public static long ToPower(this int a, int n)
