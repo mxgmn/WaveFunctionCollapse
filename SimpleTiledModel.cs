@@ -125,14 +125,14 @@ class SimpleTiledModel : Model
             {
                 for (int t = 0; t < cardinality; t++)
                 {
-                    Bitmap bitmap = new Bitmap($"samples/{name}/{tilename} {t}.png");
+                    Bitmap bitmap = new($"samples/{name}/{tilename} {t}.png");
                     tiles.Add(tile((x, y) => bitmap.GetPixel(x, y)));
                     tilenames.Add($"{tilename} {t}");
                 }
             }
             else
             {
-                Bitmap bitmap = new Bitmap($"samples/{name}/{tilename}.png");
+                Bitmap bitmap = new($"samples/{name}/{tilename}.png");
                 tiles.Add(tile((x, y) => bitmap.GetPixel(x, y)));
                 tilenames.Add($"{tilename} 0");
 
@@ -209,7 +209,7 @@ class SimpleTiledModel : Model
 
     public override Bitmap Graphics()
     {
-        Bitmap result = new Bitmap(MX * tilesize, MY * tilesize);
+        Bitmap result = new(MX * tilesize, MY * tilesize);
         int[] bitmapData = new int[result.Height * result.Width];
 
         if (observed[0] >= 0)

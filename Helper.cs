@@ -25,7 +25,7 @@ static class Helper
             partialSum += weights[i];
             if (partialSum >= threshold) return i;
         }
-        return -1;
+        return 0;
     }
 
     public static long ToPower(this int a, int n)

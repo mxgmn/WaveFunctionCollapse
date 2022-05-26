@@ -16,7 +16,7 @@ static class Program
     {
         Stopwatch sw = Stopwatch.StartNew();
 
-        Random random = new Random();
+        Random random = new();
         XDocument xdoc = XDocument.Load("samples.xml");
 
         foreach (XElement xelem in xdoc.Root.Elements("overlapping", "simpletiled"))
@@ -38,7 +38,7 @@ static class Program
                 int N = xelem.Get("N", 3);
                 bool periodicInput = xelem.Get("periodicInput", true);
                 int symmetry = xelem.Get("symmetry", 8);
-                int ground = xelem.Get("ground", 0);
+                bool ground = xelem.Get("ground", false);
 
                 model = new OverlappingModel(name, N, width, height, periodicInput, periodic, symmetry, ground, heuristic);
             }

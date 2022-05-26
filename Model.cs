@@ -20,7 +20,7 @@ abstract class Model
     int stacksize, observedSoFar;
 
     protected int MX, MY, T, N;
-    protected bool periodic;
+    protected bool periodic, ground;
 
     protected double[] weights;
     double[] weightLogWeights, distribution;
@@ -81,7 +81,7 @@ abstract class Model
         if (wave == null) Init();
 
         Clear();
-        Random random = new Random(seed);
+        Random random = new(seed);
 
         for (int l = 0; l < limit || limit < 0; l++)
         {
@@ -102,7 +102,7 @@ abstract class Model
         return true;
     }
 
-    protected int NextUnobservedNode(Random random)
+    int NextUnobservedNode(Random random)
     {
         if (heuristic == Heuristic.Scanline)
         {
@@ -146,7 +146,7 @@ abstract class Model
         for (int t = 0; t < T; t++) if (w[t] != (t == r)) Ban(node, t);
     }
 
-    protected bool Propagate()
+    bool Propagate()
     {
         while (stacksize > 0)
         {
@@ -185,7 +185,7 @@ abstract class Model
         return sumsOfOnes[0] > 0;
     }
 
-    protected void Ban(int i, int t)
+    void Ban(int i, int t)
     {
         wave[i][t] = false;
 
@@ -202,7 +202,7 @@ abstract class Model
         entropies[i] = Math.Log(sum) - sumsOfWeightLogWeights[i] / sum;
     }
 
-    protected virtual void Clear()
+    void Clear()
     {
         for (int i = 0; i < wave.Length; i++)
         {
@@ -219,6 +219,16 @@ abstract class Model
             observed[i] = -1;
         }
         observedSoFar = 0;
+
+        if (ground)
+        {
+            for (int x = 0; x < MX; x++)
+            {
+                for (int t = 0; t < T - 1; t++) Ban(x + (MY - 1) * MX, t);
+                for (int y = 0; y < MY - 1; y++) Ban(x + y * MX, T - 1);
+            }
+            Propagate();
+        }
     }
 
     public abstract System.Drawing.Bitmap Graphics();

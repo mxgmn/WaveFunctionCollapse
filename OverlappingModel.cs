@@ -15,9 +15,8 @@ class OverlappingModel : Model
 {
     byte[][] patterns;
     List<Color> colors;
-    int ground;
 
-    public OverlappingModel(string name, int N, int width, int height, bool periodicInput, bool periodic, int symmetry, int ground, Heuristic heuristic)
+    public OverlappingModel(string name, int N, int width, int height, bool periodicInput, bool periodic, int symmetry, bool ground, Heuristic heuristic)
         : base(width, height, N, periodic, heuristic)
     {
         var bitmap = new Bitmap($"samples/{name}.png");
@@ -116,7 +115,7 @@ class OverlappingModel : Model
             }
 
         T = weights.Count;
-        this.ground = (ground + T) % T;
+        this.ground = ground;
         patterns = new byte[T][];
         base.weights = new double[T];
 
@@ -141,7 +140,7 @@ class OverlappingModel : Model
             propagator[d] = new int[T][];
             for (int t = 0; t < T; t++)
             {
-                List<int> list = new List<int>();
+                List<int> list = new();
                 for (int t2 = 0; t2 < T; t2++) if (agrees(patterns[t], patterns[t2], dx[d], dy[d])) list.Add(t2);
                 propagator[d][t] = new int[list.Count];
                 for (int c = 0; c < list.Count; c++) propagator[d][t][c] = list[c];
@@ -151,7 +150,7 @@ class OverlappingModel : Model
 
     public override Bitmap Graphics()
     {
-        Bitmap result = new Bitmap(MX, MY);
+        Bitmap result = new(MX, MY);
         int[] bitmapData = new int[result.Height * result.Width];
 
         if (observed[0] >= 0)
@@ -203,21 +202,5 @@ class OverlappingModel : Model
         result.UnlockBits(bits);
 
         return result;
-    }
-
-    protected override void Clear()
-    {
-        base.Clear();
-
-        if (ground != 0)
-        {
-            for (int x = 0; x < MX; x++)
-            {
-                for (int t = 0; t < T; t++) if (t != ground) Ban(x + (MY - 1) * MX, t);
-                for (int y = 0; y < MY - 1; y++) Ban(x + y * MX, ground);
-            }
-
-            Propagate();
-        }
     }
 }
