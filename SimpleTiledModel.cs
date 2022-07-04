@@ -271,4 +271,18 @@ class SimpleTiledModel : Model
         }
         return result.ToString();
     }
+    
+   
+    
+//         public string TextOutput()
+//     {
+//         var result = new System.Text.StringBuilder();
+//         for (int y = 0; y < MY; y++)
+//         {
+//             for (int x = 0; x < MX; x++) result.Append($"{tilenames[observed[x + y * MX]]}, ");
+//             result.Append(Environment.NewLine);
+               //system.out.println("MX : " + MY*y);
+//         }
+//         return result.ToString();
+//     }
 }
