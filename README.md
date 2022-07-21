@@ -69,7 +69,7 @@ WFC algorithm in higher dimensions works completely the same way as in dimension
 
 Higher resolution screenshots: [1](http://i.imgur.com/0bsjlBY.png), [2](http://i.imgur.com/GduN0Vr.png), [3](http://i.imgur.com/IEOsbIy.png).
 
-Voxel models generated with WFC and other algorithms will be in a separate repo.
+[MarkovJunior](https://github.com/mxgmn/MarkovJunior) repository contains an implementation of the 3d simple tiled model with many [tilesets](https://github.com/mxgmn/MarkovJunior/tree/main/resources/tilesets) and [examples](https://github.com/mxgmn/MarkovJunior/blob/main/images/top-1764.png).
 
 ## Constrained synthesis
 WFC algorithm supports constraints. Therefore, it can be easily combined with other generative algorithms or with manual creation.
@@ -106,6 +106,8 @@ WFC is a console application that depends only on the standard library. Get [.NE
 ```
 dotnet run --configuration Release WaveFunctionCollapse.csproj
 ```
+Generated results are put into the `output` folder. Edit `samples.xml` to change model parameters.
+
 Alternatively, use build instructions from the community for various platforms from the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
 
 ## Notable ports, forks and spinoffs
@@ -118,7 +120,6 @@ Alternatively, use build instructions from the community for various platforms f
 * [Nick Nenov](https://github.com/NNNenov) made a [3d voxel tileset](https://twitter.com/NNNenov/status/789903180226301953) based on my Castle tileset. Nick uses text output option in the tiled model to reconstruct 3d models in Cinema 4D.
 * Sean Leffler implemented the [overlapping model in Rust](https://github.com/sdleffler/collapse).
 * rid5x is making an [OCaml version of WFC](https://twitter.com/rid5x/status/782442620459114496).
-* I published a very basic [3d tiled model](https://bitbucket.org/mxgmn/basic3dwfc/overview) so people could make their own 3d tilesets without waiting for the full 3d repository.
 * I made an [interactive version](https://twitter.com/ExUtumno/status/798571284342837249) of the overlapping model, you can download the GUI executable from the [WFC itch.io page](https://exutumno.itch.io/wavefunctioncollapse).
 * [Brian Bucklew](https://github.com/unormal) built a level generation pipeline that applies WFC in multiple passes for the [Caves of Qud](http://store.steampowered.com/app/333640) game: [1](https://twitter.com/unormal/status/805987523596091392), [2](https://twitter.com/unormal/status/808566029387448320), [3](https://twitter.com/unormal/status/808523056259993601), [4](https://twitter.com/unormal/status/808523493994364928), [5](https://twitter.com/unormal/status/808519575264497666), [6](https://twitter.com/unormal/status/808519216185876480), [7](https://twitter.com/unormal/status/808795396508123136), [8](https://twitter.com/unormal/status/808860105093632001), [9](https://twitter.com/unormal/status/809637856432033792), [10](https://twitter.com/unormal/status/810239794433425408), [11](https://twitter.com/unormal/status/811034574973243393), [12](https://twitter.com/unormal/status/811720423419314176), [13](https://twitter.com/unormal/status/811034037259276290), [14](https://twitter.com/unormal/status/810971337309224960), [15](https://twitter.com/unormal/status/811405368777723909), [16](https://twitter.com/ptychomancer/status/812053801544757248), [17](https://twitter.com/unormal/status/812159308263788544), [18](https://twitter.com/unormal/status/812158749838340096), [19](https://twitter.com/unormal/status/814569437181476864), [20](https://twitter.com/unormal/status/814570383189876738), [21](https://twitter.com/unormal/status/819725864623603712), [22](https://twitter.com/unormal/status/984719207156862976).
 * [Danny Wynne](https://github.com/dannywynne) implemented a [3d tiled model](https://twitter.com/dwtw/status/810166761270243328).

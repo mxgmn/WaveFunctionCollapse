@@ -1,21 +1,13 @@
-﻿/*
-The MIT License(MIT)
-Copyright(c) mxgmn 2016.
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
-*/
+﻿// Copyright (C) 2016 Maxim Gumin, The MIT License (MIT)
 
 using System;
 using System.Linq;
-using System.Drawing;
 using System.Xml.Linq;
-using System.Drawing.Imaging;
 using System.Collections.Generic;
 
 class SimpleTiledModel : Model
 {
-    List<Color[]> tiles;
+    List<int[]> tiles;
     List<string> tilenames;
     int tilesize;
     bool blackBackground;
@@ -23,9 +15,7 @@ class SimpleTiledModel : Model
     public SimpleTiledModel(string name, string subsetName, int width, int height, bool periodic, bool blackBackground, Heuristic heuristic) : base(width, height, 1, periodic, heuristic)
     {
         this.blackBackground = blackBackground;
-
-        XElement xroot = XDocument.Load($"samples/{name}/data.xml").Root;
-        tilesize = xroot.Get("size", 16);
+        XElement xroot = XDocument.Load($"tilesets/{name}.xml").Root;
         bool unique = xroot.Get("unique", false);
 
         List<string> subset = null;
@@ -36,17 +26,16 @@ class SimpleTiledModel : Model
             else subset = xsubset.Elements("tile").Select(x => x.Get<string>("name")).ToList();
         }
 
-        Color[] tile(Func<int, int, Color> f)
+        static int[] tile(Func<int, int, int> f, int size)
         {
-            Color[] result = new Color[tilesize * tilesize];
-            for (int y = 0; y < tilesize; y++) for (int x = 0; x < tilesize; x++) result[x + y * tilesize] = f(x, y);
+            int[] result = new int[size * size];
+            for (int y = 0; y < size; y++) for (int x = 0; x < size; x++) result[x + y * size] = f(x, y);
             return result;
         };
+        static int[] rotate(int[] array, int size) => tile((x, y) => array[size - 1 - y + x * size], size);
+        static int[] reflect(int[] array, int size) => tile((x, y) => array[size - 1 - x + y * size], size);
 
-        Color[] rotate(Color[] array) => tile((x, y) => array[tilesize - 1 - y + x * tilesize]);
-        Color[] reflect(Color[] array) => tile((x, y) => array[tilesize - 1 - x + y * tilesize]);
-
-        tiles = new List<Color[]>();
+        tiles = new List<int[]>();
         tilenames = new List<string>();
         var weightList = new List<double>();
 
@@ -125,21 +114,23 @@ class SimpleTiledModel : Model
             {
                 for (int t = 0; t < cardinality; t++)
                 {
-                    Bitmap bitmap = new($"samples/{name}/{tilename} {t}.png");
-                    tiles.Add(tile((x, y) => bitmap.GetPixel(x, y)));
+                    int[] bitmap;
+                    (bitmap, tilesize, tilesize) = BitmapHelper.LoadBitmap($"tilesets/{name}/{tilename} {t}.png");
+                    tiles.Add(bitmap);
                     tilenames.Add($"{tilename} {t}");
                 }
             }
             else
             {
-                Bitmap bitmap = new($"samples/{name}/{tilename}.png");
-                tiles.Add(tile((x, y) => bitmap.GetPixel(x, y)));
+                int[] bitmap;
+                (bitmap, tilesize, tilesize) = BitmapHelper.LoadBitmap($"tilesets/{name}/{tilename}.png");
+                tiles.Add(bitmap);
                 tilenames.Add($"{tilename} 0");
 
                 for (int t = 1; t < cardinality; t++)
                 {
-                    if (t <= 3) tiles.Add(rotate(tiles[T + t - 1]));
-                    if (t >= 4) tiles.Add(reflect(tiles[T + t - 4]));
+                    if (t <= 3) tiles.Add(rotate(tiles[T + t - 1], tilesize));
+                    if (t >= 4) tiles.Add(reflect(tiles[T + t - 4], tilesize));
                     tilenames.Add($"{tilename} {t}");
                 }
             }
@@ -207,58 +198,47 @@ class SimpleTiledModel : Model
             }
     }
 
-    public override Bitmap Graphics()
+    public override void Save(string filename)
     {
-        Bitmap result = new(MX * tilesize, MY * tilesize);
-        int[] bitmapData = new int[result.Height * result.Width];
-
+        int[] bitmapData = new int[MX * MY * tilesize * tilesize];
         if (observed[0] >= 0)
         {
             for (int x = 0; x < MX; x++) for (int y = 0; y < MY; y++)
                 {
-                    Color[] tile = tiles[observed[x + y * MX]];
-                    for (int yt = 0; yt < tilesize; yt++) for (int xt = 0; xt < tilesize; xt++)
-                        {
-                            Color c = tile[xt + yt * tilesize];
-                            bitmapData[x * tilesize + xt + (y * tilesize + yt) * MX * tilesize] =
-                                unchecked((int)0xff000000 | (c.R << 16) | (c.G << 8) | c.B);
-                        }
+                    int[] tile = tiles[observed[x + y * MX]];
+                    for (int dy = 0; dy < tilesize; dy++) for (int dx = 0; dx < tilesize; dx++)
+                            bitmapData[x * tilesize + dx + (y * tilesize + dy) * MX * tilesize] = tile[dx + dy * tilesize];
                 }
         }
         else
         {
-            for (int x = 0; x < MX; x++) for (int y = 0; y < MY; y++)
+            for (int i = 0; i < wave.Length; i++)
+            {
+                int x = i % MX, y = i / MX;
+                if (blackBackground && sumsOfOnes[i] == T)
+                    for (int yt = 0; yt < tilesize; yt++) for (int xt = 0; xt < tilesize; xt++)
+                            bitmapData[x * tilesize + xt + (y * tilesize + yt) * MX * tilesize] = 255 << 24;
+                else
                 {
-                    bool[] a = wave[x + y * MX];
-                    int amount = (from b in a where b select 1).Sum();
-                    double lambda = 1.0 / (from t in Enumerable.Range(0, T) where a[t] select weights[t]).Sum();
-
+                    bool[] w = wave[i];
+                    double normalization = 1.0 / sumsOfWeights[i];
                     for (int yt = 0; yt < tilesize; yt++) for (int xt = 0; xt < tilesize; xt++)
                         {
-                            if (blackBackground && amount == T) bitmapData[x * tilesize + xt + (y * tilesize + yt) * MX * tilesize] = unchecked((int)0xff000000);
-                            else
-                            {
-                                double r = 0, g = 0, b = 0;
-                                for (int t = 0; t < T; t++) if (a[t])
-                                    {
-                                        Color c = tiles[t][xt + yt * tilesize];
-                                        r += (double)c.R * weights[t] * lambda;
-                                        g += (double)c.G * weights[t] * lambda;
-                                        b += (double)c.B * weights[t] * lambda;
-                                    }
-
-                                bitmapData[x * tilesize + xt + (y * tilesize + yt) * MX * tilesize] =
-                                    unchecked((int)0xff000000 | ((int)r << 16) | ((int)g << 8) | (int)b);
-                            }
+                            int idi = x * tilesize + xt + (y * tilesize + yt) * MX * tilesize;
+                            double r = 0, g = 0, b = 0;
+                            for (int t = 0; t < T; t++) if (w[t])
+                                {
+                                    int argb = tiles[t][xt + yt * tilesize];
+                                    r += ((argb & 0xff0000) >> 16) * weights[t] * normalization;
+                                    g += ((argb & 0xff00) >> 8) * weights[t] * normalization;
+                                    b += (argb & 0xff) * weights[t] * normalization;
+                                }
+                            bitmapData[idi] = unchecked((int)0xff000000 | ((int)r << 16) | ((int)g << 8) | (int)b);
                         }
                 }
+            }
         }
-
-        var bits = result.LockBits(new Rectangle(0, 0, result.Width, result.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-        System.Runtime.InteropServices.Marshal.Copy(bitmapData, 0, bits.Scan0, bitmapData.Length);
-        result.UnlockBits(bits);
-
-        return result;
+        BitmapHelper.SaveBitmap(bitmapData, MX * tilesize, MY * tilesize, filename);
     }
 
     public string TextOutput()

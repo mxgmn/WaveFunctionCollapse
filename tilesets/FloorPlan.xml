@@ -1,4 +1,4 @@
-<set size="9">
+<set>
   <tiles>
     <tile name="empty" symmetry="X" weight="0.1"/>
     <tile name="out" symmetry="L"/>

@@ -1,15 +1,11 @@
-﻿/*
-The MIT License(MIT)
-Copyright(c) mxgmn 2016.
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
-*/
+﻿// Copyright (C) 2016 Maxim Gumin, The MIT License (MIT)
 
 using System.Linq;
 using System.Xml.Linq;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 static class Helper
 {
@@ -42,4 +38,28 @@ static class Helper
     }
 
     public static IEnumerable<XElement> Elements(this XElement xelement, params string[] names) => xelement.Elements().Where(e => names.Any(n => n == e.Name));
+}
+
+static class BitmapHelper
+{
+    public static (int[] bitmap, int width, int height) LoadBitmap(string filename)
+    {
+        Bitmap bitmap = new(filename);
+        int width = bitmap.Width, height = bitmap.Height;
+        var bits = bitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+        int[] result = new int[bitmap.Width * bitmap.Height];
+        System.Runtime.InteropServices.Marshal.Copy(bits.Scan0, result, 0, result.Length);
+        bitmap.UnlockBits(bits);
+        bitmap.Dispose();
+        return (result, width, height);
+    }
+
+    public static void SaveBitmap(int[] data, int width, int height, string filename)
+    {
+        Bitmap result = new(width, height);
+        var bits = result.LockBits(new Rectangle(0, 0, result.Width, result.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+        System.Runtime.InteropServices.Marshal.Copy(data, 0, bits.Scan0, data.Length);
+        result.UnlockBits(bits);
+        result.Save(filename);
+    }
 }

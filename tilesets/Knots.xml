@@ -1,4 +1,4 @@
-<set size="10">
+<set>
 	<tiles>
 		<tile name="corner" symmetry="L"/>
 		<tile name="cross" symmetry="I"/>

@@ -1,12 +1,12 @@
-<set size="48" unique="True">
+<set unique="True">
 	<tiles>
 		<tile name="cliff" symmetry="T"/>
 		<tile name="cliffcorner" symmetry="L"/>
 		<tile name="cliffturn" symmetry="L"/>
 		<tile name="grass" symmetry="X"/>
-		<tile name="grasscorner" symmetry="L" weight="0.0001"/>
-		<tile name="road" symmetry="T" weight="0.1"/>
-		<tile name="roadturn" symmetry="L" weight="0.1"/>
+		<tile name="grasscorner" symmetry="L" weight="0.01"/>
+		<tile name="road" symmetry="T" weight="0.05"/>
+		<tile name="roadturn" symmetry="L" weight="0.05"/>
 		<tile name="water_a" symmetry="X"/>
 		<tile name="water_b" symmetry="X"/>
 		<tile name="water_c" symmetry="X"/>

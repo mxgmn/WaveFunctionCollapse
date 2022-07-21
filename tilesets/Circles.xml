@@ -1,4 +1,4 @@
-<set size="32">
+<set>
 	<tiles>
 		<tile name="b_half" symmetry="T"/>
 		<tile name="b_i" symmetry="I"/>
