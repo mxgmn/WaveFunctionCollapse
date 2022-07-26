@@ -4,8 +4,9 @@ using System.Linq;
 using System.Xml.Linq;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 static class Helper
 {
@@ -42,24 +43,21 @@ static class Helper
 
 static class BitmapHelper
 {
-    public static (int[] bitmap, int width, int height) LoadBitmap(string filename)
+    public static (int[], int, int) LoadBitmap(string filename)
     {
-        Bitmap bitmap = new(filename);
-        int width = bitmap.Width, height = bitmap.Height;
-        var bits = bitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-        int[] result = new int[bitmap.Width * bitmap.Height];
-        System.Runtime.InteropServices.Marshal.Copy(bits.Scan0, result, 0, result.Length);
-        bitmap.UnlockBits(bits);
-        bitmap.Dispose();
+        using var image = Image.Load<Bgra32>(filename);
+        int width = image.Width, height = image.Height;
+        int[] result = new int[width * height];
+        image.CopyPixelDataTo(MemoryMarshal.Cast<int, Bgra32>(result));
         return (result, width, height);
     }
 
-    public static void SaveBitmap(int[] data, int width, int height, string filename)
+    unsafe public static void SaveBitmap(int[] data, int width, int height, string filename)
     {
-        Bitmap result = new(width, height);
-        var bits = result.LockBits(new Rectangle(0, 0, result.Width, result.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-        System.Runtime.InteropServices.Marshal.Copy(data, 0, bits.Scan0, data.Length);
-        result.UnlockBits(bits);
-        result.Save(filename);
+        fixed (int* pData = data)
+        {
+            using var image = Image.WrapMemory<Bgra32>(pData, width, height);
+            image.SaveAsPng(filename);
+        }
     }
 }
