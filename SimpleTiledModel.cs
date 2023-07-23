@@ -47,7 +47,7 @@ class SimpleTiledModel : Model
             string tilename = xtile.Get<string>("name");
             if (subset != null && !subset.Contains(tilename)) continue;
 
-            Func<int, int> a, b;
+            Func<int, int> a, b; //a is 90 degrees rotation, b is reflection
             int cardinality;
 
             char sym = xtile.Get("symmetry", 'X');

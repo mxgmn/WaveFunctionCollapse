@@ -38,10 +38,11 @@ Watch a video demonstration of WFC algorithm on YouTube: [https://youtu.be/DOQTr
 
 ## Tilemap generation
 The simplest nontrivial case of the algorithm is when NxN=1x2 (well, NxM). If we simplify it even further by storing not the probabilities of pairs of colors but the probabilities of colors themselves, we get what we call a "simple tiled model". The propagation phase in this model is just adjacency constraint propagation. It's convenient to initialize the simple tiled model with a list of tiles and their adjacency data (adjacency data can be viewed as a large set of very small samples) rather than a sample bitmap.
-<p align="center">
+<p align="center"><a href="http://i.imgur.com/jIctSoT.gifv"><img src="images/tile.gif"/></a></p>
+<!--<p align="center">
   <a href="images/tile.gif">GIF</a> |
   <a href="http://i.imgur.com/jIctSoT.gifv">GIFV</a>
-</p>
+</p>-->
 
 Lists of all the possible pairs of adjacent tiles in practical tilesets can be quite long, so I implemented a symmetry system for tiles to shorten the enumeration. In this system each tile should be assigned with its symmetry type.
 <p align="center"><img alt="symmetries" src="images/symmetry-system.png"></p>
@@ -75,10 +76,11 @@ Higher resolution screenshots: [1](http://i.imgur.com/0bsjlBY.png), [2](http://i
 WFC algorithm supports constraints. Therefore, it can be easily combined with other generative algorithms or with manual creation.
 
 Here is WFC autocompleting a level started by a human:
-<p align="center">
+<p align="center"><a href="http://i.imgur.com/X3aNDUv.gifv"><img src="images/constrained.gif"/></a></p>
+<!--<p align="center">
   <a href="images/constrained.gif">GIF</a> |
   <a href="http://i.imgur.com/X3aNDUv.gifv">GIFV</a>
-</p>
+</p>-->
 
 [ConvChain](https://github.com/mxgmn/ConvChain) algorithm satisfies the strong version of the condition (C2): the limit distribution of NxN patterns in the outputs it is producing is exactly the same as the distributions of patterns in the input. However, ConvChain doesn't satisfy (C1): it often produces noticeable defects. It makes sense to run ConvChain first to get a well-sampled configuration and then run WFC to correct local defects. This is similar to a common strategy in optimization: first run a Monte-Carlo method to find a point close to a global optimum and then run a gradient descent from that point for greater accuracy.
 
@@ -106,7 +108,7 @@ WFC is a console application that depends only on the standard library. Get [.NE
 ```
 dotnet run --configuration Release WaveFunctionCollapse.csproj
 ```
-Generated results are put into the `output` folder. Edit `samples.xml` to change model parameters.
+Generated results are saved into the `output` folder. Edit `samples.xml` to change model parameters.
 
 Alternatively, use build instructions from the community for various platforms from the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
 
@@ -144,7 +146,7 @@ that the resulting observed zone is navigable at each step.
 * Vasu Mahesh [ported](https://github.com/vasumahesh1/WFC_WebGL) 3d tiled model to TypeScript, made a new tileset and [visualised](https://vasumahesh1.github.io/WFC_WebGL) the generation process in WebGL.
 * [Hwanhee Kim](https://github.com/greentec) experimented with 3d WFC and created/adapted many voxel tilesets: [1](https://twitter.com/greentecq/status/1025348928634408960), [2](https://twitter.com/greentecq/status/1004068394553913344), [3](https://twitter.com/greentecq/status/1005835830802305024), [4](https://twitter.com/greentecq/status/1022851327041265664), [5](https://twitter.com/greentecq/status/1011351814216736769), [6](https://twitter.com/greentecq/status/1008210550944387077), [7](https://twitter.com/greentecq/status/1006390606875070464), [8](https://twitter.com/greentecq/status/1015182718810841088).
 * Oskar Stålberg gave a [talk](https://www.youtube.com/watch?v=0bcZb-SsnrA) about level generation in Bad North at the Everything Procedural Conference 2018.
-* I [wrote](https://twitter.com/ExUtumno/status/1024314661951467521) about how to generate (approximately) unbiased paths between 2 points with WFC and other algorithms.
+* I [wrote](https://twitter.com/ExUtumno/status/1024314661951467521) about how to generate (approximately) unbiased paths between 2 points with WFC and other algorithms. I [implemented](https://github.com/mxgmn/MarkovJunior/blob/main/models/TilePath.xml) this method in MarkovJunior.
 * [Isaac Karth](https://github.com/ikarth) and [Adam M. Smith](https://github.com/rndmcnlly) published a [preprint](https://arxiv.org/abs/1809.04432) where they describe a system based on WFC that learns from both positive and negative examples, and discuss it in a general context of dialogs with example-driven generators.
 * Brendan Anthony [uses](https://steamcommunity.com/games/314230/announcements/detail/3369147113795750369) WFC to generate wall decorations in the game [Rodina](https://store.steampowered.com/app/314230/Rodina/).
 * Tim Kong implemented the [overlapping model in Haxe](https://github.com/Mitim-84/WFC-Gen).
@@ -176,9 +178,9 @@ that the resulting observed zone is navigable at each step.
 * [Ján Pernecký](https://github.com/janper) and [Ján Tóth](https://github.com/yanchith) published a [Grasshopper plugin](https://github.com/subdgtl/Monoceros) that extends the tiled model.
 * Krystian Samp made a [single-file overlapping WFC library in C](https://github.com/krychu/wfc).
 * [Gerald Krystian](https://github.com/amarcolina) made an [interactive tool](https://amarcolina.github.io/WFC-Explorer/) that explores the tiled model where tile adjacencies are induced from edge labels.
-* DeepMind open-ended learning team [used](https://storage.googleapis.com/deepmind-media/papers/Open-Ended%20Learning%20Leads%20to%20Generally%20Capable%20Agents/open-ended-learning-paper.pdf) WFC to generate arenas for reinforcement learning agents.
+* DeepMind open-ended learning team [used](https://arxiv.org/abs/2107.12808) WFC to generate arenas for reinforcement learning agents.
 * Oskar Stålberg [made](https://twitter.com/OskSta/status/1447483550257799171) an island generator that combines triangle and quad tiles and uses a custom observation heuristic that doesn't produce local minimums.
-* [Boris the Brave](https://github.com/boristhebrave) [applied](https://www.boristhebrave.com/2021/11/08/infinite-modifying-in-blocks/) [Paul Merrell's](https://github.com/merrell42) modifying in blocks technique to the lazy generation of unbounded tile configurations. Marian Kleineberg has [implemented](https://twitter.com/marian42_/status/1490060483944140804) this method into his [infinite city generator](https://github.com/marian42/wavefunctioncollapse).
+* [Boris the Brave](https://github.com/boristhebrave) [applied](https://www.boristhebrave.com/2021/11/08/infinite-modifying-in-blocks/) [Paul Merrell's](https://github.com/merrell42) modifying in blocks technique to the lazy generation of unbounded tile configurations. Marian Kleineberg has [implemented](https://marian42.de/article/infinite-wfc) this method into his [infinite city generator](https://github.com/marian42/wavefunctioncollapse).
 
 ## Credits
 Circles tileset is taken from [Mario Klingemann](https://twitter.com/quasimondo/status/778196128957403136). FloorPlan tileset is taken from [Lingdong Huang](https://github.com/LingDong-/ndwfc). Summer tiles were drawn by Hermann Hillmann. Cat overlapping sample is taken from the Nyan Cat video, Water + Forest + Mountains samples are taken from Ultima IV, 3Bricks sample is taken from Dungeon Crawl Stone Soup, Qud sample was made by Brian Bucklew, MagicOffice + Spirals samples - by rid5x, ColoredCity + Link + Link 2 + Mazelike + RedDot + SmileCity samples - by Arvi Teikari, Wall sample - by Arcaniax, NotKnot + Sand + Wrinkles samples - by Krystian Samp, Circle sample - by Noah Buddy. The rest of the examples and tilesets were made by me. Idea of generating integrated circuits was suggested to me by [Moonasaur](https://twitter.com/Moonasaur/status/759890746350731264) and their style was taken from Zachtronics' [Ruckingenur II](http://www.zachtronics.com/ruckingenur-ii/). Voxel models were rendered in [MagicaVoxel](http://ephtracy.github.io/).
