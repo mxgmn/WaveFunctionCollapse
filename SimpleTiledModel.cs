@@ -51,41 +51,38 @@ class SimpleTiledModel : Model
             int cardinality;
 
             char sym = xtile.Get("symmetry", 'X');
-            if (sym == 'L')
+            switch (sym)
             {
-                cardinality = 4;
-                a = i => (i + 1) % 4;
-                b = i => i % 2 == 0 ? i + 1 : i - 1;
-            }
-            else if (sym == 'T')
-            {
-                cardinality = 4;
-                a = i => (i + 1) % 4;
-                b = i => i % 2 == 0 ? i : 4 - i;
-            }
-            else if (sym == 'I')
-            {
-                cardinality = 2;
-                a = i => 1 - i;
-                b = i => i;
-            }
-            else if (sym == '\\')
-            {
-                cardinality = 2;
-                a = i => 1 - i;
-                b = i => 1 - i;
-            }
-            else if (sym == 'F')
-            {
-                cardinality = 8;
-                a = i => i < 4 ? (i + 1) % 4 : 4 + (i - 1) % 4;
-                b = i => i < 4 ? i + 4 : i - 4;
-            }
-            else
-            {
-                cardinality = 1;
-                a = i => i;
-                b = i => i;
+                case 'L':
+                    cardinality = 4;
+                    a = i => (i + 1) % 4;
+                    b = i => i % 2 == 0 ? i + 1 : i - 1;
+                    break;
+                case 'T':
+                    cardinality = 4;
+                    a = i => (i + 1) % 4;
+                    b = i => i % 2 == 0 ? i : 4 - i;
+                    break;
+                case 'I':
+                    cardinality = 2;
+                    a = i => 1 - i;
+                    b = i => i;
+                    break;
+                case '\\':
+                    cardinality = 2;
+                    a = i => 1 - i;
+                    b = i => 1 - i;
+                    break;
+                case 'F':
+                    cardinality = 8;
+                    a = i => i < 4 ? (i + 1) % 4 : 4 + (i - 1) % 4;
+                    b = i => i < 4 ? i + 4 : i - 4;
+                    break;
+                default:
+                    cardinality = 1;
+                    a = i => i;
+                    b = i => i;
+                    break;
             }
 
             T = action.Count;
