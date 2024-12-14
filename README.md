@@ -31,6 +31,7 @@ Wave Function Collapse algorithm has been implemented in
 [Java](https://github.com/sjcasey21/wavefunctioncollapse),
 [Clojure](https://github.com/sjcasey21/wavefunctioncollapse-clj),
 [Free Pascal](https://github.com/PascalCorpsman/mini_projects/tree/main/miniprojects/Wave_function_collapse/Overlap_model),
+[Dart](https://github.com/rick-dalley/wfc),
 [p5js](https://github.com/D-T-666/wave-function-collapse-p5),
 [JavaScript](https://github.com/kchapelier/wavefunctioncollapse)
 and adapted to [Unity](https://selfsame.itch.io/unitywfc),
