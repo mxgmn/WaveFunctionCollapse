@@ -1,5 +1,6 @@
 ﻿// Copyright (C) 2016 Maxim Gumin, The MIT License (MIT)
 
+using System;
 using System.Linq;
 using System.Xml.Linq;
 using System.ComponentModel;
@@ -48,16 +49,16 @@ static class BitmapHelper
         using var image = Image.Load<Bgra32>(filename);
         int width = image.Width, height = image.Height;
         int[] result = new int[width * height];
-        image.CopyPixelDataTo(MemoryMarshal.Cast<int, Bgra32>(result));
+        image.CopyPixelDataTo(MemoryMarshal.Cast<int, Bgra32>(result.AsSpan()));
         return (result, width, height);
     }
 
     unsafe public static void SaveBitmap(int[] data, int width, int height, string filename)
     {
-        fixed (int* pData = data)
-        {
-            using var image = Image.WrapMemory<Bgra32>(pData, width, height);
-            image.SaveAsPng(filename);
-        }
+        if (width <= 0 || height <= 0 || data.Length != width * height) throw new Exception($"ERROR: wrong image width * height = {width} * {height}");
+
+        Span<Bgra32> pixelSpan = MemoryMarshal.Cast<int, Bgra32>(data.AsSpan());
+        using var image = Image.LoadPixelData<Bgra32>(pixelSpan.ToArray(), width, height);
+        image.SaveAsPng(filename);
     }
 }

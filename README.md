@@ -147,7 +147,11 @@ WFC is a console application that depends only on the standard library. Get [.NE
 ```
 dotnet run --configuration Release WaveFunctionCollapse.csproj
 ```
-Generated results are saved into the `output` folder. Edit `samples.xml` to change model parameters.
+To build the application without running it, run
+```
+dotnet publish --configuration Release WaveFunctionCollapse.csproj
+```
+After this, a self-contained app will appear in the `bin/publish` folder. Run `WaveFunctionCollapse.exe` - generated artifacts will appear in the `output` folder. Edit `samples.xml` to change model parameters.
 
 Alternatively, use build instructions from the community for various platforms from the [relevant issue](https://github.com/mxgmn/WaveFunctionCollapse/issues/3). Casey Marshall made a [pull request](https://github.com/mxgmn/WaveFunctionCollapse/pull/18) that makes using the program with the command line more convenient and includes snap packaging.
 
