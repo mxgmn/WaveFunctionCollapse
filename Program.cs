@@ -46,19 +46,20 @@ static class Program
                 model = new SimpleTiledModel(name, subset, width, height, periodic, blackBackground, heuristic);
             }
 
+            int seedStart = xelem.Get("seed", -1);
             for (int i = 0; i < xelem.Get("screenshots", 2); i++)
             {
                 for (int k = 0; k < 10; k++)
                 {
                     Console.Write("> ");
-                    int seed = random.Next();
+                    int seed = seedStart < 0 ? random.Next(10000) : (seedStart + i);
                     bool success = model.Run(seed, xelem.Get("limit", -1));
                     if (success)
                     {
                         Console.WriteLine("DONE");
-                        model.Save($"output/{name} {seed}.png");
+                        model.Save($"output/{name}-{seed}.png");
                         if (model is SimpleTiledModel stmodel && xelem.Get("textOutput", false))
-                            System.IO.File.WriteAllText($"output/{name} {seed}.txt", stmodel.TextOutput());
+                            System.IO.File.WriteAllText($"output/{name}-{seed}.txt", stmodel.TextOutput());
                         break;
                     }
                     else Console.WriteLine("CONTRADICTION");

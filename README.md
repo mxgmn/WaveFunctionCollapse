@@ -36,7 +36,7 @@ Wave Function Collapse algorithm has been implemented in
 [JavaScript](https://github.com/kchapelier/wavefunctioncollapse)
 and adapted to [Unity](https://selfsame.itch.io/unitywfc),
 [Unreal Engine 5](https://docs.unrealengine.com/5.0/en-US/BlueprintAPI/WaveFunctionCollapse/),
-[Godot 4](https://github.com/AliasFactory/Godot_Fast_WFC),
+[Godot 4](https://github.com/AliasFactory/Godot_Fast_WFC)
 and [Houdini](https://www.sidefx.com/tutorials/wfc-dungeon-generator/).
 You can [build WFC from source](https://github.com/mxgmn/WaveFunctionCollapse#how-to-build),
 download an official [release](https://github.com/mxgmn/WaveFunctionCollapse/releases) for Windows,
@@ -228,7 +228,7 @@ that the resulting observed zone is navigable at each step.
 * Vladimir Pleskonjić created a [single-header WFC library in C](https://github.com/vplesko/libwfc), accompanied by a CLI tool and a basic GUI tool.
 * Rick Dalley [ported](https://github.com/rick-dalley/wfc) WFC to Dart.
 * Elwann Guillemot [implemented](https://github.com/Elwqnn/wfc) the overlapping model in Rust and made a GUI.
-* [AliasFactory](https://github.com/AliasFactory) published a [Godot 4 plugin](https://github.com/AliasFactory/Godot_Fast_WFC) based on a C++ port.
+* AliasFactory made a [Godot 4 plugin](https://github.com/AliasFactory/Godot_Fast_WFC) based on the [C++ port](https://github.com/math-fehr/fast-wfc).
 
 ## Credits
 Circles tileset is taken from [Mario Klingemann](https://twitter.com/quasimondo/status/778196128957403136). FloorPlan tileset is taken from [Lingdong Huang](https://github.com/LingDong-/ndwfc). Summer tiles were drawn by Hermann Hillmann. Cat overlapping sample is taken from the Nyan Cat video, Water + Forest + Mountains samples are taken from Ultima IV, 3Bricks sample is taken from Dungeon Crawl Stone Soup, Qud sample was made by Brian Bucklew, MagicOffice + Spirals samples - by rid5x, ColoredCity + Link + Link 2 + Mazelike + RedDot + SmileCity samples - by Arvi Teikari, Wall sample - by Arcaniax, NotKnot + Sand + Wrinkles samples - by Krystian Samp, Circle sample - by Noah Buddy. The rest of the examples and tilesets were made by me. Idea of generating integrated circuits was suggested to me by [Moonasaur](https://twitter.com/Moonasaur/status/759890746350731264) and their style was taken from Zachtronics' [Ruckingenur II](http://www.zachtronics.com/ruckingenur-ii/). Voxel models were rendered in [MagicaVoxel](http://ephtracy.github.io/).

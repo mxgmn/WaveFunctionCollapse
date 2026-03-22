@@ -214,15 +214,37 @@ abstract class Model
         }
         observedSoFar = 0;
 
+        for (int y = 0; y < MY; y++) for (int x = 0; x < MX; x++)
+        {
+            if (!periodic && (x + N > MX || y + N > MY)) continue;
+
+            int i = x + y * MX;
+            for (int t = 0; t < T; t++)
+            {
+                bool noNeighborsRight = (periodic || x < MX - N) && propagator[2][t].Length == 0;
+                bool noNeighborsTop = (periodic || y > 0) && propagator[3][t].Length == 0;
+                bool noNeighborsLeft = (periodic || x > 0) && propagator[0][t].Length == 0;
+                bool noNeighborsBottom = (periodic || y < MY - N) && propagator[1][t].Length == 0;
+
+                if (noNeighborsRight || noNeighborsTop || noNeighborsLeft || noNeighborsBottom) Ban(i, t);
+            }
+        }
+
         if (ground)
         {
             for (int x = 0; x < MX; x++)
             {
-                for (int t = 0; t < T - 1; t++) Ban(x + (MY - 1) * MX, t);
-                for (int y = 0; y < MY - 1; y++) Ban(x + y * MX, T - 1);
+                int bottom = x + (MY - 1) * MX;
+                for (int t = 0; t < T - 1; t++) if (wave[bottom][t]) Ban(bottom, t);
+                for (int y = 0; y < MY - 1; y++)
+                {
+                    int i = x + y * MX;
+                    if (wave[i][T - 1]) Ban(i, T - 1);
+                }
             }
-            Propagate();
         }
+
+        if (stacksize > 0) Propagate();
     }
 
     public abstract void Save(string filename);
